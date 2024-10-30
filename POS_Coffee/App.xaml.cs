@@ -59,7 +59,7 @@ namespace POS_Coffee
             var services = new ServiceCollection();
 
             services.AddSingleton<INavigation, NavigationService>();
-            services.AddSingleton<IAccountDao, MockAccountData>();
+            services.AddSingleton<IAccountDao, MockAccountDao>();
 
             services.AddTransient<MainViewModel>();
             services.AddTransient<LoginViewModel>();

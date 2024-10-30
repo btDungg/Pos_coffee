@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace POS_Coffee.Repositories
 {
-    public class MockAccountData : IAccountDao
+    public class MockAccountDao : IAccountDao
     {
         public AccountModel getAccountByUsername(string username)
         {
@@ -20,7 +20,7 @@ namespace POS_Coffee.Repositories
             return account;
         }
 
-        public List<AccountModel> getAllAccount()
+        private List<AccountModel> getAllAccount()
         {
             var accountModels = new List<AccountModel>()
             {

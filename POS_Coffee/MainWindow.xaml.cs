@@ -30,7 +30,7 @@ namespace POS_Coffee
         public MainWindow()
         {
             this.InitializeComponent();
-            mainFrame.Content = new LoginPage();
+            mainFrame.Content = new HomePage();
         }
 
         public Frame MainFrame => mainFrame;

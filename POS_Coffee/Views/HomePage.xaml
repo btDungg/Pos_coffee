@@ -7,9 +7,123 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:converter="using:POS_Coffee.Converters"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Background="White">
-        <TextBlock Text="Welcome to the Employee Home Page!" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <Page.Resources>
+        <converter:PriceConverter x:Key="PriceConverter"/>
+    </Page.Resources>
+    <Grid >
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+
+            <!--left top -->
+            <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
+                <StackPanel Margin="50 0 0 0"  Orientation="Horizontal">
+                    <Button Command="{x:Bind ViewModel.DrinkButtonClick}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="120" Background="Gray" CornerRadius="20">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock FontSize="25" Foreground="White">🍼</TextBlock>
+
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center">Đồ uống</TextBlock>
+                        </StackPanel>
+                    </Button>
+
+                    <Button  Command="{x:Bind ViewModel.FoodButtonClick}"  HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="120" Background="red" CornerRadius="20">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock FontSize="25" Foreground="White">🍽</TextBlock>
+                            <TextBlock FontWeight="Bold" VerticalAlignment ="Center">Đồ ăn</TextBlock>
+                        </StackPanel>
+                    </Button>
+
+                    <!--search -->
+                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                        <TextBox Width="200" Height="35" PlaceholderText="Tìm món (F3)" Margin="10,0,0,0"/>
+                        <Button Content="Search" Height="35" Margin="10,0,0,0" />
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+
+            <!--right top -->
+            
+
+            <!--left side-->
+            <StackPanel Grid.Column="0"
+                      Grid.Row="1"
+                      Background="#ffffff"
+                      Margin="30,0,5,0"
+                      CornerRadius="15" > 
+
+                <!--list item-->
+                <ListView ItemsSource="{x:Bind ViewModel.Foods, Mode=TwoWay}">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapGrid Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" Margin="5" Width="150">
+                                <!-- Cố định kích thước cho mỗi item -->
+                                <Image Source="{Binding Image}" Height="100" Width="100" Stretch="Uniform" />
+                                <TextBlock Text="{Binding Name}" FontSize="20" FontWeight="Bold" />
+                                <TextBlock Text="{Binding Price, Converter={StaticResource PriceConverter}}" FontSize="16" Foreground="Green" />
+                                <TextBlock Text="{Binding Amount}" FontSize="20" FontWeight="Bold" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+            </StackPanel>
+
+
+            <!--right side-->
+            <StackPanel Grid.Column="1"
+                      Grid.Row="1"
+                      Background="Beige"
+                      Margin="5,0,30,0"
+                      CornerRadius="15">
+
+                <Button Content="Thanh toán (F9)" VerticalAlignment="Center" Height="50" Width="200" Background="Green" Foreground="White" CornerRadius="20" FontSize="18" FontWeight="Bold"/>
+            </StackPanel>
+
+            <!--bottom-->
+            <StackPanel Grid.Column="0"
+                      Grid.ColumnSpan="2"
+                      Grid.Row="2"
+                      HorizontalAlignment ="Center"
+                      VerticalAlignment="Center"
+                      Orientation="Horizontal" >
+                <StackPanel HorizontalAlignment="Center" Margin="20 0" >
+                    <Button> Hỗ trợ
+                    </Button>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" Margin="20 0">
+                    <Button>Chi nhánh trung tâm
+                    </Button>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" Margin="20 0">
+                    <Button>phím tắt
+                    </Button>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" Margin="20 0">
+                    <Button >
+                        phiên bản
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
     </Grid>
 </Page>

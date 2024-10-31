@@ -9,6 +9,6 @@ namespace POS_Coffee.Repositories
 {
     public interface IFoodDao
     {
-        List<FoodModel> GetAllFood();
+        List<FoodModel> GetAllFood(string searchQuery);
     }
 }

@@ -49,8 +49,10 @@
 
                     <!--search -->
                     <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
-                        <TextBox Width="200" Height="35" PlaceholderText="Tìm món (F3)" Margin="10,0,0,0"/>
-                        <Button Content="Search" Height="35" Margin="10,0,0,0" />
+                        <TextBox Width="200" Height="35" PlaceholderText="Tìm món (F3)" Margin="10,0,0,0"
+                                 Text="{x:Bind ViewModel.searchQuery, Mode=TwoWay}"/>
+                        <Button Content="Search" Height="35" Margin="10,0,0,0" 
+                                Command="{x:Bind ViewModel.SearchButtonClick}"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

@@ -9,9 +9,9 @@ namespace POS_Coffee.Repositories
 {
     public class MockFoodDao : IFoodDao
     {
-        public List<FoodModel> GetAllFood()
+        public List<FoodModel> GetAllFood(string searchQuery)
         {
-            return new List<FoodModel>
+            var foods = new List<FoodModel>
             {
                 new FoodModel
                 {
@@ -297,6 +297,13 @@ namespace POS_Coffee.Repositories
                     Category = "Đồ ăn"
                 },
             };
+
+            if (string.IsNullOrEmpty(searchQuery) == false)
+            {
+                foods = foods.Where(item => item.Name.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            return foods;
         }
     }
 }

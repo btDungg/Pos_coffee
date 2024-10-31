@@ -1,6 +1,7 @@
 ﻿using Microsoft.UI.Xaml;
 using POS_Coffee.Models;
 using POS_Coffee.Repositories;
+using POS_Coffee.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,6 +16,7 @@ namespace POS_Coffee.ViewModels
     {
 
         private readonly IFoodDao dao;
+        private readonly INavigation _navigation;
         private ObservableCollection<FoodModel> _foods;
         public ObservableCollection<FoodModel> Foods
         {
@@ -22,18 +24,26 @@ namespace POS_Coffee.ViewModels
             set => SetProperty(ref _foods, value);
         }
 
-        private ObservableCollection<FoodModel> _allFoods;
-
+        private string _searchQuery;
+        public string searchQuery
+        {
+            get => _searchQuery;
+            set => SetProperty(ref _searchQuery, value);
+        }
+        private List<FoodModel> _allFoods;
         public ICommand DrinkButtonClick { get; }
         public ICommand FoodButtonClick { get; }
+        public ICommand SearchButtonClick { get; }
 
-        public FoodViewModel(IFoodDao _dao)
+        public FoodViewModel(IFoodDao _dao, INavigation navigation)
         {
+            _navigation = navigation;
             dao = _dao;
-            _allFoods = new ObservableCollection<FoodModel>(dao.GetAllFood()); // Lưu tất cả món ăn
+            _allFoods = dao.GetAllFood(searchQuery);
             Foods = new ObservableCollection<FoodModel>(_allFoods); // Gán danh sách ban đầu
-            DrinkButtonClick = new Utilities.RelayCommand(() => DrinkButton_Click());
-            FoodButtonClick = new Utilities.RelayCommand(() => FoodButton_Click());
+            DrinkButtonClick = new RelayCommand(() => DrinkButton_Click());
+            FoodButtonClick = new RelayCommand(() => FoodButton_Click());
+            SearchButtonClick = new RelayCommand(() => SearchButton_Click());
         }
 
         private void FoodButton_Click()
@@ -49,10 +59,13 @@ namespace POS_Coffee.ViewModels
             var filteredFoods = _allFoods.Where(f => f.Category.Equals(category, StringComparison.OrdinalIgnoreCase)).ToList();
             Foods = new ObservableCollection<FoodModel>(filteredFoods);
         }
-    
 
+        private void SearchButton_Click()
+        {
+            Foods = new ObservableCollection<FoodModel>(dao.GetAllFood(searchQuery));
+        }
 
-}
+    }
 
 }
 

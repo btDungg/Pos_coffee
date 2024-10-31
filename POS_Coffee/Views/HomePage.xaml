@@ -31,23 +31,28 @@
 
             <!--left top -->
             <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
-                <StackPanel Margin="50 0 0 0"  Orientation="Horizontal">
-                    <Button Command="{x:Bind ViewModel.DrinkButtonClick}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="120" Background="Gray" CornerRadius="20">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBlock FontSize="25" Foreground="White">🍼</TextBlock>
+                <StackPanel Margin="5 0 0 0"  Orientation="Horizontal">
+                <Button Command="{x:Bind ViewModel.AllGoodsClick}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="70" Background="Gray" CornerRadius="10">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock FontWeight="Bold" VerticalAlignment="Center">Tất cả</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Command="{x:Bind ViewModel.DrinkButtonClick}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="100" Background="Gray" CornerRadius="10">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock FontSize="25" Foreground="White">🍼</TextBlock>
 
-                            <TextBlock FontWeight="Bold" VerticalAlignment="Center">Đồ uống</TextBlock>
-                        </StackPanel>
-                    </Button>
+                        <TextBlock FontWeight="Bold" VerticalAlignment="Center">Đồ uống</TextBlock>
+                    </StackPanel>
+                </Button>
 
-                    <Button  Command="{x:Bind ViewModel.FoodButtonClick}"  HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="120" Background="red" CornerRadius="20">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBlock FontSize="25" Foreground="White">🍽</TextBlock>
-                            <TextBlock FontWeight="Bold" VerticalAlignment ="Center">Đồ ăn</TextBlock>
-                        </StackPanel>
-                    </Button>
+                <Button  Command="{x:Bind ViewModel.FoodButtonClick}"  HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="100" Background="red" CornerRadius="10">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock FontSize="25" Foreground="White">🍽</TextBlock>
+                        <TextBlock FontWeight="Bold" VerticalAlignment ="Center">Đồ ăn</TextBlock>
+                    </StackPanel>
+                </Button>
 
-                    <!--search -->
+                <!--search -->
                     <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
                         <TextBox Width="200" Height="35" PlaceholderText="Tìm món (F3)" Margin="10,0,0,0"
                                  Text="{x:Bind ViewModel.searchQuery, Mode=TwoWay}"/>
@@ -70,34 +75,32 @@
 
                 <!--list item-->
             <ScrollViewer VerticalScrollBarVisibility="Auto" Height="800">
-                <ListView ItemsSource="{x:Bind ViewModel.Foods, Mode=TwoWay}">
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapGrid Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Button Margin="0 2" Padding="0">
-                                    <StackPanel Orientation="Vertical" Margin="5" Width="150">
-                                        <Image Source="{Binding Image}" Height="100" Width="100" Stretch="Uniform" />
-                                        <TextBlock Text="{Binding Name}" FontSize="20" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding Price, Converter={StaticResource PriceConverter}}" FontSize="16" Foreground="Green" />
-                                        <TextBlock Text="{Binding Amount}" FontSize="20" FontWeight="Bold" />
-                                    </StackPanel>
-                                </Button>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </ScrollViewer>
-            </StackPanel>
+                <GridView x:Name="GridFood"
+                       ItemsSource="{x:Bind ViewModel.Foods, Mode=TwoWay}"
+                       DataContext="{x:Bind ViewModel}">                
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="models:FoodModel">
+                            <Button Command="{Binding DataContext.SelectFoodCommand, RelativeSource={RelativeSource Mode=TemplatedParent}, ElementName=GridFood}"
+                                CommandParameter="{Binding}">
+                                <StackPanel Orientation="Vertical" Margin="5" Width="150">
+                                    <Image Source="{Binding Image}" Height="100" Width="100" Stretch="Uniform"/>
+                                    <TextBlock Text="{Binding Name}" FontSize="20" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding Price, Converter={StaticResource PriceConverter}}" FontSize="16" Foreground="Green"/>
+                                    <TextBlock Text="{Binding Amount}" FontSize="20" FontWeight="Bold"/>
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </ScrollViewer>
+        </StackPanel>
+        
 
 
 
 
 
-        <!--right side-->
+                        <!--right side-->
 
         <Grid Grid.Column="1" Grid.Row="1" Background="Beige" Margin="5,0,30,0" CornerRadius="15">
             <Grid.RowDefinitions>
@@ -107,15 +110,53 @@
 
             <!-- Danh sách sản phẩm -->
             <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
-                   <StackPanel Height="50">
-                        <TextBlock> Sản phẩm 1</TextBlock>
-                    </StackPanel>
+                <ItemsControl ItemsSource="{x:Bind ViewModel.CartItems}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="models:CartItemModel">
+                            <Grid Margin="5" BorderBrush="Gray" BorderThickness="0 0 0 1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <!-- Cột cho hình ảnh -->
+                                    <ColumnDefinition Width="*"/>
+                                    <!-- Cột cho tên và giá -->
+                                    <ColumnDefinition Width="Auto"/>
+                                    <!-- Cột cho số lượng -->
+                                    <ColumnDefinition Width="Auto"/>
+                                    <!-- Cột cho nút tăng -->
+                                    <ColumnDefinition Width="Auto"/>
+                                    <!-- Cột cho nút giảm -->
+                                </Grid.ColumnDefinitions>
+
+                                <Image Source="{Binding Image}" Height="50" Width="50" Stretch="Uniform" Grid.Column="0" Margin="5"/>
+
+                                <StackPanel Orientation="Vertical" Grid.Column="1" Margin="5">
+                                    <TextBlock Text="{Binding Name}" Margin="5,0" FontSize="16" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding Price, Converter={StaticResource PriceConverter}}" Margin="5,0" FontSize="16" Foreground="Green"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="5">
+                                    <Button>
+                                        <FontIcon Glyph="&#xE108;" Width="24" Height="24" />
+                                    </Button>
+                                    <TextBox Text="{Binding Quantity}" Margin="5 0" Width="24" Height="37" TextAlignment="Center"/>
+                                    <Button>
+                                        <FontIcon Glyph="&#xE109;" Width="24" Height="24" />
+                                    </Button>
+                                </StackPanel>
+
+                                <Button Grid.Column="3" Margin="15 0">
+                                    <FontIcon Glyph="&#xE107;" Width="24" Height="24" />
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </ScrollViewer>
 
 
             <!-- Tổng tiền và nút thanh toán -->
             <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10,0,0">
-                <TextBlock FontWeight="Bold" Text="Tổng tiền:" />
+                <!--<TextBlock FontWeight="Bold" Text="{x:Bind ViewModel.TotalPrice, Converter={StaticResource PriceConverter}}" />-->
                 <Button Content="Thanh toán (F9)" Height="50" Width="200" Background="Green" Foreground="White" CornerRadius="20" FontSize="18" FontWeight="Bold"/>
             </StackPanel>
         </Grid>

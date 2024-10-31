@@ -29,6 +29,7 @@ namespace POS_Coffee.Views
         public HomePage()
         {
             this.InitializeComponent();
+            //this.DataContext = ViewModel;
         }
 
         public FoodViewModel ViewModel { get; }

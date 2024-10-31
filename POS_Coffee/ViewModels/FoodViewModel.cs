@@ -31,9 +31,11 @@ namespace POS_Coffee.ViewModels
             set => SetProperty(ref _searchQuery, value);
         }
         private List<FoodModel> _allFoods;
+        public ICommand AllGoodsClick { get; }
         public ICommand DrinkButtonClick { get; }
         public ICommand FoodButtonClick { get; }
         public ICommand SearchButtonClick { get; }
+        public ICommand SelectFoodCommand { get; }
 
         public FoodViewModel(IFoodDao _dao, INavigation navigation)
         {
@@ -41,11 +43,15 @@ namespace POS_Coffee.ViewModels
             dao = _dao;
             _allFoods = dao.GetAllFood(searchQuery);
             Foods = new ObservableCollection<FoodModel>(_allFoods); // Gán danh sách ban đầu
+            AllGoodsClick = new RelayCommand(() => AllGoodsButton_Click());
             DrinkButtonClick = new RelayCommand(() => DrinkButton_Click());
             FoodButtonClick = new RelayCommand(() => FoodButton_Click());
             SearchButtonClick = new RelayCommand(() => SearchButton_Click());
+            SelectFoodCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<FoodModel>(SelectFood_Click);
         }
 
+        private void AllGoodsButton_Click() { Foods = new ObservableCollection<FoodModel>(_allFoods); }
+      
         private void FoodButton_Click()
         {
             var category = "Đồ ăn";
@@ -64,6 +70,43 @@ namespace POS_Coffee.ViewModels
         {
             Foods = new ObservableCollection<FoodModel>(dao.GetAllFood(searchQuery));
         }
+
+        private void SelectFood_Click(FoodModel selectedFood)
+        {
+            if (selectedFood != null)
+            {
+                var existingItem = CartItems.FirstOrDefault(item => item.Id == selectedFood.Id);
+
+                if (existingItem != null)
+                {
+                    // Tăng số lượng nếu sản phẩm đã có trong giỏ hàng
+                    existingItem.Quantity += 1;
+                }
+                else
+                {
+                    // Thêm sản phẩm mới vào giỏ hàng nếu chưa tồn tại
+                    CartItems.Add(new CartItemModel
+                    {
+                        Id = selectedFood.Id,
+                        Name = selectedFood.Name,
+                        Description = selectedFood.Description,
+                        Note = "", // Bạn có thể thêm ghi chú nếu cần
+                        Price = selectedFood.Price,
+                        Quantity = 1,
+                        Image = selectedFood.Image,
+                        Category = selectedFood.Category
+                    });
+                }
+
+                //System.Diagnostics.Debug.WriteLine("Selected food: " + selectedFood.Name);
+            }
+        }
+
+        // Danh sách CartItems để lưu các món ăn đã chọn
+        public ObservableCollection<CartItemModel> CartItems { get; set; } = new ObservableCollection<CartItemModel>();
+        //public decimal TotalPrice => CartItems.Sum(item => item.Price * item.Quantity);
+
+
 
     }
 

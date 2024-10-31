@@ -14,6 +14,7 @@ namespace POS_Coffee.ViewModels
     public class FoodViewModel: ViewModelBase
     {
 
+        private readonly IFoodDao dao;
         private ObservableCollection<FoodModel> _foods;
         public ObservableCollection<FoodModel> Foods
         {
@@ -22,12 +23,13 @@ namespace POS_Coffee.ViewModels
         }
 
         private ObservableCollection<FoodModel> _allFoods;
-     
+
         public ICommand DrinkButtonClick { get; }
         public ICommand FoodButtonClick { get; }
-        public FoodViewModel()
+
+        public FoodViewModel(IFoodDao _dao)
         {
-            var dao = new MockFoodDao();
+            dao = _dao;
             _allFoods = new ObservableCollection<FoodModel>(dao.GetAllFood()); // Lưu tất cả món ăn
             Foods = new ObservableCollection<FoodModel>(_allFoods); // Gán danh sách ban đầu
             DrinkButtonClick = new Utilities.RelayCommand(() => DrinkButton_Click());
@@ -37,35 +39,20 @@ namespace POS_Coffee.ViewModels
         private void FoodButton_Click()
         {
             var category = "Đồ ăn";
-            // Lọc danh sách để chỉ hiển thị đồ uống
-            if (string.IsNullOrEmpty(category))
-            {
-                Foods = new ObservableCollection<FoodModel>(_allFoods);
-            }
-            else
-            {
-                var filteredFoods = _allFoods.Where(f => f.Category.Equals(category, StringComparison.OrdinalIgnoreCase)).ToList();
-                Foods = new ObservableCollection<FoodModel>(filteredFoods);
-            }
+            var filteredFoods = _allFoods.Where(f => f.Category.Equals(category, StringComparison.OrdinalIgnoreCase)).ToList();
+            Foods = new ObservableCollection<FoodModel>(filteredFoods);
         }
 
         private void DrinkButton_Click()
         {
             var category = "Đồ uống";
-            // Lọc danh sách để chỉ hiển thị đồ uống
-            if (string.IsNullOrEmpty(category))
-            {
-                Foods = new ObservableCollection<FoodModel>(_allFoods);
-            }
-            else
-            {
-                var filteredFoods = _allFoods.Where(f => f.Category.Equals(category, StringComparison.OrdinalIgnoreCase)).ToList();
-                Foods = new ObservableCollection<FoodModel>(filteredFoods);
-            }
+            var filteredFoods = _allFoods.Where(f => f.Category.Equals(category, StringComparison.OrdinalIgnoreCase)).ToList();
+            Foods = new ObservableCollection<FoodModel>(filteredFoods);
         }
+    
 
-        
-    }
+
+}
 
 }
 

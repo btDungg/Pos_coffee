@@ -22,8 +22,143 @@ namespace POS_Coffee.Repositories
                     Amount = 12,
                     Image = "ms-appx:///Assets/pepsi.webp",
                     Category = "Đồ uống"
+                },  new FoodModel
+                {
+                    Id = 1,
+                    Name = "Pepsi",
+                    Description = "Nước pepsi",
+                    Price = 14000,
+                    Amount = 12,
+                    Image = "ms-appx:///Assets/pepsi.webp",
+                    Category = "Đồ uống"
+                },  new FoodModel
+                {
+                    Id = 1,
+                    Name = "Pepsi",
+                    Description = "Nước pepsi",
+                    Price = 14000,
+                    Amount = 12,
+                    Image = "ms-appx:///Assets/pepsi.webp",
+                    Category = "Đồ uống"
+                },  new FoodModel
+                {
+                    Id = 1,
+                    Name = "Pepsi",
+                    Description = "Nước pepsi",
+                    Price = 14000,
+                    Amount = 12,
+                    Image = "ms-appx:///Assets/pepsi.webp",
+                    Category = "Đồ uống"
+                },  new FoodModel
+                {
+                    Id = 1,
+                    Name = "Pepsi",
+                    Description = "Nước pepsi",
+                    Price = 14000,
+                    Amount = 12,
+                    Image = "ms-appx:///Assets/pepsi.webp",
+                    Category = "Đồ uống"
+                },  new FoodModel
+                {
+                    Id = 1,
+                    Name = "Pepsi",
+                    Description = "Nước pepsi",
+                    Price = 14000,
+                    Amount = 12,
+                    Image = "ms-appx:///Assets/pepsi.webp",
+                    Category = "Đồ uống"
+                },  new FoodModel
+                {
+                    Id = 1,
+                    Name = "Pepsi",
+                    Description = "Nước pepsi",
+                    Price = 14000,
+                    Amount = 12,
+                    Image = "ms-appx:///Assets/pepsi.webp",
+                    Category = "Đồ uống"
                 },
                 new FoodModel
+                {
+                    Id = 2,
+                    Name = "Coca-Cola",
+                    Description = "Nước ngọt",
+                    Price = 15000,
+                    Amount = 15,
+                    Image = "ms-appx:///Assets/coca_cola.jfif",
+                    Category = "Đồ uống"
+                },  new FoodModel
+                {
+                    Id = 2,
+                    Name = "Coca-Cola",
+                    Description = "Nước ngọt",
+                    Price = 15000,
+                    Amount = 15,
+                    Image = "ms-appx:///Assets/coca_cola.jfif",
+                    Category = "Đồ uống"
+                },  new FoodModel
+                {
+                    Id = 2,
+                    Name = "Coca-Cola",
+                    Description = "Nước ngọt",
+                    Price = 15000,
+                    Amount = 15,
+                    Image = "ms-appx:///Assets/coca_cola.jfif",
+                    Category = "Đồ uống"
+                },  new FoodModel
+                {
+                    Id = 2,
+                    Name = "Coca-Cola",
+                    Description = "Nước ngọt",
+                    Price = 15000,
+                    Amount = 15,
+                    Image = "ms-appx:///Assets/coca_cola.jfif",
+                    Category = "Đồ uống"
+                },  new FoodModel
+                {
+                    Id = 2,
+                    Name = "Coca-Cola",
+                    Description = "Nước ngọt",
+                    Price = 15000,
+                    Amount = 15,
+                    Image = "ms-appx:///Assets/coca_cola.jfif",
+                    Category = "Đồ uống"
+                },  new FoodModel
+                {
+                    Id = 2,
+                    Name = "Coca-Cola",
+                    Description = "Nước ngọt",
+                    Price = 15000,
+                    Amount = 15,
+                    Image = "ms-appx:///Assets/coca_cola.jfif",
+                    Category = "Đồ uống"
+                },  new FoodModel
+                {
+                    Id = 2,
+                    Name = "Coca-Cola",
+                    Description = "Nước ngọt",
+                    Price = 15000,
+                    Amount = 15,
+                    Image = "ms-appx:///Assets/coca_cola.jfif",
+                    Category = "Đồ uống"
+                },  new FoodModel
+                {
+                    Id = 2,
+                    Name = "Coca-Cola",
+                    Description = "Nước ngọt",
+                    Price = 15000,
+                    Amount = 15,
+                    Image = "ms-appx:///Assets/coca_cola.jfif",
+                    Category = "Đồ uống"
+                },  new FoodModel
+                {
+                    Id = 2,
+                    Name = "Coca-Cola",
+                    Description = "Nước ngọt",
+                    Price = 15000,
+                    Amount = 15,
+                    Image = "ms-appx:///Assets/coca_cola.jfif",
+                    Category = "Đồ uống"
+                },  new FoodModel
                 {
                     Id = 2,
                     Name = "Coca-Cola",

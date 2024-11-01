@@ -17,5 +17,6 @@ namespace POS_Coffee.Models
         public String Image { get; set; }
         public string Category { get; set; }
 
+
     }
 }

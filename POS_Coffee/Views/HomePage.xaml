@@ -80,7 +80,7 @@
                        DataContext="{x:Bind ViewModel}">                
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="models:FoodModel">
-                            <Button Command="{Binding DataContext.SelectFoodCommand, RelativeSource={RelativeSource Mode=TemplatedParent}, ElementName=GridFood}"
+                            <Button Command="{Binding DataContext.SelectFoodCommand ,Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}, ElementName=GridFood}"
                                 CommandParameter="{Binding}">
                                 <StackPanel Orientation="Vertical" Margin="5" Width="150">
                                     <Image Source="{Binding Image}" Height="100" Width="100" Stretch="Uniform"/>
@@ -110,49 +110,46 @@
 
             <!-- Danh sách sản phẩm -->
             <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{x:Bind ViewModel.CartItems}">
+                <ItemsControl x:Name="itemOrder" ItemsSource="{x:Bind ViewModel.CartItems}" DataContext="{x:Bind ViewModel}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="models:CartItemModel">
                             <Grid Margin="5" BorderBrush="Gray" BorderThickness="0 0 0 1">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
-                                    <!-- Cột cho hình ảnh -->
                                     <ColumnDefinition Width="*"/>
-                                    <!-- Cột cho tên và giá -->
                                     <ColumnDefinition Width="Auto"/>
-                                    <!-- Cột cho số lượng -->
                                     <ColumnDefinition Width="Auto"/>
-                                    <!-- Cột cho nút tăng -->
                                     <ColumnDefinition Width="Auto"/>
-                                    <!-- Cột cho nút giảm -->
                                 </Grid.ColumnDefinitions>
 
-                                <Image Source="{Binding Image}" Height="50" Width="50" Stretch="Uniform" Grid.Column="0" Margin="5"/>
+                                <Image Source="{Binding CartItem.Image}" Height="50" Width="50" Stretch="Uniform" Grid.Column="0" Margin="5"/>
 
                                 <StackPanel Orientation="Vertical" Grid.Column="1" Margin="5">
-                                    <TextBlock Text="{Binding Name}" Margin="5,0" FontSize="16" FontWeight="Bold"/>
-                                    <TextBlock Text="{Binding Price, Converter={StaticResource PriceConverter}}" Margin="5,0" FontSize="16" Foreground="Green"/>
+                                    <TextBlock Text="{Binding CartItem.Name}" Margin="5,0" FontSize="16" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding Price,Mode=TwoWay, Converter={StaticResource PriceConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" FontSize="16" Foreground="Green"/>
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="5">
-                                    <Button>
+                                    <!--<Button Command="{Binding DataContext.DecreaseQuantityCommand, RelativeSource={RelativeSource Mode=TemplatedParent},ElementName=itemOrder}"
+                                            CommandParameter="{Binding}">
                                         <FontIcon Glyph="&#xE108;" Width="24" Height="24" />
-                                    </Button>
-                                    <TextBox Text="{Binding Quantity}" Margin="5 0" Width="24" Height="37" TextAlignment="Center"/>
-                                    <Button>
+                                    </Button>-->
+                                    <TextBox Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5 0" Width="24" Height="37" TextAlignment="Center"/>
+                                    <!--<Button Command="{Binding DataContext.IncreaseQuantityCommand, RelativeSource={RelativeSource Mode=TemplatedParent},ElementName=itemOrder}" CommandParameter="{Binding}">
                                         <FontIcon Glyph="&#xE109;" Width="24" Height="24" />
-                                    </Button>
+                                    </Button>-->
                                 </StackPanel>
-
-                                <Button Grid.Column="3" Margin="15 0">
-                                    <FontIcon Glyph="&#xE107;" Width="24" Height="24" />
-                                </Button>
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
 
+
+
+            <!--<Button Grid.Column="3" Margin="15 0" Command="{Binding DataContext.RemoveItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
+     <FontIcon Glyph="&#xE107;" Width="24" Height="24" />
+ </Button>-->
 
             <!-- Tổng tiền và nút thanh toán -->
             <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10,0,0">

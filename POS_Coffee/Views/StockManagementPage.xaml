@@ -28,9 +28,9 @@
         <SplitView x:Name="splitView" Width="Auto" Height="Auto"
             IsPaneOpen="True" OpenPaneLength="350" CompactPaneLength="48" DisplayMode="Inline" Margin="10 10 10 10">
             <SplitView.Pane>
-                <Button Margin="10 10 10 10" Command="{Binding DataContext.RowSelectedCommand, Mode=TwoWay}" CommandParameter="{Binding}">
+                <Button Margin="10 10 10 10" Command="{Binding DataContext.RowSelectedCommand, Mode=TwoWay}" CommandParameter="{Binding}" VerticalAlignment="Top">
                     <controls:DataGrid x:Name="detailTable"
-                        GridLinesVisibility="All"
+                        GridLinesVisibility="All" VerticalAlignment="Top"
                         IsReadOnly="True" SelectedItem="{x:Bind ViewModel.StockDetail, Mode=TwoWay}"
                         Margin="12" MaxHeight="500" SelectionMode="Single"
                         AutoGenerateColumns="False"
@@ -62,7 +62,7 @@
                 </Grid.RowDefinitions>
                 <TextBlock Text="CHI TIẾT NGUYÊN LIỆU" Margin="10,10,0,0" Style="{StaticResource BaseTextBlockStyle}"/>
                 <StackPanel x:Name="Content" Grid.Row="1" Margin="10,10,0,0" Orientation="Vertical">
-                    <Image x:Name="StockImage" MaxWidth="1000" Height="400" Margin="0 10 0 10" Stretch="Fill" HorizontalAlignment="Left" Source="{x:Bind ViewModel.StockDetail.ImagePath}"/>
+                    <Image x:Name="StockImage" MaxWidth="1000" Height="400" Margin="0 10 0 10" Stretch="Fill" HorizontalAlignment="Left" Source="{x:Bind ViewModel.StockDetail.ImagePath, Mode=TwoWay}"/>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -83,12 +83,12 @@
                         <TextBlock x:Name="Price1" Text="Đơn giá:" FontWeight="Bold" Grid.Column="0" Grid.Row="4"/>
                         <TextBlock x:Name="StockNumber1" Text="Số lượng tồn:" FontWeight="Bold" Grid.Column="0" Grid.Row="5"/>
 
-                        <TextBlock x:Name="ID2" Text="{x:Bind ViewModel.StockDetail.ID, M}" Grid.Column="1" Grid.Row="0"/>
-                        <TextBlock x:Name="Name2" Text="{x:Bind ViewModel.StockDetail.Name}" Grid.Column="1" Grid.Row="1"/>
-                        <TextBlock x:Name="Description2" Text="{x:Bind ViewModel.StockDetail.Description}" Grid.Column="1" Grid.Row="2"/>
-                        <TextBlock x:Name="Unit2" Text="{x:Bind ViewModel.StockDetail.Unit}" Grid.Column="1" Grid.Row="3"/>
-                        <TextBlock x:Name="Price2" Text="{x:Bind ViewModel.StockDetail.Price}" Grid.Column="1" Grid.Row="4"/>
-                        <TextBlock x:Name="StockNumber2" Text="{x:Bind ViewModel.StockDetail.StockNumber}" Grid.Column="1" Grid.Row="5"/>
+                        <TextBlock x:Name="ID2" Text="{x:Bind ViewModel.StockDetail.ID, Mode=TwoWay}" Grid.Column="1" Grid.Row="0"/>
+                        <TextBlock x:Name="Name2" Text="{x:Bind ViewModel.StockDetail.Name, Mode=TwoWay}" Grid.Column="1" Grid.Row="1"/>
+                        <TextBlock x:Name="Description2" Text="{x:Bind ViewModel.StockDetail.Description, Mode=TwoWay}" Grid.Column="1" Grid.Row="2"/>
+                        <TextBlock x:Name="Unit2" Text="{x:Bind ViewModel.StockDetail.Unit, Mode=TwoWay}" Grid.Column="1" Grid.Row="3"/>
+                        <TextBlock x:Name="Price2" Text="{x:Bind ViewModel.StockDetail.Price, Mode=TwoWay}" Grid.Column="1" Grid.Row="4"/>
+                        <TextBlock x:Name="StockNumber2" Text="{x:Bind ViewModel.StockDetail.StockNumber, Mode=TwoWay}" Grid.Column="1" Grid.Row="5"/>
                     </Grid>
 
                 </StackPanel>

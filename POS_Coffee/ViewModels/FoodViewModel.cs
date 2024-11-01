@@ -35,9 +35,7 @@ namespace POS_Coffee.ViewModels
         public ICommand DrinkButtonClick { get; }
         public ICommand FoodButtonClick { get; }
         public ICommand SearchButtonClick { get; }
-        public ICommand SelectFoodCommand { get; }
-        public ICommand IncreaseQuantityCommand { get; }
-        public ICommand DecreaseQuantityCommand { get; }
+        
 
 
         public FoodViewModel(IFoodDao _dao, INavigation navigation)
@@ -46,16 +44,14 @@ namespace POS_Coffee.ViewModels
             dao = _dao;
             _allFoods = dao.GetAllFood(searchQuery);
             Foods = new ObservableCollection<FoodModel>(_allFoods); // Gán danh sách ban đầu
-            AllGoodsClick = new RelayCommand(() => AllGoodsButton_Click());
+            AllGoodsClick = new RelayCommand(() => AllFoodsButton_Click());
             DrinkButtonClick = new RelayCommand(() => DrinkButton_Click());
             FoodButtonClick = new RelayCommand(() => FoodButton_Click());
             SearchButtonClick = new RelayCommand(() => SearchButton_Click());
-            SelectFoodCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<FoodModel>(SelectFood_Click);
-            IncreaseQuantityCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<CartItemModel>(IncreaseQuantity);
-            DecreaseQuantityCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<CartItemModel>(DecreaseQuantity);
+            
         }
 
-        private void AllGoodsButton_Click() { Foods = new ObservableCollection<FoodModel>(_allFoods); }
+        private void AllFoodsButton_Click() { Foods = new ObservableCollection<FoodModel>(_allFoods); }
       
         private void FoodButton_Click()
         {
@@ -76,56 +72,7 @@ namespace POS_Coffee.ViewModels
             Foods = new ObservableCollection<FoodModel>(dao.GetAllFood(searchQuery));
         }
 
-        public ObservableCollection<CartItemViewModel> CartItems { get; set; } = new ObservableCollection<CartItemViewModel>();
-
-        private void SelectFood_Click(FoodModel selectedFood)
-        {
-            if (selectedFood != null)
-            {
-                var existingItem = CartItems.FirstOrDefault(item => item.CartItem.Id == selectedFood.Id);
-
-                if (existingItem != null)
-                {
-                    // Tăng số lượng nếu sản phẩm đã có trong giỏ hàng
-                    existingItem.Quantity += 1;
-                    existingItem.Price += existingItem.CartItem.Price;
-                }
-                else
-                {
-                    // Thêm sản phẩm mới vào giỏ hàng nếu chưa tồn tại
-                    var cartItem = new CartItemModel
-                    {
-                        Id = selectedFood.Id,
-                        Name = selectedFood.Name,
-                        Description = selectedFood.Description,
-                        Note = "",
-                        Price = selectedFood.Price,
-                        Quantity = 1,
-                        Image = selectedFood.Image,
-                        Category = selectedFood.Category
-                    };
-                    CartItems.Add(new CartItemViewModel(cartItem));
-                }
-            }
-        }
-
-        private void IncreaseQuantity(CartItemModel item)
-        {
-            if (item != null)
-            {
-                item.Quantity += 1; 
-                item.Price += item.Price;
-            }
-        }
-
-        private void DecreaseQuantity(CartItemModel item)
-        {
-            if (item != null && item.Quantity > 1)
-            {
-                item.Quantity -= 1; 
-                item.Price -= item.Price;
-            }
-        }
+       
 
     }
 

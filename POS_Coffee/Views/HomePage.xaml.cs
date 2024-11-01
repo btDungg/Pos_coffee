@@ -29,11 +29,15 @@ namespace POS_Coffee.Views
         public HomePage()
         {
             this.InitializeComponent();
+            DataContext = this;
             //this.DataContext = ViewModel;
         }
 
         public FoodViewModel ViewModel { get; }
             = App.Current.Services.GetService<FoodViewModel>();
+
+        public CartItemViewModel CartItemsViewModel { get; }
+            = App.Current.Services.GetService<CartItemViewModel>();
 
     }
 }

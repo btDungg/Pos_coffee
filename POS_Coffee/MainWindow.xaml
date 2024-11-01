@@ -7,6 +7,22 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
-    <Frame x:Name="mainFrame"/>
+    <NavigationView x:Name="nvSample">
+        <NavigationView.MenuItems>
+            <Button>
+                <NavigationViewItem Icon="Play" Content="Menu Item1" Tag="SamplePage1"/>
+            </Button>
+            <Button>
+                <NavigationViewItem Icon="Save" Content="Menu Item2" Tag="SamplePage2" />
+            </Button>
+            <Button>
+                <NavigationViewItem Icon="Refresh" Content="Menu Item3" Tag="SamplePage3" />
+            </Button>
+            <Button>
+                <NavigationViewItem Icon="Download" Content="Menu Item4" Tag="SamplePage4" />
+            </Button>
+        </NavigationView.MenuItems>
+        <Frame x:Name="mainFrame"/>
+    </NavigationView>
+    
 </Window>

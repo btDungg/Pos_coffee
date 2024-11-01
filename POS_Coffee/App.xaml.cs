@@ -60,10 +60,12 @@ namespace POS_Coffee
 
             services.AddSingleton<INavigation, NavigationService>();
             services.AddSingleton<IAccountDao, MockAccountData>();
+            services.AddSingleton<IStockDAO, MockStockDAO>();
 
             services.AddTransient<MainViewModel>();
             services.AddTransient<LoginViewModel>();
             services.AddTransient<HomeViewModel>();
+            services.AddTransient<StockViewModel>();
 
             return services.BuildServiceProvider();
         }

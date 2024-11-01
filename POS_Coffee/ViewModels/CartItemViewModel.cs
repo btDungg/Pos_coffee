@@ -1,5 +1,7 @@
-﻿using POS_Coffee.Models;
+﻿using Microsoft.UI.Xaml.Controls;
+using POS_Coffee.Models;
 using POS_Coffee.Utilities;
+using POS_Coffee.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,6 +27,7 @@ namespace POS_Coffee.ViewModels
         public ICommand SelectFoodCommand { get; }
         public ICommand IncreaseQuantityCommand { get; }
         public ICommand DecreaseQuantityCommand { get; }
+        public ICommand NavigateToPaymentCommand {  get; }
 
         public CartItemViewModel(INavigation navigation)
         {
@@ -32,6 +35,7 @@ namespace POS_Coffee.ViewModels
             SelectFoodCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<FoodModel>(SelectFood_Click);
             IncreaseQuantityCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<CartItemModel>(IncreaseQuantity);
             DecreaseQuantityCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<CartItemModel>(DecreaseQuantity);
+            NavigateToPaymentCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(NavigateToPaymentPage);
         }
 
         private void SelectFood_Click(FoodModel selectedFood)
@@ -80,6 +84,19 @@ namespace POS_Coffee.ViewModels
             {
                 item.Quantity -= 1;
                 TotalPrice -= item.Price;
+            }
+        }
+
+        private void NavigateToPaymentPage()
+        {
+            if (CartItems.Count > 0)
+            {
+                var paymentViewModel = new PaymentViewModel(CartItems, TotalPrice);
+                _navigation.NavigateTo(typeof(PaymentPage), paymentViewModel);
+            }
+            else
+            {
+                // Thông báo rằng giỏ hàng trống nếu không có sản phẩm
             }
         }
     }

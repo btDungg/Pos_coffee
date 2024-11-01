@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\AdminHomePage.xaml" />
+    <None Remove="Views\PaymentPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -66,6 +67,9 @@
     <None Update="Assets\pepsi.webp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\PaymentPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\AdminHomePage.xaml">

@@ -70,6 +70,8 @@ namespace POS_Coffee
             services.AddTransient<CartItemViewModel>();
 
 
+            services.AddSingleton<PaymentViewModel>();
+
             return services.BuildServiceProvider();
         }
     }

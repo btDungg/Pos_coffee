@@ -77,5 +77,7 @@ namespace POS_Coffee.ViewModels
                 ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
             }
         }
+
+
     }
 }

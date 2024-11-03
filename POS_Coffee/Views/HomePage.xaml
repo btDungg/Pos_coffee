@@ -7,9 +7,182 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    xmlns:models="using:POS_Coffee.Models"
 
-    <Grid Background="White">
-        <TextBlock Text="Welcome to the Employee Home Page!" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-    </Grid>
+    xmlns:converter="using:POS_Coffee.Converters"
+    Background="#003f8b">
+
+    <Page.Resources>
+        <converter:PriceConverter x:Key="PriceConverter"/>
+    </Page.Resources>
+
+    <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+
+            <!--left top -->
+            <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
+                <StackPanel Margin="5 0 0 0"  Orientation="Horizontal">
+                <Button Command="{x:Bind ViewModel.AllGoodsClick}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="70" Background="#ffffff" CornerRadius="10">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock FontWeight="Bold" VerticalAlignment="Center">Tất cả</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Command="{x:Bind ViewModel.DrinkButtonClick}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="110" Background="#ffffff" CornerRadius="10">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock FontSize="25" Foreground="White">☕</TextBlock>
+
+                        <TextBlock FontWeight="Bold" VerticalAlignment="Center">Đồ uống</TextBlock>
+                    </StackPanel>
+                </Button>
+
+                <Button  Command="{x:Bind ViewModel.FoodButtonClick}"  HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="100" Background="#ffffff" CornerRadius="10">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock FontSize="25" Foreground="White">🍽</TextBlock>
+                        <TextBlock FontWeight="Bold" VerticalAlignment ="Center">Đồ ăn</TextBlock>
+                    </StackPanel>
+                </Button>
+
+                <!--search -->
+                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                        <TextBox Width="200" Height="35" PlaceholderText="Tìm món (F3)" Margin="10,0,0,0"
+                                 Text="{x:Bind ViewModel.searchQuery, Mode=TwoWay}" Foreground="#ffffff"/>
+                        <Button Content="Search" Height="35" Margin="10,0,0,0" 
+                                Command="{x:Bind ViewModel.SearchButtonClick}"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+
+            <!--right top -->
+            
+
+            <!--left side-->
+            <Grid Grid.Column="0"
+                        Grid.Row="1"
+                        Background="#ffffff"
+                        Margin="30,0,5,0"
+                        CornerRadius="15"> 
+
+                <!--list item-->
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="800">
+                <GridView x:Name="GridFood"
+                       ItemsSource="{x:Bind ViewModel.Foods, Mode=TwoWay}">                
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="models:FoodModel">
+                            <Button Command="{Binding DataContext.CartItemsViewModel.SelectFoodCommand ,Mode=TwoWay, ElementName=GridFood}"
+                                CommandParameter="{Binding}">
+                                <StackPanel Orientation="Vertical" Margin="5" Width="150">
+                                    <Image Source="{Binding Image}" Height="100" Width="100" Stretch="Uniform"/>
+                                    <TextBlock Text="{Binding Name}" FontSize="20" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding Price, Converter={StaticResource PriceConverter}}" FontSize="16" Foreground="Green"/>
+                                    <TextBlock Text="{Binding Amount}" FontSize="20" FontWeight="Bold"/>
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </ScrollViewer>
+        </Grid>
+       
+                        <!--right side-->
+
+        <Grid Grid.Column="1" Grid.Row="1" Background="#ffffff" Margin="5,0,30,0" CornerRadius="15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Danh sách sản phẩm -->
+            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                <ItemsControl x:Name="itemOrder" ItemsSource="{x:Bind CartItemsViewModel.CartItems, Mode=TwoWay}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="models:CartItemModel">
+                            <Grid Margin="5" BorderBrush="Gray" BorderThickness="0 0 0 1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Image Source="{Binding Image}" Height="50" Width="50" Stretch="Uniform" Grid.Column="0" Margin="5"/>
+
+                                <StackPanel Orientation="Vertical" Grid.Column="1" Margin="5">
+                                    <TextBlock Text="{Binding Name}" Margin="5,0" FontSize="16" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding Price,Mode=TwoWay, Converter={StaticResource PriceConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" FontSize="16" Foreground="Green"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="5">
+                                    <Button Command="{Binding DataContext.CartItemsViewModel.DecreaseQuantityCommand, RelativeSource={RelativeSource Mode=TemplatedParent},ElementName=itemOrder}"
+                                            CommandParameter="{Binding}">
+                                        <FontIcon Glyph="&#xE108;" Width="24" Height="24" />
+                                    </Button>
+                                    <TextBox Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5 0" Width="24" Height="37" TextAlignment="Center"/>
+                                    <Button Command="{Binding DataContext.CartItemsViewModel.IncreaseQuantityCommand, RelativeSource={RelativeSource Mode=TemplatedParent},ElementName=itemOrder}" CommandParameter="{Binding}">
+                                        <FontIcon Glyph="&#xE109;" Width="24" Height="24" />
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+
+
+            <!--<Button Grid.Column="3" Margin="15 0" Command="{Binding DataContext.RemoveItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                    <FontIcon Glyph="&#xE107;" Width="24" Height="24" />
+            </Button>-->
+
+            <!-- Tổng tiền và nút thanh toán -->
+            <Grid Grid.Row="1" Background="#e6f0fa">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10,0,0">
+                    <TextBlock FontWeight="Bold">
+                        <Run Text="Tổng tiền: " />
+                        <Run Text="{x:Bind CartItemsViewModel.TotalPrice, Mode=OneWay, Converter={StaticResource PriceConverter}}" />
+                    </TextBlock>
+                    <Button Content="Thanh toán" Command="{x:Bind CartItemsViewModel.NavigateToPaymentCommand}"
+                            Height="50" Width="200" Background="Green" Foreground="White" CornerRadius="20" FontSize="18" FontWeight="Bold"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+
+        <!--bottom-->
+            <StackPanel Grid.Column="0"
+                      Grid.ColumnSpan="2"
+                      Grid.Row="2"
+                      HorizontalAlignment ="Center"
+                      VerticalAlignment="Center"
+                      Orientation="Horizontal" >
+                <StackPanel HorizontalAlignment="Center" Margin="20 0" >
+                    <Button> Hỗ trợ
+                    </Button>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" Margin="20 0">
+                    <Button>Chi nhánh trung tâm
+                    </Button>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" Margin="20 0">
+                <Button>Phím tắt
+                    </Button>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" Margin="20 0">
+                    <Button >
+                        Phiên bản
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
 </Page>

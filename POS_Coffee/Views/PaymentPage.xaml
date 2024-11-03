@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="POS_Coffee.Views.PaymentPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:POS_Coffee.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:viewModels="using:POS_Coffee.ViewModels"
+    xmlns:models="using:POS_Coffee.Models"
+    xmlns:converter="using:POS_Coffee.Converters" 
+    d:DataContext="{d:DesignInstance Type=viewModels:CartItemViewModel}"
+    Background="#cfe4dd">
+    <Page.Resources>
+        <converter:PriceConverter x:Key="PriceConverter"/>
+    </Page.Resources>
+
+    <Grid>
+            <!-- Phần đầu: Thông tin khách hàng và trạng thái đơn hàng -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="10" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Thông tin khách hàng và trạng thái đơn hàng -->
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Margin="10">
+                <TextBlock Text="Phiếu thanh toán - " FontWeight="Bold" FontSize="18" />
+                <TextBlock Text="1-4" FontSize="18" />
+                <TextBlock Text=" • " FontSize="18" />
+                <TextBlock Text="Mang về" Foreground="Blue" FontSize="18" />
+            </StackPanel>
+
+        <Grid Grid.Row="1" Grid.Column="0" Background="#ffffff" CornerRadius="10" Margin="20 0 10 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Header row -->
+            <Grid Grid.Row="0" Background="#f6f6f6" MinHeight="40">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Tên sản phẩm:" Grid.Column="0" TextAlignment="Center"  VerticalAlignment="Center" FontWeight="Bold" Foreground="#2f343b"/>
+                <TextBlock Text="Số lượng" Grid.Column="1" TextAlignment="Center" Foreground="#2f343b" VerticalAlignment="Center"/>
+                <TextBlock Text="Giá" Grid.Column="2" TextAlignment="Center" Foreground="#2f343b" VerticalAlignment="Center"/>
+            </Grid>
+
+            <!-- Items List -->
+            <ScrollViewer Grid.Row="1" Background="#ffffff">
+                <ItemsControl ItemsSource="{Binding CartItems}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="models:CartItemModel">
+                            <Grid Background="#ffffff" MinHeight="50" BorderThickness="0 0 0 1" BorderBrush="Gray" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Name}" Grid.Column="0" TextAlignment="Center" FontWeight="Bold" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Quantity}" Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Price, Converter={StaticResource PriceConverter}}" Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+        </Grid>
+
+        <Grid Grid.Column="1" Grid.Row="0" Margin="10 0 25 0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <TextBlock Foreground="#8a8d90" Margin="5 0 5 0">Ngày/Thang/Năm</TextBlock>
+                <TextBlock  Margin="5 0 5 0">📅</TextBlock>
+                <TextBlock Margin="5 0 5 0">🕒</TextBlock>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="1"  Background="#ffffff" CornerRadius="10" Margin="10 0 20 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!--Thông tin thanh toán-->
+                <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Tổng tiền hàng:" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" />
+                    <TextBlock  Grid.Row="0" Text="{Binding TotalPrice}" FontSize="20" Foreground="Green" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"  />
+
+
+                    <TextBlock Grid.Row="1" Text="Giảm giá" FontSize="20"  HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" />
+                    <TextBox Height="30" MinWidth="70" Grid.Row="1" FontSize="18"
+                             FontWeight="Bold" Foreground="#bae4d6" HorizontalAlignment="Right" Grid.Column="1"
+                             Text="{x:Bind PaymentViewModel.Discount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Grid.Row="2" Text="Khách cần trả:" FontSize="24" FontWeight="Bold"
+                               HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0"/>
+                    <TextBlock  Grid.Row="2" FontSize="24" FontWeight="Bold" Foreground="#267dd3" 
+                                HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"
+                                Text="{x:Bind PaymentViewModel.PriceAfterDiscount, Mode=OneWay}"/>
+
+                    <TextBlock Grid.Row="3" Text="Khách thanh toán:" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"  HorizontalAlignment="Left" Grid.Column="0" />
+                    <TextBox Height="30" MinWidth="70" Grid.Row="3" PlaceholderText="0"  FontSize="18" FontWeight="Black"
+                             Foreground="#bae4d6" HorizontalAlignment="Right" Grid.Column="1"
+                             Text="{x:Bind PaymentViewModel.AmountReceived, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+
+                    <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <RadioButton Content="Tiền mặt" GroupName="PaymentMethod" Margin="0,0,10,0" />
+                        <RadioButton Content="Chuyển khoản" GroupName="PaymentMethod" />
+                    </StackPanel>
+
+                    <TextBlock Grid.Row="5" Text="Tiền thừa trả khách:" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" />
+                    <TextBlock  Grid.Row="5" FontSize="16" Foreground="Black" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"
+                                Text="{x:Bind PaymentViewModel.Change, Mode=OneWay}"/>
+
+                </Grid>
+
+            </StackPanel>
+
+               <!--Nút Thanh toán và In hóa đơn-->
+            <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,50">
+                <Button Content="Thanh toán" 
+                    Background="Green" 
+                    Foreground="White" 
+                    FontWeight="Bold" 
+                    Width="150" 
+                    Height="50" 
+                    CornerRadius="10" 
+                    Margin="0,0,20,0" 
+                    Command="{x:Bind PaymentViewModel.PayCommand}"
+                    CommandParameter="{Binding CartItems}"/>
+
+                <Button Content="In hoá đơn" 
+                    Background="Red" 
+                    Foreground="White" 
+                    FontWeight="Bold" 
+                    Width="150" 
+                    Height="50" 
+                    CornerRadius="10" />
+            </StackPanel>
+
+
+        </Grid>
+        
+    </Grid>
+
+
+ </Page>
+

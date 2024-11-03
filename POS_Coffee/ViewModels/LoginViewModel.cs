@@ -16,6 +16,7 @@ namespace POS_Coffee.ViewModels
 {
     public class LoginViewModel : ViewModelBase
     {
+        public Action OnLoginSuccess { get; set; } 
         private readonly INavigation _navigation;
         private readonly IAccountDao _accountDao;
         private string _username;
@@ -68,8 +69,8 @@ namespace POS_Coffee.ViewModels
                     {
                         _navigation.NavigateTo(typeof(AdminHomePage), user);
                     }
-                }
-                
+                    OnLoginSuccess?.Invoke();
+                }              
             }
         }
     }

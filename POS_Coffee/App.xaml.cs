@@ -67,7 +67,7 @@ namespace POS_Coffee
 
             //services.AddTransient<FoodViewModel>();
             services.AddTransient<MainViewModel>();
-            services.AddTransient<LoginViewModel>();
+            services.AddSingleton<LoginViewModel>();
             services.AddTransient<HomeViewModel>();
             services.AddTransient<FoodViewModel>();
             services.AddTransient<CartItemViewModel>();

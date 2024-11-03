@@ -7,13 +7,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+
     <NavigationView x:Name="nvSample" PaneDisplayMode="Top"
-    SelectionFollowsFocus="Enabled" IsBackButtonVisible="Collapsed">
+    SelectionFollowsFocus="Enabled" IsBackButtonVisible="Collapsed" IsSettingsVisible="False">
         <NavigationView.MenuItems>
             <NavigationViewItem Icon="Home" Content="Trang chủ" x:Name="HomePage"/>
-            <NavigationViewItem Icon="Manage" Content="Quản lý kho" x:Name="LoginPage" />
+            <NavigationViewItem Icon="Manage" Content="Quản lý kho" x:Name="StockManagement" />
             <NavigationViewItem Icon="Manage" Content="Quán lý hóa đơn" x:Name="PaymentPage" />
         </NavigationView.MenuItems>
+        <NavigationView.FooterMenuItems>
+            <NavigationViewItem Content="Đăng xuất" Tag="SamplePage5" Icon="LeaveChat" x:Name="LogOut"/>
+        </NavigationView.FooterMenuItems>
         <Frame x:Name="mainFrame"/>
     </NavigationView>
 

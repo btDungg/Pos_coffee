@@ -35,26 +35,86 @@ namespace POS_Coffee
         public MainWindow()
         {
             this.InitializeComponent();
-            mainFrame.Content = new HomePage();
-            //nvSample.ItemInvoked += (sender, args) =>
-            //{
-            //    if (args.InvokedItemContainer is NavigationViewItem item)
-            //    {
-            //        string pageKey = item.Name;
-            //        ViewModel.NavigateCommand.Execute(pageKey);
-            //    }
-            //};
+            ViewModel.NavigationCompleted += OnNavigationCompleted;
+            LoginViewModel.OnLoginSuccess = ShowNavigationItems;
+            nvSample.ItemInvoked += (sender, args) =>
+            {
+                if (args.InvokedItemContainer is NavigationViewItem item)
+                {
+                    string pageKey = item.Name;
+                    ViewModel.NavigateCommand.Execute(pageKey);
+                }
+            };
             SetWindowSize(this, 1300, 800);
             CenterWindowOnScreen(this);
             DisableWindowResize(this);
             this.Title = "Quản lý bán hàng";
             mainFrame.Content = new LoginPage();
+            HideNavigationItems();
+        }
+
+        private void HideNavigationItems()
+        {
+            foreach (var item in nvSample.MenuItems)
+            {
+                if (item is NavigationViewItem navItem)
+                {
+                    navItem.Visibility = Visibility.Collapsed;
+                }
+            }
+            foreach (var item in nvSample.FooterMenuItems)
+            {
+                if (item is NavigationViewItem navItem)
+                {
+                    navItem.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+
+        private void ShowNavigationItems()
+        {
+            foreach (var item in nvSample.MenuItems)
+            {
+                if (item is NavigationViewItem navItem)
+                {
+                    navItem.Visibility = Visibility.Visible;
+                }
+            }
+            foreach (var item in nvSample.FooterMenuItems)
+            {
+                if (item is NavigationViewItem navItem)
+                {
+                    navItem.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        private void OnNavigationCompleted(string pageName)
+        {
+            bool isLoginPage = pageName == "LogOut";  
+
+            foreach (var item in nvSample.MenuItems)
+            {
+                if (item is NavigationViewItem navItem)
+                {
+                    navItem.Visibility = isLoginPage ? Visibility.Collapsed : Visibility.Visible;
+                }
+            }
+            foreach (var item in nvSample.FooterMenuItems)
+            {
+                if (item is NavigationViewItem navItem)
+                {
+                    navItem.Visibility = isLoginPage ? Visibility.Collapsed : Visibility.Visible;
+                }
+            }
         }
 
         public Frame MainFrame => mainFrame;
 
         public MainViewModel ViewModel { get; }
             = App.Current.Services.GetService<MainViewModel>();
+        public LoginViewModel LoginViewModel { get; }
+            = App.Current.Services.GetService<LoginViewModel>();
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {

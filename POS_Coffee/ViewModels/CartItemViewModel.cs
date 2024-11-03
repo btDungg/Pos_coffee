@@ -98,6 +98,10 @@ namespace POS_Coffee.ViewModels
         {
             if (CartItems.Count > 0)
             {
+                foreach(var item in CartItems)
+                {
+
+                }
                 _navigation.NavigateTo(typeof(PaymentPage), this);
             }
             else

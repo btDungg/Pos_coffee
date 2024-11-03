@@ -14,6 +14,7 @@ namespace POS_Coffee.ViewModels
 {
     public class MainViewModel 
     {
+        public event Action<string> NavigationCompleted;
         private readonly INavigation _navigation;
         public MainViewModel(INavigation navigation)
         {
@@ -30,13 +31,17 @@ namespace POS_Coffee.ViewModels
                 case "HomePage":
                     _navigation.NavigateTo(typeof(HomePage));
                     break;
-                case "LoginPage":
+                case "LogOut":
                     _navigation.NavigateTo(typeof(LoginPage));
                     break;
                 case "PaymentPage":
                     _navigation.NavigateTo(typeof(PaymentManagementPage));
                     break;
+                case "StockManagement":
+                    _navigation.NavigateTo(typeof(PaymentManagementPage));
+                    break;
             }
+            NavigationCompleted?.Invoke(pageName);
         }
 
     }

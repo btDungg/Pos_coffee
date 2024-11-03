@@ -30,7 +30,7 @@ namespace POS_Coffee.Views
             this.InitializeComponent();
         }
 
-        public LoginViewModel ViewModel { get; }
+        public LoginViewModel ViewModel {get; }
             = App.Current.Services.GetService<LoginViewModel>();
     }
 }

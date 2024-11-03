@@ -128,6 +128,8 @@ namespace POS_Coffee.ViewModels
                 Change = Change,
                 CreatedDate = DateTime.Now,
             };
+            //Thực hiện cập nhật lại số lượng 
+            //Chưa thực hiện được do sử dụng mockdata
             _paymentDao.AddPayment(payment);
 
             var dialog = new ContentDialog()

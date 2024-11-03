@@ -15,11 +15,24 @@
 	 
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="Assets\bac-xiu.jpg" />
+    <Content Remove="Assets\banhmingot.jpg" />
     <Content Remove="Assets\coca_cola.jfif" />
+    <Content Remove="Assets\coffee-salt.jpg" />
+    <Content Remove="Assets\coffee.jpg" />
+    <Content Remove="Assets\dauphong.jpg" />
     <Content Remove="Assets\HaoHao.jfif" />
+    <Content Remove="Assets\huongduong.jpg" />
+    <Content Remove="Assets\milktea.jpg" />
     <Content Remove="Assets\Omachi.jfif" />
     <Content Remove="Assets\pepsi.webp" />
     <Content Remove="Assets\coffee_img.jpg" />
+    <Content Remove="Assets\revive.webp" />
+    <Content Remove="Assets\sinhto-bo.jpg" />
+    <Content Remove="Assets\snack.jpg" />
+    <Content Remove="Assets\suachua-da.jpg" />
+    <Content Remove="Assets\suachua-vietquat.jpg" />
+    <Content Remove="Assets\tra-chanh.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\AdminHomePage.xaml" />
@@ -58,6 +71,69 @@
   -->
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\dauphong.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\huongduong.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\snack.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\banhmingot.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\sinhto-bo.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\suachua-da.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\suachua-vietquat.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\revive.webp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\tra-chanh.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\milktea.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\coffee-salt.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\bac-xiu.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\coffee.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Update="Assets\coca_cola.jfif">

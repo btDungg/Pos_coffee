@@ -13,7 +13,9 @@
   + **ViewModel:** Là cầu nối giữa Model và View. Nó chứa logic giao tiếp với Model, xử lý dữ liệu, và cung cấp dữ liệu đã được xử lý cho View. ViewModel cũng phản ứng lại các sự kiện người dùng thông qua cơ chế binding (ràng buộc dữ liệu).
 
 * Minh họa:
-![MVVM](https://i.stack.imgur.com/vTZzA.png)
+
+![image](https://github.com/user-attachments/assets/826dbd92-578c-44b0-98b7-5708b7f65028)
+
 
 ## 2. Design Pattern - Dependency Injection:
 * **Định nghĩa:** **Dependency Injection (DI)** là một design pattern, một kỹ thuật cho phép xóa bỏ sự phụ thuộc giữa các module, làm cho ứng dụng dễ dàng hơn trong việc thay đổi module, bảo trì code và testing. DI cung cấp cho một đối tượng các thể hiện phụ thuộc (dependencies) của nó từ bên ngoài truyền vào mà không phải khởi tạo trực tiếp từ trong class sử dụng.
@@ -39,7 +41,8 @@
   + **Decrease Performance:** Các object được khởi tạo toàn bộ ngay từ đầu, có thể làm giảm performance.
   + **Error in runtime:** Có thể gặp lỗi ở run-time thay vì compile-time.
 * Minh họa Dependency Injection:
-![DI](https://i.stack.imgur.com/vTZzA.png)
+
+![image](https://github.com/user-attachments/assets/10d1c335-b26f-40e9-a899-41257d0c6fbb)
 
 # III. Các chức năng đã thực hiện
 ## 1. Chức năng đăng nhập:

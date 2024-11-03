@@ -15,13 +15,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\learning_English.jpg" />
-    <Content Remove="Assets\ongtho.jpg" />
-    <Content Remove="Assets\trathainguyen.jpg" />
-    <Content Remove="Assets\trungga.jpg" />
-    <Content Remove="Assets\trungnguyen.jpg" />
-    <Content Remove="Assets\Vinamilk.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Assets\ongtho.jpg" />
+    <None Remove="Assets\trathainguyen.jpg" />
+    <None Remove="Assets\trungga.jpg" />
+    <None Remove="Assets\trungnguyen.jpg" />
+    <None Remove="Assets\Vinamilk.jpg" />
     <None Remove="Views\AdminHomePage.xaml" />
     <None Remove="Views\StockManagementPage.xaml" />
   </ItemGroup>
@@ -59,21 +59,21 @@
     <None Update="Assets\learning_English.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\ongtho.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\trathainguyen.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\trungga.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\trungnguyen.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Vinamilk.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Content Update="Assets\ongtho.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\trathainguyen.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\trungga.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\trungnguyen.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Vinamilk.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\StockManagementPage.xaml">

@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Documents;
 using POS_Coffee.Models;
 using POS_Coffee.Repositories;
 using POS_Coffee.Utilities;
@@ -29,14 +32,26 @@ namespace POS_Coffee.ViewModels
         public ICommand NormalStockClickCmd { get; }
         public ICommand LowStockClickCmd { get; }
         public ICommand UseUpStockClickCmd { get; }
+        public ICommand AddStockClickCmd { get; }
+        public ICommand UpdateStockClickCmd { get; }
+        public ICommand DeleteStockClickCmd { get; }
         public ICommand SearchButtonClickCmd { get; }
 
         //Variable
         private ObservableCollection<StockModel> _stocks;
+        private XamlRoot _xamlRoot;
+
         public ObservableCollection<StockModel> Stocks
         {
             get => _stocks;
             set => SetProperty(ref _stocks, value);
+        }
+
+        private string _searchQuery;
+        public string searchQuery
+        {
+            get => _searchQuery;
+            set => SetProperty(ref _searchQuery, value);
         }
 
         public StockViewModel(IStockDAO stockDAO, INavigation navigation) 
@@ -54,12 +69,14 @@ namespace POS_Coffee.ViewModels
             {
                 StockDetail = null;
             }    
-            //RowSelectedCommand = new RelayCommand(() => LoadDetail());
             RowSelectedCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<StockModel>(LoadDetail);
             AllStockClickCmd = new RelayCommand(() => AllStockClick());
             NormalStockClickCmd = new RelayCommand(() => NormalStockClick());
             LowStockClickCmd = new RelayCommand(() => LowStockClick());
             UseUpStockClickCmd = new RelayCommand(() => UseUpStockClick());
+            AddStockClickCmd = new RelayCommand(() => AddStockClick());
+            DeleteStockClickCmd = new RelayCommand(DeleteStockClick);
+            UpdateStockClickCmd = new CommunityToolkit.Mvvm.Input.RelayCommand<StockModel>(UpdateStockClick);
             //SearchButtonClickCmd = new RelayCommand(() => SearchStockClick());
         }
 
@@ -97,8 +114,66 @@ namespace POS_Coffee.ViewModels
 
         //private void SearchStockClick()
         //{
-            
+
         //}
+
+        private void AddStockClick()
+        {
+
+        }
+        //private void DeleteStockClick(StockModel deletedStock)
+        //{
+        //    var temp = _dao.RemoveStock(deletedStock);
+        //    if (temp != null)
+        //    {
+        //        Stocks = new ObservableCollection<StockModel>(allStocks);
+        //        StockDetail = new StockModel();
+        //        StockDetail = allStocks[0];
+        //    }    
+        //    else
+        //    {
+        //        StockDetail = new StockModel();
+        //        StockDetail = allStocks[0];
+        //    }    
+        //}
+
+        private async void DeleteStockClick()
+        {
+            var temp = _dao.RemoveStock(StockDetail);
+            if (temp != null)
+            {
+                Stocks.Remove(StockDetail);
+                var dialog = new ContentDialog()
+                {
+                    XamlRoot = _xamlRoot,
+                    Content = "Xóa thành công",
+                    Title = "Thành công",
+                    CloseButtonText = "Ok",
+                };
+                await dialog.ShowAsync();
+            }
+            else
+            {
+                var dialog = new ContentDialog()
+                {
+                    XamlRoot = _xamlRoot,
+                    Content = "Xóa thất bại",
+                    Title = "Thất bại",
+                    CloseButtonText = "Ok",
+                };
+                await dialog.ShowAsync();
+            }
+        }
+
+        private void UpdateStockClick(StockModel updatedStock)
+        {
+
+        }
+
+        public void SetXamlRoot(XamlRoot xamlRoot)
+        {
+            _xamlRoot = xamlRoot;
+        }
 
     }
 }

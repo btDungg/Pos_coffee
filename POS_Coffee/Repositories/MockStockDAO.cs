@@ -69,7 +69,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/trungnguyen.jpg",
-                    ID = 1,
+                    ID = 6,
                     Name = "Cà phê",
                     Description = "Cà phê thương hiệu Trung Nguyên Legend",
                     Unit = "kg",
@@ -80,7 +80,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/Vinamilk.jpg",
-                    ID = 2,
+                    ID = 7,
                     Name = "Sữa tươi",
                     Description = "Sữa tươi Vinamilk 100% nguyên chất",
                     Unit = "hộp",
@@ -91,7 +91,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/trungga.jpg",
-                    ID = 3,
+                    ID = 8,
                     Name = "Trứng gà",
                     Description = "Trứng gà công nghiệp",
                     Unit = "quả",
@@ -101,7 +101,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/ongtho.jpg",
-                    ID = 4,
+                    ID = 9,
                     Name = "Sữa đặc",
                     Description = "Sữa đặc Ông thọ",
                     Unit = "hộp",
@@ -112,7 +112,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/trathainguyen.jpg",
-                    ID = 5,
+                    ID = 10,
                     Name = "Trà",
                     Description = "Trà thái nguyên",
                     Unit = "kg",
@@ -122,7 +122,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/trungnguyen.jpg",
-                    ID = 1,
+                    ID = 11,
                     Name = "Cà phê",
                     Description = "Cà phê thương hiệu Trung Nguyên Legend",
                     Unit = "kg",
@@ -133,7 +133,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/Vinamilk.jpg",
-                    ID = 2,
+                    ID = 12,
                     Name = "Sữa tươi",
                     Description = "Sữa tươi Vinamilk 100% nguyên chất",
                     Unit = "hộp",
@@ -144,7 +144,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/trungga.jpg",
-                    ID = 3,
+                    ID = 13,
                     Name = "Trứng gà",
                     Description = "Trứng gà công nghiệp",
                     Unit = "quả",
@@ -154,7 +154,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/ongtho.jpg",
-                    ID = 4,
+                    ID = 14,
                     Name = "Sữa đặc",
                     Description = "Sữa đặc Ông thọ",
                     Unit = "hộp",
@@ -165,7 +165,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/trathainguyen.jpg",
-                    ID = 5,
+                    ID = 15,
                     Name = "Trà",
                     Description = "Trà thái nguyên",
                     Unit = "kg",
@@ -175,7 +175,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/trungnguyen.jpg",
-                    ID = 1,
+                    ID = 16,
                     Name = "Cà phê",
                     Description = "Cà phê thương hiệu Trung Nguyên Legend",
                     Unit = "kg",
@@ -186,7 +186,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/Vinamilk.jpg",
-                    ID = 2,
+                    ID = 17,
                     Name = "Sữa tươi",
                     Description = "Sữa tươi Vinamilk 100% nguyên chất",
                     Unit = "hộp",
@@ -197,7 +197,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/trungga.jpg",
-                    ID = 3,
+                    ID = 18,
                     Name = "Trứng gà",
                     Description = "Trứng gà công nghiệp",
                     Unit = "quả",
@@ -207,7 +207,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/ongtho.jpg",
-                    ID = 4,
+                    ID = 19,
                     Name = "Sữa đặc",
                     Description = "Sữa đặc Ông thọ",
                     Unit = "hộp",
@@ -218,7 +218,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/trathainguyen.jpg",
-                    ID = 5,
+                    ID = 20,
                     Name = "Trà",
                     Description = "Trà thái nguyên",
                     Unit = "kg",
@@ -228,7 +228,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/trungnguyen.jpg",
-                    ID = 1,
+                    ID = 21,
                     Name = "Cà phê",
                     Description = "Cà phê thương hiệu Trung Nguyên Legend",
                     Unit = "kg",
@@ -239,7 +239,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/Vinamilk.jpg",
-                    ID = 2,
+                    ID = 22,
                     Name = "Sữa tươi",
                     Description = "Sữa tươi Vinamilk 100% nguyên chất",
                     Unit = "hộp",
@@ -250,7 +250,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/trungga.jpg",
-                    ID = 3,
+                    ID = 23,
                     Name = "Trứng gà",
                     Description = "Trứng gà công nghiệp",
                     Unit = "quả",
@@ -260,7 +260,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/ongtho.jpg",
-                    ID = 4,
+                    ID = 24,
                     Name = "Sữa đặc",
                     Description = "Sữa đặc Ông thọ",
                     Unit = "hộp",
@@ -271,7 +271,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/trathainguyen.jpg",
-                    ID = 5,
+                    ID = 25,
                     Name = "Trà",
                     Description = "Trà thái nguyên",
                     Unit = "kg",
@@ -281,7 +281,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/trungnguyen.jpg",
-                    ID = 1,
+                    ID = 26,
                     Name = "Cà phê",
                     Description = "Cà phê thương hiệu Trung Nguyên Legend",
                     Unit = "kg",
@@ -292,7 +292,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/Vinamilk.jpg",
-                    ID = 2,
+                    ID = 27,
                     Name = "Sữa tươi",
                     Description = "Sữa tươi Vinamilk 100% nguyên chất",
                     Unit = "hộp",
@@ -303,7 +303,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/trungga.jpg",
-                    ID = 3,
+                    ID = 28,
                     Name = "Trứng gà",
                     Description = "Trứng gà công nghiệp",
                     Unit = "quả",
@@ -313,7 +313,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/ongtho.jpg",
-                    ID = 4,
+                    ID = 29,
                     Name = "Sữa đặc",
                     Description = "Sữa đặc Ông thọ",
                     Unit = "hộp",
@@ -324,7 +324,7 @@ namespace POS_Coffee.Repositories
                 new StockModel()
                 {
                     ImagePath = "ms-appx:///Assets/trathainguyen.jpg",
-                    ID = 5,
+                    ID = 30,
                     Name = "Trà",
                     Description = "Trà thái nguyên",
                     Unit = "kg",
@@ -344,6 +344,19 @@ namespace POS_Coffee.Repositories
             if (stockDetail != null)
             {
                 return stockDetail;
+            }
+            return null;
+        }
+
+        public StockModel RemoveStock(StockModel deletedStock)
+        {
+            var stockModels = new List<StockModel>();
+            stockModels = getAllStock();
+            StockModel stock = stockModels.FirstOrDefault(x  => x.ID == deletedStock.ID);
+            if (stock != null)
+            {
+                stockModels.Remove(deletedStock);
+                return stock;
             }
             return null;
         }

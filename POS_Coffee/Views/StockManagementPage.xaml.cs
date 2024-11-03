@@ -29,11 +29,19 @@ namespace POS_Coffee.Views
         public StockManagementPage()
         {
             this.InitializeComponent();
+            this.Loaded += Announce_Loaded;
             //DataContext = this;
         }
 
         public StockViewModel ViewModel { get; }
            = App.Current.Services.GetService<StockViewModel>();
+
+        private void Announce_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.SetXamlRoot(this.XamlRoot);
+        }
+
+
 
     }
 }

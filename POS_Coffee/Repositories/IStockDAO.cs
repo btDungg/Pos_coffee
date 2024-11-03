@@ -11,5 +11,6 @@ namespace POS_Coffee.Repositories
     {
         List<StockModel> getAllStock();
         StockModel getStockByID(int id);
+        StockModel RemoveStock(StockModel deletedStock);
     }
 }

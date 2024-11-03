@@ -15,3 +15,10 @@
 
 * Minh họa:
 ![MVVM]([https://images.viblo.asia/518eea86-f0bd-45c9-bf38-d5cb119e947d.png](https://i.stack.imgur.com/vTZzA.png))
+
+## 2. Design Pattern - Dependency Injection:
+* **Định nghĩa:** **Dependency Injection (DI)** là một design pattern, một kỹ thuật cho phép xóa bỏ sự phụ thuộc giữa các module, làm cho ứng dụng dễ dàng hơn trong việc thay đổi module, bảo trì code và testing. DI cung cấp cho một đối tượng các thể hiện phụ thuộc (dependencies) của nó từ bên ngoài truyền vào mà không phải khởi tạo trực tiếp từ trong class sử dụng.
+* Nhiệm vụ của Dependency Injection:
+  + Tạo ra các đối tượng (object). 1
+  + Quản lý sự phụ thuộc (dependencies) giữa các đối tượng (Biết được class nào cần những object đấy). 2
+  + Cung cấp (inject) các phụ thuộc được yêu cầu cho đối tượng (được truyền từ bên ngoài đối tượng) (Cung cấp cho những class đó những object chúng cần). 

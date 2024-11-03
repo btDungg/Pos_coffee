@@ -33,6 +33,7 @@ namespace POS_Coffee.ViewModels
         public ICommand IncreaseQuantityCommand { get; }
         public ICommand DecreaseQuantityCommand { get; }
         public ICommand NavigateToPaymentCommand {  get; }
+        public ICommand RemoveItemCommand { get; }
 
 
 
@@ -43,6 +44,7 @@ namespace POS_Coffee.ViewModels
             IncreaseQuantityCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<CartItemModel>(IncreaseQuantity);
             DecreaseQuantityCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<CartItemModel>(DecreaseQuantity);
             NavigateToPaymentCommand = new RelayCommand(() => NavigateToPaymentPage());
+            RemoveItemCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<CartItemModel>(RemoveItem);
         }
 
         private void SelectFood_Click(FoodModel selectedFood)
@@ -98,15 +100,20 @@ namespace POS_Coffee.ViewModels
         {
             if (CartItems.Count > 0)
             {
-                foreach(var item in CartItems)
-                {
-
-                }
                 _navigation.NavigateTo(typeof(PaymentPage), this);
             }
             else
             {
                 // Thông báo rằng giỏ hàng trống nếu không có sản phẩm
+            }
+        }
+
+        private void RemoveItem(CartItemModel item)
+        {
+            if (item != null && CartItems.Contains(item))
+            {
+                CartItems.Remove(item);
+                TotalPrice -= item.Price * item.Quantity;
             }
         }
     }

@@ -1,5 +1,5 @@
 # I. Thông tin nhóm:
-|STT|MSSV|Họ tên|% Đóng góp|
+|STT|MSSV|Họ tên|% đóng góp|
 |---|-----|---------|-----|
 |1|21120434|Bùi Tiến Dũng|100%|
 |2|21120443|Phạm Thế Duyệt|100%|

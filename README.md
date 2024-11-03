@@ -1,12 +1,24 @@
 #Poscoffee
-# I. Thông tin nhóm và phân công công việc
-|STT|MSSV|Họ tên|Công việc được giao|Mức độ hoàn thành|
-|---|-----|---------|---------------|-----|
-|1|21120434|Bùi Tiến Dũng|- ?????.<br>- ???. <br>- ???.<br>- Viết báo cáo.|100%|
-|2|21120443|Phạm Thế Duyệt|- Thiết kế giao diện quản lý kho nguyên liệu.<br>- Code chức năng phân loại nguyên liệu trong kho. <br>- Code chức năng xóa một nguyên liệu có sẵn trong kho.<br>- Viết báo cáo.|100%|
-|3|21120480|Nguyễn Võ Nhật Huy|- ?????.<br>- ???. <br>- ???.<br>- Viết báo cáo.|100%|
+# I. Thông tin nhóm:
+|STT|MSSV|Họ tên|% đóng góp|
+|---|-----|---------|-----|
+|1|21120434|Bùi Tiến Dũng|100%|
+|2|21120443|Phạm Thế Duyệt|100%|
+|3|21120480|Nguyễn Võ Nhật Huy|100%|
 
-# II. Những vấn đề đã tìm hiểu được:
+# II. Danh sách chức năng:
+|STT|Chức năng|Người thực hiện|Mức độ hoàn thành
+|---|------------------|---------|------|
+|1|-|21120434<br>Bùi Tiến Dũng||
+||Giao diện quản lý kho hàng.|21120443<br>Phạm Thế Duyệt|100%|
+||Phân loại nguyên liệu trong kho.|21120443<br>Phạm Thế Duyệt|100%|
+||Xóa nguyên liệu trong kho.|21120443<br>Phạm Thế Duyệt|100%|
+||Tìm kiếm nguyên liệu theo tên.|21120443<br>Phạm Thế Duyệt|100%|
+||Xem chi tiết thông tin nguyên liệu.|21120443<br>Phạm Thế Duyệt|100%|
+|3|-|21120480<br>Nguyễn Võ Nhật Huy||
+
+
+# III. Những vấn đề đã tìm hiểu được:
 ## 1. Mô hình MVVM:
 * MVVM là mô hình kiến trúc được sử dụng rộng rãi trong phát triển ứng dụng desktop, đặc biệt với các framework như WPF (Windows Presentation Foundation) và WinUI. Mô hình này giúp tách biệt giữa giao diện người dùng (View) và logic xử lý (ViewModel, Model).
   + **Model:** Là lớp quản lý dữ liệu của ứng dụng. Nó chứa dữ liệu và logic xử lý dữ liệu, bao gồm cả việc tương tác với cơ sở dữ liệu hoặc các nguồn dữ liệu khác.

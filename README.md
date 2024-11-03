@@ -9,9 +9,9 @@
 # II. Những vấn đề đã tìm hiểu được:
 ## 1. Mô hình MVVM:
 * MVVM là mô hình kiến trúc được sử dụng rộng rãi trong phát triển ứng dụng desktop, đặc biệt với các framework như WPF (Windows Presentation Foundation) và WinUI. Mô hình này giúp tách biệt giữa giao diện người dùng (View) và logic xử lý (ViewModel, Model).
-  + Model: Là lớp quản lý dữ liệu của ứng dụng. Nó chứa dữ liệu và logic xử lý dữ liệu, bao gồm cả việc tương tác với cơ sở dữ liệu hoặc các nguồn dữ liệu khác. 1
-  + View: Đây là phần giao diện người dùng (UI). View chỉ đơn thuần hiển thị dữ liệu và nhận các tương tác từ người dùng như nhập liệu hoặc nhấp chuột. View không xử lý logic mà chỉ nhận dữ liệu từ ViewModel.2
-  + ViewModel: Là cầu nối giữa Model và View. Nó chứa logic giao tiếp với Model, xử lý dữ liệu, và cung cấp dữ liệu đã được xử lý cho View. ViewModel cũng phản ứng lại các sự kiện người dùng thông qua cơ chế binding (ràng buộc dữ liệu). 3
+  + **Model:** Là lớp quản lý dữ liệu của ứng dụng. Nó chứa dữ liệu và logic xử lý dữ liệu, bao gồm cả việc tương tác với cơ sở dữ liệu hoặc các nguồn dữ liệu khác. 1
+  + **View:** Đây là phần giao diện người dùng (UI). View chỉ đơn thuần hiển thị dữ liệu và nhận các tương tác từ người dùng như nhập liệu hoặc nhấp chuột. View không xử lý logic mà chỉ nhận dữ liệu từ ViewModel.2
+  + **ViewModel:** Là cầu nối giữa Model và View. Nó chứa logic giao tiếp với Model, xử lý dữ liệu, và cung cấp dữ liệu đã được xử lý cho View. ViewModel cũng phản ứng lại các sự kiện người dùng thông qua cơ chế binding (ràng buộc dữ liệu). 3
 
 * Minh họa:
 ![MVVM](https://i.stack.imgur.com/vTZzA.png)
@@ -25,5 +25,21 @@
 * Nguyên tắc hoạt động của DI:
   + Các class sẽ không phụ thuộc trực tiếp lẫn nhau mà thay vào đó chúng sẽ liên kết với nhau thông qua một Interface hoặc base class (đối với một số ngôn ngữ không hỗ trợ Interface). 1
   + Việc khởi tạo các class sẽ do các Interface quản lí thay vì class phụ thuộc nó. 2
+* Các loại Dependency Injection thường gặp:
+  + **Constructor injection:** Các dependency (biến phụ thuộc) được cung cấp thông qua constructor (hàm tạo lớp). 1
+  + **Setter injection:** Các dependency (biến phụ thuộc) sẽ được truyền vào 1 class thông qua các setter method (hàm setter). 2
+  + **Interface injection:** Dependency sẽ cung cấp một Interface, trong đó có chứa hàm có tên là Inject.  Các client phải triển khai một Interface mà có một setter method dành cho việc nhận dependency và truyền nó vào class thông qua việc gọi hàm Inject của Interface đó. 3
+* Ưu điểm:
+  + **Reduced dependencies:** Giảm sự kết dính giữa các thành phần, tránh ảnh hưởng quá nhiều khi có thay đổi nào đó. 1 
+  + **Reusable:** code dễ bảo trì, dễ tái sử dụng, thay thế module. Giảm boiler-plate code do việc tạo các biến phụ thuộc đã được injector thực hiện. 2
+  + **Testable:** rất dễ test và viết Unit Test. 3
+  + **Readable:** Dependency Injection sẽ inject các object phụ thuộc vào các interface thành phần của object bị phụ thuộc nên ta dễ dàng thấy được các dependency của một object. 4
+* Khuyết điểm:
+  + **Complex:** Khái niệm DI khá khó hiểu đối với người mới tìm hiểu. 1
+  + **Difficult in debugging:** Sử dụng interface nên đôi khi sẽ khó debug, do không biết chính xác module nào được gọi. 2 
+  + **Decrease Performance:** Các object được khởi tạo toàn bộ ngay từ đầu, có thể làm giảm performance. 3
+  + **Error in runtime:** Có thể gặp lỗi ở run-time thay vì compile-time. 4
 * Minh họa Dependency Injection:
 ![DI](https://i.stack.imgur.com/vTZzA.png)
+
+

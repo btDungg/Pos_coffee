@@ -67,7 +67,7 @@ namespace POS_Coffee.ViewModels
                     }
                     else if (user.role == "admin")
                     {
-                        _navigation.NavigateTo(typeof(AdminHomePage), user);
+                        _navigation.NavigateTo(typeof(StockManagementPage), user);
                     }
                     OnLoginSuccess?.Invoke();
                 }              

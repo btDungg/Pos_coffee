@@ -59,16 +59,15 @@ namespace POS_Coffee
             var services = new ServiceCollection();
 
             services.AddSingleton<INavigation, NavigationService>();
-
+            services.AddSingleton<IStockDAO, MockStockDAO>();
             services.AddSingleton<IFoodDao, MockFoodDao>();
             services.AddSingleton<IPaymentDao, PaymentDao>();
             services.AddSingleton<IAccountDao, MockAccountDao>();
 
-
-            //services.AddTransient<FoodViewModel>();
             services.AddTransient<MainViewModel>();
             services.AddSingleton<LoginViewModel>();
             services.AddTransient<HomeViewModel>();
+            services.AddTransient<StockViewModel>();
             services.AddTransient<FoodViewModel>();
             services.AddTransient<CartItemViewModel>();
             services.AddTransient<PaymentViewModel>();

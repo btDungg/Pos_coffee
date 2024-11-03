@@ -20,5 +20,4 @@
         </NavigationView.FooterMenuItems>
         <Frame x:Name="mainFrame"/>
     </NavigationView>
-
 </Window>

@@ -127,7 +127,7 @@
                                             CommandParameter="{Binding}">
                                         <FontIcon Glyph="&#xE108;" Width="24" Height="24" />
                                     </Button>
-                                    <TextBox Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5 0" Width="24" Height="37" TextAlignment="Center"/>
+                                    <TextBlock Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5 15 5 0" Width="24" Height="37" TextAlignment="Center"/>
                                     <Button Command="{Binding DataContext.CartItemsViewModel.IncreaseQuantityCommand, RelativeSource={RelativeSource Mode=TemplatedParent},ElementName=itemOrder}" CommandParameter="{Binding}">
                                         <FontIcon Glyph="&#xE109;" Width="24" Height="24" />
                                     </Button>

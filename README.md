@@ -13,7 +13,5 @@
   + View: Đây là phần giao diện người dùng (UI). View chỉ đơn thuần hiển thị dữ liệu và nhận các tương tác từ người dùng như nhập liệu hoặc nhấp chuột. View không xử lý logic mà chỉ nhận dữ liệu từ ViewModel.2
   + ViewModel: Là cầu nối giữa Model và View. Nó chứa logic giao tiếp với Model, xử lý dữ liệu, và cung cấp dữ liệu đã được xử lý cho View. ViewModel cũng phản ứng lại các sự kiện người dùng thông qua cơ chế binding (ràng buộc dữ liệu). 3
 
-* unordered list
-    + sub-item 1 
-    + sub-item 2 
-        - sub-sub-item 1
+* Minh họa:
+![MVVM]([https://images.viblo.asia/518eea86-f0bd-45c9-bf38-d5cb119e947d.png](https://i.stack.imgur.com/vTZzA.png))

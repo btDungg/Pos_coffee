@@ -19,6 +19,7 @@
     <Content Remove="Assets\HaoHao.jfif" />
     <Content Remove="Assets\Omachi.jfif" />
     <Content Remove="Assets\pepsi.webp" />
+    <Content Remove="Assets\coffee_img.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\AdminHomePage.xaml" />
@@ -30,6 +31,7 @@
     <Content Include="Assets\SplashScreen.scale-200.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\LockScreenLogo.scale-200.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -76,6 +78,9 @@
     <Page Update="Views\PaymentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <None Update="Assets\coffee_img.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\AdminHomePage.xaml">

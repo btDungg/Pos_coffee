@@ -61,6 +61,7 @@ namespace POS_Coffee
             services.AddSingleton<INavigation, NavigationService>();
             services.AddSingleton<IAccountDao, MockAccountData>();
             services.AddSingleton<IFoodDao, MockFoodDao>();
+            services.AddSingleton<IPaymentDao, PaymentDao>();
 
             //services.AddTransient<FoodViewModel>();
             services.AddTransient<MainViewModel>();
@@ -68,9 +69,7 @@ namespace POS_Coffee
             services.AddTransient<HomeViewModel>();
             services.AddTransient<FoodViewModel>();
             services.AddTransient<CartItemViewModel>();
-
-
-            services.AddSingleton<PaymentViewModel>();
+            services.AddTransient<PaymentViewModel>();
 
             return services.BuildServiceProvider();
         }

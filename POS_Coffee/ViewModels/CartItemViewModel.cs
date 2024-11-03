@@ -15,9 +15,14 @@ namespace POS_Coffee.ViewModels
     public class CartItemViewModel : ViewModelBase
     {
         private readonly INavigation _navigation;
-        
-        public ObservableCollection<CartItemModel> CartItems = new ObservableCollection<CartItemModel>();
 
+        private ObservableCollection<CartItemModel> _cartItems = new ObservableCollection<CartItemModel>();
+        public ObservableCollection<CartItemModel> CartItems
+        {
+            get => _cartItems;
+            set => SetProperty(ref _cartItems, value);
+        }
+ 
         private decimal _totalPrice = 0;
         public decimal TotalPrice
         {
@@ -29,13 +34,15 @@ namespace POS_Coffee.ViewModels
         public ICommand DecreaseQuantityCommand { get; }
         public ICommand NavigateToPaymentCommand {  get; }
 
+
+
         public CartItemViewModel(INavigation navigation)
         {
             _navigation = navigation;
             SelectFoodCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<FoodModel>(SelectFood_Click);
             IncreaseQuantityCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<CartItemModel>(IncreaseQuantity);
             DecreaseQuantityCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<CartItemModel>(DecreaseQuantity);
-            NavigateToPaymentCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(NavigateToPaymentPage);
+            NavigateToPaymentCommand = new RelayCommand(() => NavigateToPaymentPage());
         }
 
         private void SelectFood_Click(FoodModel selectedFood)
@@ -91,8 +98,7 @@ namespace POS_Coffee.ViewModels
         {
             if (CartItems.Count > 0)
             {
-                var paymentViewModel = new PaymentViewModel(CartItems, TotalPrice);
-                _navigation.NavigateTo(typeof(PaymentPage), paymentViewModel);
+                _navigation.NavigateTo(typeof(PaymentPage), this);
             }
             else
             {

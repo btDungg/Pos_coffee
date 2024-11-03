@@ -10,13 +10,13 @@
     xmlns:viewModels="using:POS_Coffee.ViewModels"
     xmlns:models="using:POS_Coffee.Models"
     xmlns:converter="using:POS_Coffee.Converters" 
-    d:DataContext="{d:DesignInstance Type=viewModels:PaymentViewModel}"
+    d:DataContext="{d:DesignInstance Type=viewModels:CartItemViewModel}"
     Background="#cfe4dd">
-        <Page.Resources>
-            <converter:PriceConverter x:Key="PriceConverter"/>
-        </Page.Resources>
+    <Page.Resources>
+        <converter:PriceConverter x:Key="PriceConverter"/>
+    </Page.Resources>
 
-        <Grid>
+    <Grid>
             <!-- Phần đầu: Thông tin khách hàng và trạng thái đơn hàng -->
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -64,7 +64,7 @@
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="models:CartItemModel">
                             <Grid Background="#ffffff" MinHeight="50" BorderThickness="0 0 0 1" BorderBrush="Gray" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="4*" />
@@ -121,13 +121,20 @@
 
 
                     <TextBlock Grid.Row="1" Text="Giảm giá" FontSize="20"  HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" />
-                    <TextBox Height="30" MinWidth="70" Grid.Row="1" PlaceholderText="0"  FontSize="18" FontWeight="Bold" Foreground="#bae4d6" HorizontalAlignment="Right" Grid.Column="1" />
+                    <TextBox Height="30" MinWidth="70" Grid.Row="1" FontSize="18"
+                             FontWeight="Bold" Foreground="#bae4d6" HorizontalAlignment="Right" Grid.Column="1"
+                             Text="{x:Bind PaymentViewModel.Discount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <TextBlock Grid.Row="2" Text="Khách cần trả:" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" />
-                    <TextBlock  Grid.Row="2" Text="0"  FontSize="24" FontWeight="Bold" Foreground="#267dd3" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" />
+                    <TextBlock Grid.Row="2" Text="Khách cần trả:" FontSize="24" FontWeight="Bold"
+                               HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0"/>
+                    <TextBlock  Grid.Row="2" FontSize="24" FontWeight="Bold" Foreground="#267dd3" 
+                                HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"
+                                Text="{x:Bind PaymentViewModel.PriceAfterDiscount, Mode=OneWay}"/>
 
                     <TextBlock Grid.Row="3" Text="Khách thanh toán:" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"  HorizontalAlignment="Left" Grid.Column="0" />
-                    <TextBox Height="30" MinWidth="70" Grid.Row="3" PlaceholderText="0"  FontSize="18" FontWeight="Black" Foreground="#bae4d6" HorizontalAlignment="Right" Grid.Column="1" />
+                    <TextBox Height="30" MinWidth="70" Grid.Row="3" PlaceholderText="0"  FontSize="18" FontWeight="Black"
+                             Foreground="#bae4d6" HorizontalAlignment="Right" Grid.Column="1"
+                             Text="{x:Bind PaymentViewModel.AmountReceived, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
 
                     <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -136,16 +143,12 @@
                     </StackPanel>
 
                     <TextBlock Grid.Row="5" Text="Tiền thừa trả khách:" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" />
-                    <TextBlock  Grid.Row="5" Text="0"  FontSize="16" Foreground="Black" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" />
+                    <TextBlock  Grid.Row="5" FontSize="16" Foreground="Black" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"
+                                Text="{x:Bind PaymentViewModel.Change, Mode=OneWay}"/>
 
                 </Grid>
-                
 
-
-               
-
-                    
-                </StackPanel>
+            </StackPanel>
 
                <!--Nút Thanh toán và In hóa đơn-->
             <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,50">
@@ -156,7 +159,9 @@
                     Width="150" 
                     Height="50" 
                     CornerRadius="10" 
-                    Margin="0,0,20,0" />
+                    Margin="0,0,20,0" 
+                    Command="{x:Bind PaymentViewModel.PayCommand}"
+                    CommandParameter="{Binding CartItems}"/>
 
                 <Button Content="In hoá đơn" 
                     Background="Red" 

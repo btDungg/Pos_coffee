@@ -108,7 +108,7 @@
 
             <!-- Danh sách sản phẩm -->
             <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
-                <ItemsControl x:Name="itemOrder" ItemsSource="{x:Bind CartItemsViewModel.CartItems}">
+                <ItemsControl x:Name="itemOrder" ItemsSource="{x:Bind CartItemsViewModel.CartItems, Mode=TwoWay}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="models:CartItemModel">
                             <Grid Margin="5" BorderBrush="Gray" BorderThickness="0 0 0 1">
@@ -153,7 +153,8 @@
             <Grid Grid.Row="1" Background="#e6f0fa">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10,0,0">
                     <TextBlock FontWeight="Bold" Text="{x:Bind CartItemsViewModel.TotalPrice, Mode=OneWay, Converter={StaticResource PriceConverter}}" />
-                    <Button Content="Thanh toán" Command="{Binding DataContext.CartItemsViewModel.NavigateToPaymentCommand}" Height="50" Width="200" Background="Green" Foreground="White" CornerRadius="20" FontSize="18" FontWeight="Bold"/>
+                    <Button Content="Thanh toán" Command="{x:Bind CartItemsViewModel.NavigateToPaymentCommand}"
+                            Height="50" Width="200" Background="Green" Foreground="White" CornerRadius="20" FontSize="18" FontWeight="Bold"/>
                 </StackPanel>
             </Grid>
         </Grid>

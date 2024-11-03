@@ -29,17 +29,37 @@ namespace POS_Coffee.Views
         public PaymentPage()
         {
             this.InitializeComponent();
-           
+            this.Loaded += PaymentPage_Loaded;
         }
+
+        private void PaymentPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            PaymentViewModel.SetXamlRoot(this.XamlRoot);
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
-            // Kiểm tra và gán DataContext nếu parameter là một PaymentViewModel
-            if (e.Parameter is PaymentViewModel viewModel)
+            if (e.Parameter is CartItemViewModel cartItemViewModel)
             {
-                DataContext = viewModel;
+                List<CartItemModel> cartItems = new List<CartItemModel>();
+                PaymentViewModel.TotalPrice = cartItemViewModel.TotalPrice;
+                foreach(var item in cartItemViewModel.CartItems)
+                {
+                    cartItems.Add(item);
+                }
+                var CartItemViewModel = new
+                {
+                    CartItems = cartItems,
+                    TotalPrice = cartItemViewModel.TotalPrice,
+                };
+                DataContext = CartItemViewModel;
             }
         }
+        public PaymentViewModel PaymentViewModel { get; set; }
+            = App.Current.Services.GetService<PaymentViewModel>();
+
+        //public CartItemViewModel CartItemViewModel { get; set; }
+        //    = App.Current.Services.GetService<CartItemViewModel>();
     }
  }

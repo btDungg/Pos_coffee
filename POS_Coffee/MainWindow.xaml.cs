@@ -31,6 +31,14 @@ namespace POS_Coffee
         {
             this.InitializeComponent();
             mainFrame.Content = new HomePage();
+            //nvSample.ItemInvoked += (sender, args) =>
+            //{
+            //    if (args.InvokedItemContainer is NavigationViewItem item)
+            //    {
+            //        string pageKey = item.Name;
+            //        ViewModel.NavigateCommand.Execute(pageKey);
+            //    }
+            //};
         }
 
         public Frame MainFrame => mainFrame;

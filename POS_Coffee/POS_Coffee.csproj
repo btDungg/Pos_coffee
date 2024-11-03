@@ -11,6 +11,8 @@
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	 
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\coca_cola.jfif" />
@@ -20,6 +22,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\AdminHomePage.xaml" />
+    <None Remove="Views\PaymentManagementPage.xaml" />
     <None Remove="Views\PaymentPage.xaml" />
   </ItemGroup>
 
@@ -67,6 +70,9 @@
     <None Update="Assets\pepsi.webp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\PaymentManagementPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\PaymentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

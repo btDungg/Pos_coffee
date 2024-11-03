@@ -26,4 +26,4 @@
   + Các class sẽ không phụ thuộc trực tiếp lẫn nhau mà thay vào đó chúng sẽ liên kết với nhau thông qua một Interface hoặc base class (đối với một số ngôn ngữ không hỗ trợ Interface). 1
   + Việc khởi tạo các class sẽ do các Interface quản lí thay vì class phụ thuộc nó. 2
 * Minh họa Dependency Injection:
-  ![MVVM]([(https://i.stack.imgur.com/vTZzA.png)](https://devopedia.org/images/article/30/1198.1536743057.png)])
+  ![MVVM]([(https://i.stack.imgur.com/vTZzA.png)])

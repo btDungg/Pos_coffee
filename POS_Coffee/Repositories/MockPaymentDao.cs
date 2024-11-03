@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace POS_Coffee.Repositories
 {
-    public class PaymentDao : IPaymentDao
+    public class MockPaymentDao : IPaymentDao
     {
         public void AddPayment(PaymentModel payment)
         {

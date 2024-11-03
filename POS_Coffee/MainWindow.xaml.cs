@@ -35,17 +35,10 @@ namespace POS_Coffee
         public MainWindow()
         {
             this.InitializeComponent();
+            nvSample.ItemInvoked += OnItemInvoked;
             ViewModel.NavigationCompleted += OnNavigationCompleted;
-            LoginViewModel.OnLoginSuccess = ShowNavigationItems;
-            nvSample.ItemInvoked += (sender, args) =>
-            {
-                if (args.InvokedItemContainer is NavigationViewItem item)
-                {
-                    string pageKey = item.Name;
-                    ViewModel.NavigateCommand.Execute(pageKey);
-                }
-            };
-            SetWindowSize(this, 1300, 800);
+            LoginViewModel.OnLoginSuccess += InitializeNavigation;
+            SetWindowSize(this, 1300, 825);
             CenterWindowOnScreen(this);
             DisableWindowResize(this);
             this.Title = "Quản lý bán hàng";
@@ -59,14 +52,16 @@ namespace POS_Coffee
             {
                 if (item is NavigationViewItem navItem)
                 {
-                    navItem.Visibility = Visibility.Collapsed;
+                    //navItem.Visibility = Visibility.Collapsed;
+                    navItem.IsEnabled = false;
                 }
             }
             foreach (var item in nvSample.FooterMenuItems)
             {
                 if (item is NavigationViewItem navItem)
                 {
-                    navItem.Visibility = Visibility.Collapsed;
+                    //navItem.Visibility = Visibility.Collapsed;
+                    navItem.IsEnabled = false;
                 }
             }
         }
@@ -77,15 +72,31 @@ namespace POS_Coffee
             {
                 if (item is NavigationViewItem navItem)
                 {
-                    navItem.Visibility = Visibility.Visible;
+                    //navItem.Visibility = Visibility.Visible;
+                    navItem.IsEnabled = true;
                 }
             }
             foreach (var item in nvSample.FooterMenuItems)
             {
                 if (item is NavigationViewItem navItem)
                 {
-                    navItem.Visibility = Visibility.Visible;
+                    navItem.IsEnabled = true;
+                   // navItem.Visibility = Visibility.Visible;
                 }
+            }       
+        }
+
+        private void InitializeNavigation(string pagekey)
+        {
+            ShowNavigationItems();
+        }
+
+        private void OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        {
+            if (args.InvokedItemContainer is NavigationViewItem item)
+            {
+                string pageKey = item.Name;
+                ViewModel.NavigateCommand.Execute(pageKey);
             }
         }
 

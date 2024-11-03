@@ -28,7 +28,7 @@ namespace POS_Coffee.ViewModels
         {
             _paymentDao = paymentDao;          
             _navigation = navigation;
-            _paymentModels = new ObservableCollection<PaymentModel>(paymentDao.GetAllPayment());
+            _paymentModels = new ObservableCollection<PaymentModel>(_paymentDao.GetAllPayment());
             PayCommand = new RelayCommand<List<CartItemModel>>(AddPayment);
         }
 
@@ -117,30 +117,45 @@ namespace POS_Coffee.ViewModels
             {
                 return;
             }
-            var payment = new PaymentModel
+            if ((decimal)AmountReceived < PriceAfterDiscount)
             {
-                Id = Guid.NewGuid(),
-                CartItems = cartItems,
-                TotalPrice = TotalPrice,
-                Discount = Discount,
-                PriceAfterDiscount = PriceAfterDiscount,
-                AmountReceived = (decimal)AmountReceived,
-                Change = Change,
-                CreatedDate = DateTime.Now,
-            };
-            //Thực hiện cập nhật lại số lượng 
-            //Chưa thực hiện được do sử dụng mockdata
-            _paymentDao.AddPayment(payment);
-
-            var dialog = new ContentDialog()
+                var failDialog = new ContentDialog()
+                {
+                    XamlRoot = _xamlRoot,
+                    Content = "Số tiền khách thanh toán không hợp lệ",
+                    Title = "Thất bại",
+                    CloseButtonText = "Ok",
+                };
+                await failDialog.ShowAsync();
+            }
+            else
             {
-                XamlRoot = _xamlRoot,
-                Content = "Thanh toán thành công",
-                Title = "Thành công",
-                PrimaryButtonText = "Ok",
-            };
-            dialog.PrimaryButtonClick += Dialog_PrimaryButtonClick;
-            await dialog.ShowAsync();
+                var payment = new PaymentModel
+                {
+                    Id = Guid.NewGuid(),
+                    CartItems = cartItems,
+                    TotalPrice = TotalPrice,
+                    Discount = Discount,
+                    PriceAfterDiscount = PriceAfterDiscount,
+                    AmountReceived = (decimal)AmountReceived,
+                    Change = Change,
+                    CreatedDate = DateTime.Now,
+                };
+                //Thực hiện cập nhật lại số lượng 
+                //Chưa thực hiện được do sử dụng mockdata
+                _paymentDao.AddPayment(payment);
+                _paymentModels.Add(payment);
+                var dialog = new ContentDialog()
+                {
+                    XamlRoot = _xamlRoot,
+                    Content = "Thanh toán thành công",
+                    Title = "Thành công",
+                    PrimaryButtonText = "Ok",
+                };
+                dialog.PrimaryButtonClick += Dialog_PrimaryButtonClick;
+                await dialog.ShowAsync();
+            }
+            
         }
 
         private void Dialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

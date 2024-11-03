@@ -16,7 +16,7 @@ namespace POS_Coffee.ViewModels
 {
     public class LoginViewModel : ViewModelBase
     {
-        public Action OnLoginSuccess { get; set; } 
+        public event Action<string> OnLoginSuccess; 
         private readonly INavigation _navigation;
         private readonly IAccountDao _accountDao;
         private string _username;
@@ -55,6 +55,7 @@ namespace POS_Coffee.ViewModels
             }
             else
             {
+                string pagekey = "";
                 if (user.password != Password)
                 {
                     ErrorMessage = "Tên đăng nhập hoặc mật khẩu không đúng";
@@ -64,12 +65,14 @@ namespace POS_Coffee.ViewModels
                     if (user.role == "employee")
                     {
                         _navigation.NavigateTo(typeof(HomePage), user);
+                        pagekey = "HomePage";
                     }
                     else if (user.role == "admin")
                     {
                         _navigation.NavigateTo(typeof(StockManagementPage), user);
+                        pagekey = "StockManagement";
                     }
-                    OnLoginSuccess?.Invoke();
+                    OnLoginSuccess?.Invoke(pagekey);
                 }              
             }
         }

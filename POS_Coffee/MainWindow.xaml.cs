@@ -35,6 +35,15 @@ namespace POS_Coffee
         public MainWindow()
         {
             this.InitializeComponent();
+            mainFrame.Content = new HomePage();
+            //nvSample.ItemInvoked += (sender, args) =>
+            //{
+            //    if (args.InvokedItemContainer is NavigationViewItem item)
+            //    {
+            //        string pageKey = item.Name;
+            //        ViewModel.NavigateCommand.Execute(pageKey);
+            //    }
+            //};
             SetWindowSize(this, 1300, 800);
             CenterWindowOnScreen(this);
             DisableWindowResize(this);

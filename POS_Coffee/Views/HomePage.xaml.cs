@@ -1,3 +1,4 @@
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -5,6 +6,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using POS_Coffee.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,9 +25,19 @@ namespace POS_Coffee.Views
     /// </summary>
     public sealed partial class HomePage : Page
     {
+       
         public HomePage()
         {
             this.InitializeComponent();
+            DataContext = this;
+            //this.DataContext = ViewModel;
         }
+
+        public FoodViewModel ViewModel { get; }
+            = App.Current.Services.GetService<FoodViewModel>();
+
+        public CartItemViewModel CartItemsViewModel { get; }
+            = App.Current.Services.GetService<CartItemViewModel>();
+
     }
 }

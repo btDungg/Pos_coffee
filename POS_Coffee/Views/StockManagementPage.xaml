@@ -16,20 +16,19 @@
 
     <StackPanel Orientation="Vertical" Width="Auto" Height="Auto" Background="FloralWhite" Margin="10 10 10 10">
         <TextBlock Text="QUẢN LÝ KHO HÀNG" FontSize="25" Margin="0,10,0,0" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Center"/>
-        <StackPanel
-            Orientation="Horizontal"
-            Margin="10 10 10 0">
+        <StackPanel Orientation="Horizontal" Margin="10 10 10 0" Width="Auto">
             <Button Name="allStockButton" Width="125" Height="35" Content="Tất cả" Foreground="Blue" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.AllStockClickCmd}"/>
             <Button Name="normalStockButton" Width="125" Height="35" Content="Bình thường" Foreground="Green" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.NormalStockClickCmd}"/>
             <Button Name="lowStockButton" Width="125" Height="35" Content="Sắp hết hàng" Foreground="Yellow" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.LowStockClickCmd}"/>
             <Button Name="useUpStockButton" Width="125" Height="35" Content="Đã hết hàng" Foreground="Red" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.UseUpStockClickCmd}"/>
 
-            <StackPanel Orientation="Horizontal" Margin="10,0,0,0" HorizontalAlignment="Center" Width="900" Background="Red">
+            <StackPanel Orientation="Horizontal" Margin="10,0,0,0" HorizontalAlignment="Right" Width="Auto">
                 <TextBox Width="400" Height="35" HorizontalAlignment="Right" PlaceholderText="Tìm nguyên liệu" Margin="10,0,0,0" Text="{x:Bind ViewModel.searchQuery, Mode=TwoWay}"/>
                 <Button Content="Search" Height="35" Margin="10,0,0,0" HorizontalAlignment="Right" Command="{x:Bind ViewModel.SearchButtonClickCmd}"/>
             </StackPanel>
         </StackPanel>
 
+        
         <SplitView x:Name="splitView" Width="Auto" Height="Auto"
             IsPaneOpen="True" OpenPaneLength="500" CompactPaneLength="48" DisplayMode="Inline" Margin="10 10 10 0">
             <SplitView.Pane>

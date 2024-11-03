@@ -77,7 +77,7 @@ namespace POS_Coffee.ViewModels
             AddStockClickCmd = new RelayCommand(() => AddStockClick());
             DeleteStockClickCmd = new RelayCommand(DeleteStockClick);
             UpdateStockClickCmd = new CommunityToolkit.Mvvm.Input.RelayCommand<StockModel>(UpdateStockClick);
-            //SearchButtonClickCmd = new RelayCommand(() => SearchStockClick());
+            SearchButtonClickCmd = new RelayCommand(() => SearchStockClick());
         }
 
         private void LoadDetail(StockModel stock)
@@ -112,30 +112,15 @@ namespace POS_Coffee.ViewModels
             Stocks = new ObservableCollection<StockModel>(filteredStocks);
         }
 
-        //private void SearchStockClick()
-        //{
-
-        //}
+        private void SearchStockClick()
+        {
+            Stocks = new ObservableCollection<StockModel>(_dao.getSearchStock(searchQuery));
+        }
 
         private void AddStockClick()
         {
 
         }
-        //private void DeleteStockClick(StockModel deletedStock)
-        //{
-        //    var temp = _dao.RemoveStock(deletedStock);
-        //    if (temp != null)
-        //    {
-        //        Stocks = new ObservableCollection<StockModel>(allStocks);
-        //        StockDetail = new StockModel();
-        //        StockDetail = allStocks[0];
-        //    }    
-        //    else
-        //    {
-        //        StockDetail = new StockModel();
-        //        StockDetail = allStocks[0];
-        //    }    
-        //}
 
         private async void DeleteStockClick()
         {

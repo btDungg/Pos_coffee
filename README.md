@@ -14,7 +14,7 @@
   + ViewModel: Là cầu nối giữa Model và View. Nó chứa logic giao tiếp với Model, xử lý dữ liệu, và cung cấp dữ liệu đã được xử lý cho View. ViewModel cũng phản ứng lại các sự kiện người dùng thông qua cơ chế binding (ràng buộc dữ liệu). 3
 
 * Minh họa:
-![MVVM]([(https://i.stack.imgur.com/vTZzA.png)])
+![MVVM](https://i.stack.imgur.com/vTZzA.png)
 
 ## 2. Design Pattern - Dependency Injection:
 * **Định nghĩa:** **Dependency Injection (DI)** là một design pattern, một kỹ thuật cho phép xóa bỏ sự phụ thuộc giữa các module, làm cho ứng dụng dễ dàng hơn trong việc thay đổi module, bảo trì code và testing. DI cung cấp cho một đối tượng các thể hiện phụ thuộc (dependencies) của nó từ bên ngoài truyền vào mà không phải khởi tạo trực tiếp từ trong class sử dụng.
@@ -26,4 +26,4 @@
   + Các class sẽ không phụ thuộc trực tiếp lẫn nhau mà thay vào đó chúng sẽ liên kết với nhau thông qua một Interface hoặc base class (đối với một số ngôn ngữ không hỗ trợ Interface). 1
   + Việc khởi tạo các class sẽ do các Interface quản lí thay vì class phụ thuộc nó. 2
 * Minh họa Dependency Injection:
-  ![MVVM]([(https://i.stack.imgur.com/vTZzA.png)])
+  ![DI](https://i.stack.imgur.com/vTZzA.png)

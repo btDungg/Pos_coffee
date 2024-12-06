@@ -22,7 +22,7 @@ namespace POS_Coffee.ViewModels
 
         public StockModel StockDetail { get; set; }
 
-        private IStockDAO _dao = null;
+        private readonly IStockDAO _dao;
 
         private INavigation _navigation;
 
@@ -82,6 +82,11 @@ namespace POS_Coffee.ViewModels
         {
             get => _searchQuery;
             set => SetProperty(ref _searchQuery, value);
+        }
+
+        public StockViewModel(IStockDAO stockDAO)
+        {
+            _dao = stockDAO;
         }
 
         public StockViewModel(IStockDAO stockDAO, INavigation navigation) 

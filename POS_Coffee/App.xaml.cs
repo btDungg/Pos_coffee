@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -7,6 +8,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
+using POS_Coffee.Data;
 using POS_Coffee.Repositories;
 using POS_Coffee.Utilities;
 using POS_Coffee.ViewModels;
@@ -59,7 +61,9 @@ namespace POS_Coffee
             var services = new ServiceCollection();
 
             services.AddSingleton<INavigation, NavigationService>();
+
             services.AddSingleton<IStockDAO, MockStockDAO>();
+
             services.AddSingleton<IFoodDao, MockFoodDao>();
             services.AddSingleton<IPaymentDao, MockPaymentDao>();
             services.AddSingleton<IAccountDao, MockAccountDao>();
@@ -71,6 +75,9 @@ namespace POS_Coffee
             services.AddTransient<FoodViewModel>();
             services.AddTransient<CartItemViewModel>();
             services.AddTransient<PaymentViewModel>();
+
+            services.AddDbContext<PosDbContext>(option =>
+            option.UseSqlServer("Server=localhost;Database=PosCoffeeDb;Trusted_Connection=True;TrustServerCertificate=True"));
 
             return services.BuildServiceProvider();
         }

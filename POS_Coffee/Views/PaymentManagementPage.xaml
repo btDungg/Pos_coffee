@@ -16,14 +16,13 @@
 
     <StackPanel Orientation="Vertical" Width="Auto" Height="Auto" Background="FloralWhite" Margin="10 10 10 10">
         <TextBlock Text="QUẢN LÝ HÓA ĐƠN" FontSize="25" Margin="0,10,0,0" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Center"/>
-        <Button Command="{Binding ShowDetailCommand}"
-                            CommandParameter="{Binding}" >
+        <!--<Button Command="{x:Bind ViewModel.ShowDetailCommand}">-->
             <controls:DataGrid x:Name="detailTable"
                 GridLinesVisibility="All" VerticalAlignment="Top"
                 IsReadOnly="True" 
                 Margin="10" MaxHeight="500" SelectionMode="Single"
-                AutoGenerateColumns="False"
-                ItemsSource="{x:Bind ViewModel._paymentModels}"
+                AutoGenerateColumns="False" SelectedItem="{x:Bind ViewModel.PaymentItem, Mode=TwoWay}"
+                ItemsSource="{x:Bind ViewModel._paymentModels, Mode=TwoWay}"
                 DataContext="{x:Bind ViewModel}">
                 <controls:DataGrid.Columns>
                     <controls:DataGridTextColumn 
@@ -66,9 +65,11 @@
                 </controls:DataGrid.Columns>
 
             </controls:DataGrid>
-
+    
+        <!--</Button>-->
+        <Button Content="Show Detail" Command="{x:Bind ViewModel.ShowDetailCommand}" Margin="10 10 10 10" HorizontalAlignment="Right">
+            
         </Button>
-        
     </StackPanel>
 
 </Page>

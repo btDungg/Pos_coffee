@@ -62,7 +62,7 @@ namespace POS_Coffee
 
             services.AddSingleton<INavigation, NavigationService>();
 
-            services.AddSingleton<IStockDAO, MockStockDAO>();
+            services.AddSingleton<IStockDAO, SqlStockDao>();
 
             services.AddSingleton<IFoodDao, MockFoodDao>();
             services.AddSingleton<IPaymentDao, MockPaymentDao>();

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="POS_Coffee.Views.FinancialReportPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:POS_Coffee.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:POS_Coffee.Models"
+    xmlns:viewmodels="using:POS_Coffee.ViewModels"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity" 
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:chart="using:Syncfusion.UI.Xaml.Charts"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal" Margin="10 10 10 0" Width="Auto">
+            <Button Name="yearReportButton" Width="125" Height="35" Content="Year" Foreground="Blue" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.YearReportClickCmd}"/>
+            <Button Name="quarterReportButton" Width="125" Height="35" Content="Quarter" Foreground="Green" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.QuarterReportClickCmd}"/>
+            <Button Name="monthReportButton" Width="125" Height="35" Content="Month" Foreground="Yellow" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.MonthReportClickCmd}"/>
+            <Button Name="dayReportButton" Width="125" Height="35" Content="Day" Foreground="Red" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.DayReportClickCmd}"/>
+        </StackPanel>
+        <chart:SfCartesianChart Header="Test Chart" MaxHeight="600">
+            <chart:SfCartesianChart.Legend>
+                <chart:ChartLegend/>
+            </chart:SfCartesianChart.Legend>
+
+            <!--Initialize the axis for chart-->
+            <chart:SfCartesianChart.XAxes>
+                <chart:CategoryAxis Header="Names"/>
+            </chart:SfCartesianChart.XAxes>
+            <chart:SfCartesianChart.YAxes>
+                <chart:NumericalAxis Header="Height(in cm)"/>
+            </chart:SfCartesianChart.YAxes>
+
+            <!--Initialize the series for chart-->
+            <chart:StackedColumnSeries 
+				Label="Đồ ăn" 
+				EnableTooltip="True"
+                ShowDataLabels="True"
+                EnableAnimation="True"
+                LegendIcon="Circle" 
+                Fill="Brown"
+                ItemsSource="{x:Bind ViewModel.ReportFood, Mode=TwoWay}"
+                XBindingPath="CreatedDate" 
+                YBindingPath="TotalPrice">
+                <chart:StackedColumnSeries.DataLabelSettings>
+                    <chart:CartesianDataLabelSettings Position="Inner"/>
+                </chart:StackedColumnSeries.DataLabelSettings>
+            </chart:StackedColumnSeries>
+
+            <chart:StackedColumnSeries 
+	            Label="Đồ uống" 
+	            EnableTooltip="True"
+                ShowDataLabels="True"
+                EnableAnimation="True"
+                LegendIcon="Circle" 
+                Fill="SeaGreen"
+                ItemsSource="{x:Bind ViewModel.ReportDrink, Mode=TwoWay}"
+                XBindingPath="CreatedDate" 
+                YBindingPath="TotalPrice">
+                <chart:StackedColumnSeries.DataLabelSettings>
+                    <chart:CartesianDataLabelSettings Position="Inner"/>
+                </chart:StackedColumnSeries.DataLabelSettings>
+            </chart:StackedColumnSeries>
+
+        </chart:SfCartesianChart>
+    </StackPanel>
+
+</Page>

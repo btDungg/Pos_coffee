@@ -12,11 +12,24 @@
     SelectionFollowsFocus="Enabled" IsBackButtonVisible="Collapsed" IsSettingsVisible="False">
         <NavigationView.MenuItems>
             <NavigationViewItem Icon="Home" Content="Trang chủ" x:Name="HomePage"/>
-            <NavigationViewItem Icon="Manage" Content="Quản lý kho" x:Name="StockManagement" />
-            <NavigationViewItem Icon="Manage" Content="Quán lý hóa đơn" x:Name="PaymentPage" />
+            <NavigationViewItem Icon="Library" Content="Quản lý kho" x:Name="StockManagement" />
+            <NavigationViewItem Content="Quán lý hóa đơn" x:Name="PaymentPage">
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xF0E3;"/>
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>    
+            <NavigationViewItem Content="Báo cáo tài chính" x:Name="FinancialReport">
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xE9F9;"/>
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
         </NavigationView.MenuItems>
         <NavigationView.FooterMenuItems>
-            <NavigationViewItem Content="Đăng xuất" Tag="SamplePage5" Icon="LeaveChat" x:Name="LogOut"/>
+            <NavigationViewItem Content="Đăng xuất" Tag="SamplePage5" x:Name="LogOut">
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xF3B1;"/>
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
         </NavigationView.FooterMenuItems>
         <Frame x:Name="mainFrame"/>
     </NavigationView>

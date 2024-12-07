@@ -63,7 +63,7 @@ namespace POS_Coffee.ViewModels
         { 
             await LoadFoods();
         }
-      
+
         private async void FoodButton_Click()
         {
             var filteredFoods = await dao.GetFoodsByCategory("Đồ ăn");

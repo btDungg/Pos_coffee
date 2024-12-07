@@ -26,6 +26,7 @@
     <None Remove="Assets\Vinamilk.jpg" />
     <None Remove="Views\AdminHomePage.xaml" />
     <None Remove="Views\PaymentDetailDialog.xaml" />
+    <None Remove="Views\FinancialReportPage.xaml" />
     <None Remove="Views\StockManagementPage.xaml" />
     <Content Remove="Assets\bac-xiu.jpg" />
     <Content Remove="Assets\banhmingot.jpg" />
@@ -85,6 +86,7 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240923002" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+    <PackageReference Include="Syncfusion.Chart.WinUI" Version="27.2.2" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
@@ -196,6 +198,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Page Update="Views\PaymentDetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\FinancialReportPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\PaymentManagementPage.xaml">

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ContentDialog
     x:Class="POS_Coffee.Views.PaymentDetailDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -67,5 +68,5 @@
                 </ListView>
             </StackPanel>
         </StackPanel>
-    </Grid>
+  </Grid>
 </ContentDialog>

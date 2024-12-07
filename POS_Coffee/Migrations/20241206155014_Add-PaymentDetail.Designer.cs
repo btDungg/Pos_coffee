@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using POS_Coffee.Data;
 
@@ -11,9 +12,11 @@ using POS_Coffee.Data;
 namespace POS_Coffee.Migrations
 {
     [DbContext(typeof(PosDbContext))]
-    partial class PosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241206155014_Add-PaymentDetail")]
+    partial class AddPaymentDetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,6 +68,45 @@ namespace POS_Coffee.Migrations
                             role = "admin",
                             username = "admin1"
                         });
+                });
+
+            modelBuilder.Entity("POS_Coffee.Models.CartItemModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("PaymentModelId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PaymentModelId");
+
+                    b.ToTable("CartItemModel");
                 });
 
             modelBuilder.Entity("POS_Coffee.Models.FoodModel", b =>
@@ -267,16 +309,10 @@ namespace POS_Coffee.Migrations
                     b.Property<Guid>("PaymentID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("FoodId")
+                    b.Property<int>("CartItemId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("PaymentID", "FoodId");
+                    b.HasKey("PaymentID", "CartItemId");
 
                     b.ToTable("PaymentDetails");
                 });
@@ -394,6 +430,18 @@ namespace POS_Coffee.Migrations
                             StockNumber = 20,
                             Unit = "kg"
                         });
+                });
+
+            modelBuilder.Entity("POS_Coffee.Models.CartItemModel", b =>
+                {
+                    b.HasOne("POS_Coffee.Models.PaymentModel", null)
+                        .WithMany("CartItems")
+                        .HasForeignKey("PaymentModelId");
+                });
+
+            modelBuilder.Entity("POS_Coffee.Models.PaymentModel", b =>
+                {
+                    b.Navigation("CartItems");
                 });
 #pragma warning restore 612, 618
         }

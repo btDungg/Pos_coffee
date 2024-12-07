@@ -20,6 +20,11 @@ namespace POS_Coffee.Repositories
             return account;
         }
 
+        Task<AccountModel> IAccountDao.getAccountByUsername(string username)
+        {
+            throw new NotImplementedException();
+        }
+
         private List<AccountModel> getAllAccount()
         {
             var accountModels = new List<AccountModel>()

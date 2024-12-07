@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using RelayCommand = CommunityToolkit.Mvvm.Input.RelayCommand;
 
 namespace POS_Coffee.ViewModels
 {
@@ -20,18 +21,31 @@ namespace POS_Coffee.ViewModels
     {
         private readonly IPaymentDao _paymentDao;
         private readonly INavigation _navigation;
+        private readonly IFoodDao _foodDao;
         
+        public ICommand ShowDetailCommand { get; }
         public ICommand PayCommand { get; }
-
+        public IAsyncRelayCommand LoadPaymentsCommand { get; }
         public ObservableCollection<PaymentModel> _paymentModels { get; set; }
-        public PaymentViewModel(IPaymentDao paymentDao, INavigation navigation)
+        public PaymentViewModel(IPaymentDao paymentDao, INavigation navigation, IFoodDao foodDao)
         {
             _paymentDao = paymentDao;          
             _navigation = navigation;
-            _paymentModels = new ObservableCollection<PaymentModel>(_paymentDao.GetAllPayment());
+            _foodDao = foodDao;
+            LoadPaymentsCommand = new AsyncRelayCommand(LoadPayments);
             PayCommand = new RelayCommand<List<CartItemModel>>(AddPayment);
+            ShowDetailCommand = new RelayCommand(() => LoadPaymentDetail());
+            LoadPaymentsCommand.Execute(null);
+            
         }
+        //private PaymentModel _selectedPayment;
+        //public PaymentModel SelectedPayment
+        //{
+        //    get => _selectedPayment;
+        //    set => SetProperty(ref _selectedPayment, value);
+        //}
 
+        //public ObservableCollection<PaymentDetailModel> SelectedPaymentItems { get; set; }
         private decimal _totalPrice;
         public decimal TotalPrice
         {
@@ -44,6 +58,8 @@ namespace POS_Coffee.ViewModels
                 }
             }
         }
+
+        public PaymentModel PaymentItem { get; set; }
 
         private float _discount;
         public float Discount
@@ -110,6 +126,20 @@ namespace POS_Coffee.ViewModels
             _xamlRoot = xamlRoot;
         }
 
+        private async Task LoadPayments()
+        {
+            var payments = await _paymentDao.GetAllPayment();
+            _paymentModels = new ObservableCollection<PaymentModel>(payments);
+            PaymentItem = new PaymentModel();
+            if (_paymentModels.Any())
+            {
+                PaymentItem = _paymentModels[0];
+            }
+            else
+            {
+                PaymentItem = null;
+            }
+        }
 
         public async void AddPayment(List<CartItemModel> cartItems)
         {
@@ -133,7 +163,6 @@ namespace POS_Coffee.ViewModels
                 var payment = new PaymentModel
                 {
                     Id = Guid.NewGuid(),
-                    CartItems = cartItems,
                     TotalPrice = TotalPrice,
                     Discount = Discount,
                     PriceAfterDiscount = PriceAfterDiscount,
@@ -142,9 +171,9 @@ namespace POS_Coffee.ViewModels
                     CreatedDate = DateTime.Now,
                 };
                 //Thực hiện cập nhật lại số lượng 
-                //Chưa thực hiện được do sử dụng mockdata
-                _paymentDao.AddPayment(payment);
-                _paymentModels.Add(payment);
+                await _foodDao.UpdateQuantity(cartItems);
+                await _paymentDao.AddPayment(payment);
+                await _paymentDao.AddPaymentDetail(cartItems, payment.Id);
                 var dialog = new ContentDialog()
                 {
                     XamlRoot = _xamlRoot,
@@ -162,5 +191,20 @@ namespace POS_Coffee.ViewModels
         {
             _navigation.NavigateTo(typeof(HomePage));
         }
+
+        private  async void LoadPaymentDetail()
+        {
+            if (PaymentItem == null) { return; }
+            var items = await _paymentDao.GetPaymentDetailById(PaymentItem.Id);
+            // Hiển thị dialog
+            var dialog = new PaymentDetailDialog
+            {
+                 XamlRoot = _xamlRoot,
+                 SelectedPayment = PaymentItem,
+                 SelectedPaymentItems = new ObservableCollection<PaymentDetailModel>(items)
+            };
+            await dialog.ShowAsync();
+        }
+
     }
 }

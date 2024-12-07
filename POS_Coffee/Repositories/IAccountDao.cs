@@ -12,6 +12,6 @@ namespace POS_Coffee.Repositories
         //List<AccountModel>
         //test
         //List<AccountModel> getAllAccount();
-        AccountModel getAccountByUsername(string username);
+        Task<AccountModel> getAccountByUsername(string username);
     }
 }

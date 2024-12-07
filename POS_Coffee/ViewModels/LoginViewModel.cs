@@ -46,9 +46,9 @@ namespace POS_Coffee.ViewModels
 
         
 
-        private void Login()
+        private async void Login()
         {
-            var user = _accountDao.getAccountByUsername(Username);
+            var user = await _accountDao.getAccountByUsername(Username);
             if (user == null)
             {
                 ErrorMessage = "Tên đăng nhập hoặc mật khẩu không đúng";

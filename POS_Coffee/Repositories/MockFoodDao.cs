@@ -177,5 +177,20 @@ namespace POS_Coffee.Repositories
 
             return foods;
         }
+
+        public Task<List<FoodModel>> GetFoodsByCategory(string category)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateQuantity(List<CartItemModel> cartItems)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<FoodModel>> IFoodDao.GetAllFood(string searchQuery)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

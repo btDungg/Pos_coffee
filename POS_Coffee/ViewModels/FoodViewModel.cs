@@ -1,14 +1,17 @@
-﻿using Microsoft.UI.Xaml;
+﻿using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml;
 using POS_Coffee.Models;
 using POS_Coffee.Repositories;
 using POS_Coffee.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using RelayCommand = POS_Coffee.Utilities.RelayCommand;
 
 namespace POS_Coffee.ViewModels
 {
@@ -35,41 +38,48 @@ namespace POS_Coffee.ViewModels
         public ICommand DrinkButtonClick { get; }
         public ICommand FoodButtonClick { get; }
         public ICommand SearchButtonClick { get; }
-        
+        public IAsyncRelayCommand LoadFoodsCommand { get; }
 
 
         public FoodViewModel(IFoodDao _dao, INavigation navigation)
         {
             _navigation = navigation;
             dao = _dao;
-            _allFoods = dao.GetAllFood(searchQuery);
-            Foods = new ObservableCollection<FoodModel>(_allFoods); // Gán danh sách ban đầu
+            LoadFoodsCommand = new AsyncRelayCommand(LoadFoods);
             AllGoodsClick = new RelayCommand(() => AllFoodsButton_Click());
             DrinkButtonClick = new RelayCommand(() => DrinkButton_Click());
             FoodButtonClick = new RelayCommand(() => FoodButton_Click());
             SearchButtonClick = new RelayCommand(() => SearchButton_Click());
-            
+            LoadFoodsCommand.Execute(null);
         }
 
-        private void AllFoodsButton_Click() { Foods = new ObservableCollection<FoodModel>(_allFoods); }
+        private async Task LoadFoods()
+        {
+            var foods = await dao.GetAllFood(null);
+            Foods = new ObservableCollection<FoodModel>(foods);
+        }
+
+        private async void AllFoodsButton_Click()
+        { 
+            await LoadFoods();
+        }
       
-        private void FoodButton_Click()
+        private async Task FoodButton_Click()
         {
-            var category = "Đồ ăn";
-            var filteredFoods = _allFoods.Where(f => f.Category.Equals(category, StringComparison.OrdinalIgnoreCase)).ToList();
+            var filteredFoods = await dao.GetFoodsByCategory("Đồ ăn");
             Foods = new ObservableCollection<FoodModel>(filteredFoods);
         }
 
-        private void DrinkButton_Click()
+        private async Task DrinkButton_Click()
         {
-            var category = "Đồ uống";
-            var filteredFoods = _allFoods.Where(f => f.Category.Equals(category, StringComparison.OrdinalIgnoreCase)).ToList();
+            var filteredFoods = await dao.GetFoodsByCategory("Đồ uống");
             Foods = new ObservableCollection<FoodModel>(filteredFoods);
         }
 
-        private void SearchButton_Click()
+        private async Task SearchButton_Click()
         {
-            Foods = new ObservableCollection<FoodModel>(dao.GetAllFood(searchQuery));
+            var foods = await dao.GetAllFood(searchQuery);
+            Foods = new ObservableCollection<FoodModel>(foods);
         }
 
        

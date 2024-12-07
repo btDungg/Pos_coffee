@@ -25,6 +25,7 @@
     <None Remove="Assets\trungnguyen.jpg" />
     <None Remove="Assets\Vinamilk.jpg" />
     <None Remove="Views\AdminHomePage.xaml" />
+    <None Remove="Views\PaymentDetailDialog.xaml" />
     <None Remove="Views\StockManagementPage.xaml" />
     <Content Remove="Assets\bac-xiu.jpg" />
     <Content Remove="Assets\banhmingot.jpg" />
@@ -194,6 +195,9 @@
     <None Update="Assets\pepsi.webp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\PaymentDetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\PaymentManagementPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

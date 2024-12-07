@@ -36,7 +36,7 @@ namespace POS_Coffee.Repositories
             var stocks = _dbcontext.Stocks.AsQueryable();
             if (!string.IsNullOrWhiteSpace(searchQuery))
             {
-                stocks = stocks.Where(x => x.Name.Contains(searchQuery, StringComparison.OrdinalIgnoreCase));
+                stocks = stocks.Where(x => x.Name.Contains(searchQuery));
             }
             return await stocks.ToListAsync();
         }
@@ -63,9 +63,20 @@ namespace POS_Coffee.Repositories
             return stock;
         }
 
-        public Task<StockModel> UpdateStock(StockModel stock)
+        public async Task<StockModel> UpdateStock(StockModel stock)
         {
-            throw new NotImplementedException();
+            var Updatedstock = await _dbcontext.Stocks.FirstOrDefaultAsync(x => x.ID == stock.ID);
+            if(Updatedstock == null)
+            {
+                return null;
+            }
+            Updatedstock.Price = stock.Price;
+            Updatedstock.StockNumber = stock.StockNumber;
+            Updatedstock.Name = stock.Name;
+            Updatedstock.Unit = stock.Unit;
+            Updatedstock.Description = stock.Description;
+            await _dbcontext.SaveChangesAsync();
+            return Updatedstock;
         }
     }
 }

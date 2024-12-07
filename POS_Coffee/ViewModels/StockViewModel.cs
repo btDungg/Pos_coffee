@@ -22,7 +22,12 @@ namespace POS_Coffee.ViewModels
     {
         public List<StockModel> allStocks { get; set; }
 
-        public StockModel StockDetail { get; set; }
+        private StockModel _stockDetail;
+        public StockModel StockDetail
+        {
+            get => _stockDetail;
+            set => SetProperty(ref _stockDetail, value);
+        }
 
         private readonly IStockDAO _dao;
 
@@ -67,12 +72,7 @@ namespace POS_Coffee.ViewModels
             set => SetProperty(ref _saveStatus, value);
         }
 
-        private StockModel _stockDetailChanged;
-        public StockModel stockDetailChanged
-        {
-            get => _stockDetailChanged;
-            set => SetProperty(ref _stockDetailChanged, value);
-        }
+        
 
         public ObservableCollection<StockModel> Stocks
         {
@@ -95,11 +95,7 @@ namespace POS_Coffee.ViewModels
         public StockViewModel(IStockDAO stockDAO, INavigation navigation) 
         { 
             _dao = stockDAO;
-            //llStocks = new List<StockModel>(_dao.getAllStock());
-            //Stocks = new ObservableCollection<StockModel>(allStocks);
             _navigation = navigation;
-            StockDetail = new StockModel();
-            stockDetailChanged = new StockModel();
               
             AllStockClickCmd = new RelayCommand(() => AllStockClick());
             NormalStockClickCmd = new RelayCommand(() => NormalStockClick());
@@ -229,8 +225,10 @@ namespace POS_Coffee.ViewModels
             //    StockDetail.StockNumber = stockDetailChanged.StockNumber;
             //    stockDetailChanged.StockNumber = -1;
             //}
-            var updatedStock = await _dao.UpdateStock(StockDetail);
-            StockDetail = updatedStock;
+            await _dao.UpdateStock(StockDetail);
+            //StockDetail = updatedStock;
+            var stocks = await _dao.getAllStock();
+            Stocks = new ObservableCollection<StockModel>(stocks);
             isReadOnly = true;
             visibilityStatus = "Visible";
             saveStatus = "Collapsed";

@@ -40,6 +40,7 @@ namespace POS_Coffee
         /// </summary>
         public App()
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NDaF1cWGhIYVZpR2Nbek5xdV9EZVZSTGYuP1ZhSXxXd0djX35fdHJVT2dZU0U=");
             this.InitializeComponent();
             Services = ConfigureServices();
         }
@@ -75,6 +76,7 @@ namespace POS_Coffee
             services.AddTransient<FoodViewModel>();
             services.AddTransient<CartItemViewModel>();
             services.AddTransient<PaymentViewModel>();
+            services.AddTransient<ReportViewModel>();
 
             services.AddDbContext<PosDbContext>(option =>
             option.UseSqlServer("Server=localhost;Database=PosCoffeeDb;Trusted_Connection=True;TrustServerCertificate=True"));

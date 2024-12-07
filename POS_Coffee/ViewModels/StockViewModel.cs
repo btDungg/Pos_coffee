@@ -27,7 +27,6 @@ namespace POS_Coffee.ViewModels
         private INavigation _navigation;
 
         //Command:
-        public ICommand RowSelectedCommand { get; }  
         public ICommand AllStockClickCmd { get; }
         public ICommand NormalStockClickCmd { get; }
         public ICommand LowStockClickCmd { get; }
@@ -36,10 +35,41 @@ namespace POS_Coffee.ViewModels
         public ICommand UpdateStockClickCmd { get; }
         public ICommand DeleteStockClickCmd { get; }
         public ICommand SearchButtonClickCmd { get; }
+        public ICommand SaveStockClickCmd { get; }
+        public ICommand CancelStockClickCmd { get; }
+        public ICommand ChangeDetailCmd { get; }
 
         //Variable
         private ObservableCollection<StockModel> _stocks;
         private XamlRoot _xamlRoot;
+
+        private bool _isReadOnly = true;
+        public bool isReadOnly
+        {
+            get => _isReadOnly;
+            set => SetProperty(ref _isReadOnly, value);
+        }
+
+        private string _visibilityStatus = "Visible";
+        public string visibilityStatus
+        {
+            get => _visibilityStatus;
+            set => SetProperty(ref _visibilityStatus, value);
+        }
+
+        private string _saveStatus = "Collapsed";
+        public string saveStatus
+        {
+            get => _saveStatus;
+            set => SetProperty(ref _saveStatus, value);
+        }
+
+        private StockModel _stockDetailChanged;
+        public StockModel stockDetailChanged
+        {
+            get => _stockDetailChanged;
+            set => SetProperty(ref _stockDetailChanged, value);
+        }
 
         public ObservableCollection<StockModel> Stocks
         {
@@ -66,6 +96,7 @@ namespace POS_Coffee.ViewModels
             Stocks = new ObservableCollection<StockModel>(allStocks);
             _navigation = navigation;
             StockDetail = new StockModel();
+            stockDetailChanged = new StockModel();
             if (allStocks.Any())
             {
                 StockDetail = allStocks[0];
@@ -74,21 +105,16 @@ namespace POS_Coffee.ViewModels
             {
                 StockDetail = null;
             }    
-            RowSelectedCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<StockModel>(LoadDetail);
             AllStockClickCmd = new RelayCommand(() => AllStockClick());
             NormalStockClickCmd = new RelayCommand(() => NormalStockClick());
             LowStockClickCmd = new RelayCommand(() => LowStockClick());
             UseUpStockClickCmd = new RelayCommand(() => UseUpStockClick());
             AddStockClickCmd = new RelayCommand(() => AddStockClick());
             DeleteStockClickCmd = new RelayCommand(DeleteStockClick);
-            UpdateStockClickCmd = new CommunityToolkit.Mvvm.Input.RelayCommand<StockModel>(UpdateStockClick);
+            UpdateStockClickCmd = new RelayCommand(() => UpdateStockClick());
             SearchButtonClickCmd = new RelayCommand(() => SearchStockClick());
-        }
-
-        private void LoadDetail(StockModel stock)
-        {
-            StockDetail = new StockModel();
-            StockDetail = stock;
+            SaveStockClickCmd = new RelayCommand(()=>SaveStockClick());
+            CancelStockClickCmd = new RelayCommand(() => CancelStockClick());
         }
 
         private void AllStockClick() 
@@ -155,9 +181,58 @@ namespace POS_Coffee.ViewModels
             }
         }
 
-        private void UpdateStockClick(StockModel updatedStock)
+        private void UpdateStockClick()
         {
+            isReadOnly = false;
+            visibilityStatus = "Collapsed";
+            saveStatus = "Visible";
+        }
 
+        private async void SaveStockClick()
+        {
+            if(stockDetailChanged.Name != null)
+            {
+                StockDetail.Name = stockDetailChanged.Name;
+                stockDetailChanged.Name = null;
+            }
+            if (stockDetailChanged.Description != null)
+            {
+                StockDetail.Description = stockDetailChanged.Description;
+                stockDetailChanged.Description = null;
+            }
+            if (stockDetailChanged.Unit != null)
+            {
+                StockDetail.Unit = stockDetailChanged.Unit;
+                stockDetailChanged.Unit = null;
+            }
+            if (stockDetailChanged.Price >= 0)
+            {
+                StockDetail.Price = stockDetailChanged.Price;
+                stockDetailChanged.Price = -1;
+            }
+            if (stockDetailChanged.StockNumber >= 0)
+            {
+                StockDetail.StockNumber = stockDetailChanged.StockNumber;
+                stockDetailChanged.StockNumber = -1;
+            }
+            isReadOnly = true;
+            visibilityStatus = "Visible";
+            saveStatus = "Collapsed";
+            var dialog = new ContentDialog()
+            {
+                XamlRoot = _xamlRoot,
+                Content = "Lưu thành công",
+                Title = "Lưu thay đổi",
+                CloseButtonText = "Ok",
+            };
+            await dialog.ShowAsync();
+        }
+
+        private void CancelStockClick()
+        {
+            isReadOnly = true;
+            visibilityStatus = "Visible";
+            saveStatus = "Collapsed";
         }
 
         public void SetXamlRoot(XamlRoot xamlRoot)

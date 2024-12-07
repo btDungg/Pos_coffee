@@ -21,7 +21,7 @@ namespace POS_Coffee.Repositories
             var foods = _dbcontext.Foods.AsQueryable();
             if (string.IsNullOrEmpty(searchQuery) == false)
             {
-                foods = foods.Where(item => item.Name.Contains(searchQuery, StringComparison.OrdinalIgnoreCase));
+                foods = foods.Where(item => item.Name.Contains(searchQuery));
             }
 
             return await foods.ToListAsync();
@@ -31,7 +31,7 @@ namespace POS_Coffee.Repositories
         public async Task<List<FoodModel>> GetFoodsByCategory(string category)
         {
             var foods = _dbcontext.Foods.AsQueryable();
-            foods = foods.Where(item => item.Name.Equals(category, StringComparison.OrdinalIgnoreCase));
+            foods = foods.Where(item => item.Category == category);
             return await foods.ToListAsync();
         }
 

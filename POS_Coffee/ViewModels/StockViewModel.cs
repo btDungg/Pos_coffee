@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
@@ -13,6 +14,7 @@ using POS_Coffee.Models;
 using POS_Coffee.Repositories;
 using POS_Coffee.Utilities;
 using POS_Coffee.Views;
+using RelayCommand = CommunityToolkit.Mvvm.Input.RelayCommand;
 
 namespace POS_Coffee.ViewModels
 {
@@ -20,14 +22,18 @@ namespace POS_Coffee.ViewModels
     {
         public List<StockModel> allStocks { get; set; }
 
-        public StockModel StockDetail { get; set; }
+        private StockModel _stockDetail;
+        public StockModel StockDetail
+        {
+            get => _stockDetail;
+            set => SetProperty(ref _stockDetail, value);
+        }
 
         private readonly IStockDAO _dao;
 
         private INavigation _navigation;
 
         //Command:
-        public ICommand RowSelectedCommand { get; }  
         public ICommand AllStockClickCmd { get; }
         public ICommand NormalStockClickCmd { get; }
         public ICommand LowStockClickCmd { get; }
@@ -36,10 +42,37 @@ namespace POS_Coffee.ViewModels
         public ICommand UpdateStockClickCmd { get; }
         public ICommand DeleteStockClickCmd { get; }
         public ICommand SearchButtonClickCmd { get; }
+        public ICommand SaveStockClickCmd { get; }
+        public ICommand CancelStockClickCmd { get; }
+        public ICommand ChangeDetailCmd { get; }
+        public IAsyncRelayCommand LoadStocksCommand;
 
         //Variable
         private ObservableCollection<StockModel> _stocks;
         private XamlRoot _xamlRoot;
+
+        private bool _isReadOnly = true;
+        public bool isReadOnly
+        {
+            get => _isReadOnly;
+            set => SetProperty(ref _isReadOnly, value);
+        }
+
+        private string _visibilityStatus = "Visible";
+        public string visibilityStatus
+        {
+            get => _visibilityStatus;
+            set => SetProperty(ref _visibilityStatus, value);
+        }
+
+        private string _saveStatus = "Collapsed";
+        public string saveStatus
+        {
+            get => _saveStatus;
+            set => SetProperty(ref _saveStatus, value);
+        }
+
+        
 
         public ObservableCollection<StockModel> Stocks
         {
@@ -62,10 +95,26 @@ namespace POS_Coffee.ViewModels
         public StockViewModel(IStockDAO stockDAO, INavigation navigation) 
         { 
             _dao = stockDAO;
-            allStocks = new List<StockModel>(_dao.getAllStock());
-            Stocks = new ObservableCollection<StockModel>(allStocks);
             _navigation = navigation;
-            StockDetail = new StockModel();
+              
+            AllStockClickCmd = new RelayCommand(() => AllStockClick());
+            NormalStockClickCmd = new RelayCommand(() => NormalStockClick());
+            LowStockClickCmd = new RelayCommand(() => LowStockClick());
+            UseUpStockClickCmd = new RelayCommand(() => UseUpStockClick());
+            AddStockClickCmd = new RelayCommand(() => AddStockClick());
+            DeleteStockClickCmd = new RelayCommand(DeleteStockClick);
+            UpdateStockClickCmd = new RelayCommand(() => UpdateStockClick());
+            SearchButtonClickCmd = new RelayCommand(() => SearchStockClick());
+            SaveStockClickCmd = new RelayCommand(()=>SaveStockClick());
+            CancelStockClickCmd = new RelayCommand(() => CancelStockClick());
+            LoadStocksCommand = new AsyncRelayCommand(LoadStocks);
+            LoadStocksCommand.Execute(null);
+        }
+
+        private async Task LoadStocks()
+        {
+            var stocks = await _dao.getAllStock();
+            allStocks = new List<StockModel>(stocks);
             if (allStocks.Any())
             {
                 StockDetail = allStocks[0];
@@ -73,22 +122,8 @@ namespace POS_Coffee.ViewModels
             else
             {
                 StockDetail = null;
-            }    
-            RowSelectedCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<StockModel>(LoadDetail);
-            AllStockClickCmd = new RelayCommand(() => AllStockClick());
-            NormalStockClickCmd = new RelayCommand(() => NormalStockClick());
-            LowStockClickCmd = new RelayCommand(() => LowStockClick());
-            UseUpStockClickCmd = new RelayCommand(() => UseUpStockClick());
-            AddStockClickCmd = new RelayCommand(() => AddStockClick());
-            DeleteStockClickCmd = new RelayCommand(DeleteStockClick);
-            UpdateStockClickCmd = new CommunityToolkit.Mvvm.Input.RelayCommand<StockModel>(UpdateStockClick);
-            SearchButtonClickCmd = new RelayCommand(() => SearchStockClick());
-        }
-
-        private void LoadDetail(StockModel stock)
-        {
-            StockDetail = new StockModel();
-            StockDetail = stock;
+            }
+            Stocks = new ObservableCollection<StockModel>(allStocks);
         }
 
         private void AllStockClick() 
@@ -117,9 +152,10 @@ namespace POS_Coffee.ViewModels
             Stocks = new ObservableCollection<StockModel>(filteredStocks);
         }
 
-        private void SearchStockClick()
+        private async void SearchStockClick()
         {
-            Stocks = new ObservableCollection<StockModel>(_dao.getSearchStock(searchQuery));
+            var stocks = await _dao.getSearchStock(searchQuery);
+            Stocks = new ObservableCollection<StockModel>(stocks);
         }
 
         private void AddStockClick()
@@ -155,9 +191,62 @@ namespace POS_Coffee.ViewModels
             }
         }
 
-        private void UpdateStockClick(StockModel updatedStock)
+        private void UpdateStockClick()
         {
+            isReadOnly = false;
+            visibilityStatus = "Collapsed";
+            saveStatus = "Visible";
+        }
 
+        private async void SaveStockClick()
+        {
+            //if(stockDetailChanged.Name != null)
+            //{
+            //    StockDetail.Name = stockDetailChanged.Name;
+            //    stockDetailChanged.Name = null;
+            //}
+            //if (stockDetailChanged.Description != null)
+            //{
+            //    StockDetail.Description = stockDetailChanged.Description;
+            //    stockDetailChanged.Description = null;
+            //}
+            //if (stockDetailChanged.Unit != null)
+            //{
+            //    StockDetail.Unit = stockDetailChanged.Unit;
+            //    stockDetailChanged.Unit = null;
+            //}
+            //if (stockDetailChanged.Price >= 0)
+            //{
+            //    StockDetail.Price = stockDetailChanged.Price;
+            //    stockDetailChanged.Price = -1;
+            //}
+            //if (stockDetailChanged.StockNumber >= 0)
+            //{
+            //    StockDetail.StockNumber = stockDetailChanged.StockNumber;
+            //    stockDetailChanged.StockNumber = -1;
+            //}
+            await _dao.UpdateStock(StockDetail);
+            //StockDetail = updatedStock;
+            var stocks = await _dao.getAllStock();
+            Stocks = new ObservableCollection<StockModel>(stocks);
+            isReadOnly = true;
+            visibilityStatus = "Visible";
+            saveStatus = "Collapsed";
+            var dialog = new ContentDialog()
+            {
+                XamlRoot = _xamlRoot,
+                Content = "Lưu thành công",
+                Title = "Lưu thay đổi",
+                CloseButtonText = "Ok",
+            };
+            await dialog.ShowAsync();
+        }
+
+        private void CancelStockClick()
+        {
+            isReadOnly = true;
+            visibilityStatus = "Visible";
+            saveStatus = "Collapsed";
         }
 
         public void SetXamlRoot(XamlRoot xamlRoot)

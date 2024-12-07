@@ -28,6 +28,7 @@ namespace POS_Coffee.Views
         public PaymentDetailDialog()
         {
             this.InitializeComponent();
+            DataContext = this;
         }
         public PaymentModel SelectedPayment { get; set; }
         public ObservableCollection<PaymentDetailModel> SelectedPaymentItems { get; set; }

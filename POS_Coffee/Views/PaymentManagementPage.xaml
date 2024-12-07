@@ -6,59 +6,69 @@
     xmlns:local="using:POS_Coffee.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:POS_Coffee.Models"
+    xmlns:viewmodels="using:POS_Coffee.ViewModels"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity" 
-    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core" d:DataContext="{d:DesignInstance Type=viewmodels:PaymentViewModel}"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Orientation="Vertical" Width="Auto" Height="Auto" Background="FloralWhite" Margin="10 10 10 10">
         <TextBlock Text="QUẢN LÝ HÓA ĐƠN" FontSize="25" Margin="0,10,0,0" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Center"/>
-
-        <Button Margin="10 10 10 10" Command="{Binding DataContext.RowSelectedCommand, Mode=TwoWay}" CommandParameter="{Binding}" VerticalAlignment="Top">
+        <Button Command="{Binding ShowDetailCommand}"
+                            CommandParameter="{Binding}" >
             <controls:DataGrid x:Name="detailTable"
-                        GridLinesVisibility="All" VerticalAlignment="Top"
-                        IsReadOnly="True" 
-                        Margin="10" MaxHeight="500" SelectionMode="Single"
-                        AutoGenerateColumns="False"
-                        ItemsSource="{x:Bind ViewModel._paymentModels}"
-                        DataContext="{x:Bind ViewModel}">
-
+                GridLinesVisibility="All" VerticalAlignment="Top"
+                IsReadOnly="True" 
+                Margin="10" MaxHeight="500" SelectionMode="Single"
+                AutoGenerateColumns="False"
+                ItemsSource="{x:Bind ViewModel._paymentModels}"
+                DataContext="{x:Bind ViewModel}">
                 <controls:DataGrid.Columns>
                     <controls:DataGridTextColumn 
-                            Header="Mã hóa đơn"
-                            Width="*"
-                            Binding="{Binding Id}" 
-                            FontSize="14">
-                    </controls:DataGridTextColumn>
+                    Header="Tổng tiền" 
+                    Width="*"
+                    Binding="{Binding TotalPrice}" 
+                    FontSize="14" />
                     <controls:DataGridTextColumn 
-                            Header="Tổng tiền" 
-                            Width="*"
-                            Binding="{Binding TotalPrice}" 
-                            FontSize="14" />
+                    Header="Giảm giá" 
+                    Width="*"
+                    Binding="{Binding Discount}" 
+                    FontSize="14" />
                     <controls:DataGridTextColumn 
-                            Header="Giảm giá" 
-                            Width="*"
-                            Binding="{Binding Discount}" 
-                            FontSize="14" />
+                    Header="Số tiền nhận" 
+                    Width="*"
+                    Binding="{Binding AmountReceived}" 
+                    FontSize="14" />
                     <controls:DataGridTextColumn 
-                            Header="Số tiền nhận" 
-                            Width="*"
-                            Binding="{Binding AmountReceived}" 
-                            FontSize="14" />
+                    Header="Số tiền trả lại" 
+                    Width="*"
+                    Binding="{Binding Change}" 
+                    FontSize="14" />
                     <controls:DataGridTextColumn 
-                            Header="Số tiền trả lại" 
-                            Width="*"
-                            Binding="{Binding Change}" 
-                            FontSize="14" />
-                    <controls:DataGridTextColumn 
-                            Header="Ngày tạo" 
-                            Width="*"
-                            Binding="{Binding CreatedDate}" 
-                            FontSize="14" />
+                    Header="Ngày tạo" 
+                    Width="*"
+                    Binding="{Binding CreatedDate}" 
+                    FontSize="14" />    
+                    <!--<controls:DataGridTemplateColumn Header="Chỉnh sửa" Width="Auto">
+            <controls:DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                    <Button Command="{Binding DataContext.ShowDetailCommand, ElementName=PaymentPage}"
+                            CommandParameter="{x:Bind}" 
+                            HorizontalAlignment="Center"
+                            Background="Transparent">                   
+                        <FontIcon Glyph="&#xE70F;" FontSize="16" Foreground="DarkBlue" />
+                    </Button>
+                </DataTemplate>
+            </controls:DataGridTemplateColumn.CellTemplate>
+        </controls:DataGridTemplateColumn>-->
                 </controls:DataGrid.Columns>
+
             </controls:DataGrid>
+
         </Button>
+        
     </StackPanel>
 
 </Page>

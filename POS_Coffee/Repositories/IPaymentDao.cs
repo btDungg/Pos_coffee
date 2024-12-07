@@ -9,8 +9,12 @@ namespace POS_Coffee.Repositories
 {
     public interface IPaymentDao
     {
-        List<PaymentModel> GetAllPayment();
+        Task<List<PaymentModel>> GetAllPayment();
 
-        void AddPayment(PaymentModel payment);
+        Task<PaymentModel> AddPayment(PaymentModel payment);
+
+        Task<List<CartItemModel>> AddPaymentDetail (List<CartItemModel> cartItems, Guid paymentID);
+
+        Task<List<PaymentDetailModel>> GetPaymentDetailById(Guid paymentID);
     }
 }

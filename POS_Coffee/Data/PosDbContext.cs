@@ -18,7 +18,7 @@ namespace POS_Coffee.Data
         public DbSet<AccountModel> Accounts { get; set; }
         public DbSet<StockModel> Stocks { get; set; }
         public DbSet<PaymentModel> Payments { get; set; }
-
+        public DbSet<PaymentDetailModel> PaymentDetails { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             
@@ -51,6 +51,11 @@ namespace POS_Coffee.Data
             modelBuilder.Entity<PaymentModel>(entity =>
             {
                 entity.HasKey(e => e.Id);
+            });
+
+            modelBuilder.Entity<PaymentDetailModel>(entity =>
+            {
+                entity.HasKey(e => new{ e.PaymentID, e.FoodId});
             });
 
             var foods = new List<FoodModel>

@@ -9,7 +9,6 @@ namespace POS_Coffee.Models
     public class PaymentModel
     {
         public Guid Id { get; set; }
-        public List<CartItemModel> CartItems { get; set; }
         public float Discount {  get; set; }
         public decimal TotalPrice { get; set; }
         public decimal AmountReceived { get; set; }

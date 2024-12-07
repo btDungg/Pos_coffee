@@ -64,26 +64,23 @@ namespace POS_Coffee.ViewModels
             await LoadFoods();
         }
       
-        private async Task FoodButton_Click()
+        private async void FoodButton_Click()
         {
             var filteredFoods = await dao.GetFoodsByCategory("Đồ ăn");
             Foods = new ObservableCollection<FoodModel>(filteredFoods);
         }
 
-        private async Task DrinkButton_Click()
+        private async void DrinkButton_Click()
         {
             var filteredFoods = await dao.GetFoodsByCategory("Đồ uống");
             Foods = new ObservableCollection<FoodModel>(filteredFoods);
         }
 
-        private async Task SearchButton_Click()
+        private async void SearchButton_Click()
         {
             var foods = await dao.GetAllFood(searchQuery);
             Foods = new ObservableCollection<FoodModel>(foods);
         }
-
-       
-
     }
 
 }

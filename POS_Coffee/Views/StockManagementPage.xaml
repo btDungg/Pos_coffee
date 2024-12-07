@@ -50,7 +50,7 @@
                             Width="*"
                             Binding="{Binding ID}" 
                             FontSize="14">
-                        </controls:DataGridTextColumn>
+                        </controls:DataGridTextColumn>                   
                         <controls:DataGridTextColumn 
                             Header="Tên nguyên liệu" 
                             Width="*"
@@ -89,26 +89,19 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock x:Name="ID1" Text="Mã nguyên liệu:" FontWeight="Bold" Grid.Column="0" Grid.Row="0" Margin="0 5 0 0"/>
+                            <!--<TextBlock x:Name="ID1" Text="Mã nguyên liệu:" FontWeight="Bold" Grid.Column="0" Grid.Row="0" Margin="0 5 0 0"/>-->
                             <TextBlock x:Name="Name1" Text="Tên nguyên liệu:" FontWeight="Bold" Grid.Column="0" Grid.Row="1" Margin="0 5 0 0"/>
                             <TextBlock x:Name="Description1" Text="Mô tả:" FontWeight="Bold" Grid.Column="0" Grid.Row="2" Margin="0 5 0 0"/>
                             <TextBlock x:Name="Unit1" Text="Đơn vị:" FontWeight="Bold" Grid.Column="0" Grid.Row="3" Margin="0 5 0 0"/>
                             <TextBlock x:Name="Price1" Text="Đơn giá:" FontWeight="Bold" Grid.Column="0" Grid.Row="4" Margin="0 5 0 0"/>
                             <TextBlock x:Name="StockNumber1" Text="Số lượng tồn:" FontWeight="Bold" Grid.Column="0" Grid.Row="5" Margin="0 5 0 0"/>
 
-                            <!--<TextBlock x:Name="ID2" Text="{x:Bind ViewModel.StockDetail.ID, Mode=TwoWay}" Grid.Column="1" Grid.Row="0"/>
-                            <TextBlock x:Name="Name2" Text="{x:Bind ViewModel.StockDetail.Name, Mode=TwoWay}" Grid.Column="1" Grid.Row="1"/>
-                            <TextBlock x:Name="Description2" Text="{x:Bind ViewModel.StockDetail.Description, Mode=TwoWay}" Grid.Column="1" Grid.Row="2"/>
-                            <TextBlock x:Name="Unit2" Text="{x:Bind ViewModel.StockDetail.Unit, Mode=TwoWay}" Grid.Column="1" Grid.Row="3"/>
-                            <TextBlock x:Name="Price2" Text="{x:Bind ViewModel.StockDetail.Price, Mode=TwoWay}" Grid.Column="1" Grid.Row="4"/>
-                            <TextBlock x:Name="StockNumber2" Text="{x:Bind ViewModel.StockDetail.StockNumber, Mode=TwoWay}" Grid.Column="1" Grid.Row="5"/>-->
-
-                            <TextBox x:Name="ID2" PlaceholderText="{x:Bind ViewModel.StockDetail.ID, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="0" IsReadOnly="True"/>
-                            <TextBox x:Name="Name2" PlaceholderText="{x:Bind ViewModel.StockDetail.Name, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="1" IsReadOnly="True"/>
-                            <TextBox x:Name="Description2" PlaceholderText="{x:Bind ViewModel.StockDetail.Description, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="2" IsReadOnly="True"/>
-                            <TextBox x:Name="Unit2" PlaceholderText="{x:Bind ViewModel.StockDetail.Unit, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="3" IsReadOnly="True"/>
-                            <TextBox x:Name="Price2" PlaceholderText="{x:Bind ViewModel.StockDetail.Price, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="4" IsReadOnly="True"/>
-                            <TextBox x:Name="StockNumber2" PlaceholderText="{x:Bind ViewModel.StockDetail.StockNumber, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="5" IsReadOnly="True"/>
+                            <!--<TextBox x:Name="ID2" Text="{x:Bind ViewModel.StockDetail.ID, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="0" IsReadOnly="True"/>-->
+                            <TextBox x:Name="Name2" Text="{x:Bind ViewModel.StockDetail.Name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="1" IsReadOnly="{x:Bind ViewModel.isReadOnly, Mode=TwoWay}"/>
+                            <TextBox x:Name="Description2" Text="{x:Bind ViewModel.StockDetail.Description, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="2" IsReadOnly="{x:Bind ViewModel.isReadOnly, Mode=TwoWay}"/>
+                            <TextBox x:Name="Unit2" Text="{x:Bind ViewModel.StockDetail.Unit, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="3" IsReadOnly="{x:Bind ViewModel.isReadOnly, Mode=TwoWay}"/>
+                            <TextBox x:Name="Price2" Text="{x:Bind ViewModel.StockDetail.Price, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="4" IsReadOnly="{x:Bind ViewModel.isReadOnly, Mode=TwoWay}"/>
+                            <TextBox x:Name="StockNumber2" Text="{x:Bind ViewModel.StockDetail.StockNumber, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="5" IsReadOnly="{x:Bind ViewModel.isReadOnly, Mode=TwoWay}"/>
 
                             <!--<TextBlock x:Name="IDChange" Text="New Detail" FontWeight="Bold" HorizontalTextAlignment="Center" Margin="0 0 10 0" Grid.Column="2" Grid.Row="0" Visibility="{x:Bind ViewModel.saveStatus, Mode=TwoWay}"/>
                             <TextBox x:Name="NameChange" Text="{x:Bind ViewModel.stockDetailChanged.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="2" Grid.Row="1" Visibility="{x:Bind ViewModel.saveStatus, Mode=TwoWay}"/>

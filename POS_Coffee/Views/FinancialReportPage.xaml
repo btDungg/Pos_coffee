@@ -16,7 +16,12 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Orientation="Vertical">
-        <Button Name="allStockButton" Width="125" Height="35" Content="Tất cả" Foreground="Blue" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.AllStockClickCmd}"/>
+        <StackPanel Orientation="Horizontal" Margin="10 10 10 0" Width="Auto">
+            <Button Name="yearReportButton" Width="125" Height="35" Content="Year" Foreground="Blue" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.YearReportClickCmd}"/>
+            <Button Name="quarterReportButton" Width="125" Height="35" Content="Quarter" Foreground="Green" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.QuarterReportClickCmd}"/>
+            <Button Name="monthReportButton" Width="125" Height="35" Content="Month" Foreground="Yellow" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.MonthReportClickCmd}"/>
+            <Button Name="dayReportButton" Width="125" Height="35" Content="Day" Foreground="Red" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.DayReportClickCmd}"/>
+        </StackPanel>
         <chart:SfCartesianChart Header="Test Chart" MaxHeight="600">
             <chart:SfCartesianChart.Legend>
                 <chart:ChartLegend/>
@@ -37,10 +42,10 @@
                 ShowDataLabels="True"
                 EnableAnimation="True"
                 LegendIcon="Circle" 
-                Fill="Aqua"
-                ItemsSource="{x:Bind ViewModel.ReportStocks, Mode=TwoWay}"
-                XBindingPath="Name" 
-                YBindingPath="TotalStockNumber">
+                Fill="Brown"
+                ItemsSource="{x:Bind ViewModel.ReportFood, Mode=TwoWay}"
+                XBindingPath="CreatedDate" 
+                YBindingPath="TotalPrice">
                 <chart:StackedColumnSeries.DataLabelSettings>
                     <chart:CartesianDataLabelSettings Position="Inner"/>
                 </chart:StackedColumnSeries.DataLabelSettings>
@@ -53,9 +58,9 @@
                 EnableAnimation="True"
                 LegendIcon="Circle" 
                 Fill="SeaGreen"
-                ItemsSource="{x:Bind ViewModel.ReportStocks, Mode=TwoWay}"
-                XBindingPath="Name" 
-                YBindingPath="TotalStockNumber">
+                ItemsSource="{x:Bind ViewModel.ReportDrink, Mode=TwoWay}"
+                XBindingPath="CreatedDate" 
+                YBindingPath="TotalPrice">
                 <chart:StackedColumnSeries.DataLabelSettings>
                     <chart:CartesianDataLabelSettings Position="Inner"/>
                 </chart:StackedColumnSeries.DataLabelSettings>

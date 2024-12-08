@@ -101,7 +101,7 @@
 
                                 <!-- Action Icons -->
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1">
-                                    <Button Background="Transparent" BorderThickness="0">
+                                    <Button Background="Transparent" Command="{Binding DataContext.UpdateSelectedPromotionCommand, ElementName=RootPage}" CommandParameter="{Binding}" BorderThickness="0">
                                         <FontIcon Glyph="&#xE104;" />
                                     </Button>
                                     <Button Background="Transparent" Command="{Binding DataContext.DeleteSelectedPromotionCommand, ElementName=RootPage}" CommandParameter="{Binding}" BorderThickness="0">

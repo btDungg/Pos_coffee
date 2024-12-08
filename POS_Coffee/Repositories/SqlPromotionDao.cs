@@ -37,7 +37,7 @@ namespace POS_Coffee.Repositories
                 query = query.Where(p => p.end_date < DateTime.Now);
             }
 
-            if (isUpcoming.HasValue && isUpcoming.Value  == true)
+            if (isUpcoming.HasValue && isUpcoming.Value == true)
             {
                 query = query.Where(p => p.start_date > DateTime.Now);
             }
@@ -77,5 +77,34 @@ namespace POS_Coffee.Repositories
                 throw new Exception("Error deleting promotion from the database.", ex);
             }
         }
+
+        public async Task UpdatePromotionAsync(PromotionModel promotion)
+        {
+            try
+            {
+                var existingPromotion = await _dbContext.Promotions
+                    .FirstOrDefaultAsync(p => p.Id == promotion.Id);
+
+                if (existingPromotion != null)
+                {
+                    existingPromotion.Name = promotion.Name;
+                    existingPromotion.Description = promotion.Description;
+                    existingPromotion.discount_type = promotion.discount_type;
+                    existingPromotion.discount_value = promotion.discount_value;
+                    existingPromotion.min_order_value = promotion.min_order_value;
+                    existingPromotion.start_date = promotion.start_date;
+                    existingPromotion.end_date = promotion.end_date;
+                    existingPromotion.applicable_to = promotion.applicable_to;
+
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log hoặc xử lý lỗi
+                throw new Exception("Error updating promotion in the database.", ex);
+            }
+        }
     }
+
 }

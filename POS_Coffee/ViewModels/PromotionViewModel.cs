@@ -17,6 +17,8 @@ namespace POS_Coffee.ViewModels
         private readonly INavigation _navigation;
 
         public ICommand AddNewPromotionCommand { get; }
+
+        public ICommand UpdateSelectedPromotionCommand {  get; }
         public ICommand DeleteSelectedPromotionCommand { get; }
 
         public PromotionViewModel(IPromotionDao dao, INavigation navigation)
@@ -25,6 +27,8 @@ namespace POS_Coffee.ViewModels
             _navigation = navigation;
 
             AddNewPromotionCommand = new RelayCommand(ExecuteAddNewPromotion);
+            UpdateSelectedPromotionCommand = new RelayCommand<PromotionModel>(UpdatePromotionAsync);
+
             DeleteSelectedPromotionCommand = new RelayCommand<PromotionModel>(async (promotion) => await DeletePromotionAsync(promotion));
 
             LoadPromotions();
@@ -130,6 +134,22 @@ namespace POS_Coffee.ViewModels
             {
                 LogError(ex);
                 ShowMessage("An error occurred while deleting the promotion. Please try again.");
+            }
+        }
+
+        private void UpdatePromotionAsync(PromotionModel promotion)
+        {
+            try
+            {
+                if (promotion != null)
+                {
+                    _navigation.NavigateTo(typeof(UpdatePromotion), promotion);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogError(ex);
+                ShowMessage("An error occurred while updating the promotion.");
             }
         }
 

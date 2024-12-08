@@ -145,6 +145,7 @@ namespace POS_Coffee.ViewModels
                     newPromotion.start_date > newPromotion.end_date)
                 {
                     ShowMessage("Invalid input. Please check the data and try again.");
+
                     return;
                 }
 

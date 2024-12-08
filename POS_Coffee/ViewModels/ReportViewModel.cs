@@ -29,8 +29,11 @@ namespace POS_Coffee.ViewModels
         public class ReportTest
         { 
             public Guid Id { get; set; }
-            public string Category { get; set; }
+            public string PaymentDate { get; set; }
             public decimal TotalPrice { get; set; }
+            public decimal TotalFoodPrice { get; set; }
+            public decimal TotalDrinkPrice { get; set; }
+            public int SortPayment { get; set; }
             public DateTime CreatedDate { get; set; }
         }
 
@@ -42,18 +45,11 @@ namespace POS_Coffee.ViewModels
         private INavigation _navigation;
         private XamlRoot _xamlRoot;
         
-        private ObservableCollection<ReportTest> _reportFood;
-        public ObservableCollection<ReportTest> ReportFood
+        private ObservableCollection<ReportTest> _report;
+        public ObservableCollection<ReportTest> Report
         {
-            get => _reportFood;
-            set => SetProperty(ref _reportFood, value);
-        }
-
-        private ObservableCollection<ReportTest> _reportDrink;
-        public ObservableCollection<ReportTest> ReportDrink
-        {
-            get => _reportDrink;
-            set => SetProperty(ref _reportDrink, value);
+            get => _report;
+            set => SetProperty(ref _report, value);
         }
 
         // Cần thêm biến:
@@ -73,8 +69,70 @@ namespace POS_Coffee.ViewModels
             _daoFood = foodDao;
             _daoPaymentDetail = paymentDetailDao;
             _navigation = navigation;
+            YearReportClickCmd = new AsyncRelayCommand(YearReportClick);
+            QuarterReportClickCmd = new AsyncRelayCommand(QuarterReportClick);
             MonthReportClickCmd = new AsyncRelayCommand(MonthReportClick);
             DayReportClickCmd = new AsyncRelayCommand(DayReportClick);
+        }
+
+        private async Task YearReportClick()
+        {
+            // Get all  payments
+            var payments = await _daoPayment.GetAllPayment();
+            Payments = new ObservableCollection<PaymentModel>(payments);
+            // Get all foods
+            var foods = await _daoFood.GetAllFood("");
+            Foods = new ObservableCollection<FoodModel>(foods);
+            // Get all payment details
+            var paymentsDetail = await _daoPaymentDetail.GetAllPaymentDetail();
+            PaymentsDetail = new ObservableCollection<PaymentDetailModel>(paymentsDetail);
+
+            // Query
+            var result = from p in Payments // Giả sử `payments` là danh sách Payments
+                         join pd in PaymentsDetail on p.Id equals pd.PaymentID // Kết nối PaymentDetails
+                         join f in Foods on pd.FoodId equals f.Id // Kết nối Foods
+                         group new { pd, f } by new { PaymentYear = p.CreatedDate.Year } into g // Nhóm theo Id, CreatedDate và Category
+                         select new ReportTest
+                         {
+                             TotalFoodPrice = g.Sum(item => item.f.Category == "Đồ ăn" ? item.pd.Quantity * item.f.Price : 0), // Tính tổng giá cho Đồ ăn
+                             TotalDrinkPrice = g.Sum(item => item.f.Category == "Đồ uống" ? item.pd.Quantity * item.f.Price : 0), // Tính tổng giá cho Đồ uống
+                             SortPayment = g.Key.PaymentYear,
+                             PaymentDate = g.Key.PaymentYear.ToString()
+                         } into groupedResult // Đưa kết quả vào biến tạm
+                         orderby groupedResult.SortPayment ascending // Sắp xếp theo CreatedDate tăng dần
+                         select groupedResult; // Chọn kết quả đã sắp xếp
+
+            Report = new ObservableCollection<ReportTest>(result);
+        }
+
+        private async Task QuarterReportClick()
+        {
+            // Get all  payments
+            var payments = await _daoPayment.GetAllPayment();
+            Payments = new ObservableCollection<PaymentModel>(payments);
+            // Get all foods
+            var foods = await _daoFood.GetAllFood("");
+            Foods = new ObservableCollection<FoodModel>(foods);
+            // Get all payment details
+            var paymentsDetail = await _daoPaymentDetail.GetAllPaymentDetail();
+            PaymentsDetail = new ObservableCollection<PaymentDetailModel>(paymentsDetail);
+
+            // Query
+            var result = from p in Payments // Giả sử `payments` là danh sách Payments
+                         join pd in PaymentsDetail on p.Id equals pd.PaymentID // Kết nối PaymentDetails
+                         join f in Foods on pd.FoodId equals f.Id // Kết nối Foods
+                         group new { pd, f } by new { PaymentQuarter = (p.CreatedDate.Month - 1) / 3 + 1 } into g // Nhóm theo Id, CreatedDate và Category
+                         select new ReportTest
+                         {
+                             TotalFoodPrice = g.Sum(item => item.f.Category == "Đồ ăn" ? item.pd.Quantity * item.f.Price : 0), // Tính tổng giá cho Đồ ăn
+                             TotalDrinkPrice = g.Sum(item => item.f.Category == "Đồ uống" ? item.pd.Quantity * item.f.Price : 0), // Tính tổng giá cho Đồ uống
+                             SortPayment = g.Key.PaymentQuarter,
+                             PaymentDate = g.Key.PaymentQuarter.ToString()
+                         } into groupedResult // Đưa kết quả vào biến tạm
+                         orderby groupedResult.SortPayment ascending // Sắp xếp theo CreatedDate tăng dần
+                         select groupedResult; // Chọn kết quả đã sắp xếp
+
+            Report = new ObservableCollection<ReportTest>(result);
         }
 
         private async Task MonthReportClick()
@@ -89,18 +147,22 @@ namespace POS_Coffee.ViewModels
             var paymentsDetail = await _daoPaymentDetail.GetAllPaymentDetail();
             PaymentsDetail = new ObservableCollection<PaymentDetailModel>(paymentsDetail);
 
+            // Query
             var result = from p in Payments // Giả sử `payments` là danh sách Payments
                          join pd in PaymentsDetail on p.Id equals pd.PaymentID // Kết nối PaymentDetails
                          join f in Foods on pd.FoodId equals f.Id // Kết nối Foods
-                         group new { pd, f } by new { p.Id, p.CreatedDate, f.Category } into g // Nhóm theo Id, CreatedDate và Category
+                         group new { pd, f } by new { PaymentMonth = p.CreatedDate.Month } into g // Nhóm theo Id, CreatedDate và Category
                          select new ReportTest
                          {
-                             Id = g.Key.Id,
-                             TotalPrice = g.Sum(item => item.pd.Quantity * item.f.Price), // Tính tổng giá
-                             CreatedDate = g.Key.CreatedDate,
-                             Category = g.Key.Category
-                         };
-            ReportFood = new ObservableCollection<ReportTest>(result);
+                             TotalFoodPrice = g.Sum(item => item.f.Category == "Đồ ăn" ? item.pd.Quantity * item.f.Price : 0), // Tính tổng giá cho Đồ ăn
+                             TotalDrinkPrice = g.Sum(item => item.f.Category == "Đồ uống" ? item.pd.Quantity * item.f.Price : 0), // Tính tổng giá cho Đồ uống
+                             SortPayment =g.Key.PaymentMonth,
+                             PaymentDate = g.Key.PaymentMonth.ToString()
+                         } into groupedResult // Đưa kết quả vào biến tạm
+                         orderby groupedResult.SortPayment ascending // Sắp xếp theo CreatedDate tăng dần
+                         select groupedResult; // Chọn kết quả đã sắp xếp
+
+            Report = new ObservableCollection<ReportTest>(result);
         }
         private async Task DayReportClick()
         {
@@ -113,71 +175,25 @@ namespace POS_Coffee.ViewModels
             // Get all payment details
             var paymentsDetail = await _daoPaymentDetail.GetAllPaymentDetail();
             PaymentsDetail = new ObservableCollection<PaymentDetailModel>(paymentsDetail);
-
-            var resultFood = from p in Payments // Giả sử `payments` là danh sách Payments
-                         join pd in PaymentsDetail on p.Id equals pd.PaymentID // Kết nối PaymentDetails
-                         join f in Foods on pd.FoodId equals f.Id // Kết nối Foods
-                         where f.Category == "Đồ ăn"
-                         group new { pd, f } by new { p.Id, p.CreatedDate, f.Category } into g // Nhóm theo Id, CreatedDate và Category
-                         select new ReportTest
-                         {
-                             Id = g.Key.Id,
-                             TotalPrice = g.Sum(item => item.pd.Quantity * item.f.Price), // Tính tổng giá
-                             CreatedDate = g.Key.CreatedDate,
-                             Category = g.Key.Category
-                         } into groupedResult // Đưa kết quả vào biến tạm
-                         orderby groupedResult.CreatedDate ascending // Sắp xếp theo CreatedDate tăng dần
-                         select groupedResult; // Chọn kết quả đã sắp xếp
-            var resultDrink = from p in Payments // Giả sử `payments` là danh sách Payments
+            
+            // Query
+            var result = from p in Payments // Giả sử `payments` là danh sách Payments
                              join pd in PaymentsDetail on p.Id equals pd.PaymentID // Kết nối PaymentDetails
                              join f in Foods on pd.FoodId equals f.Id // Kết nối Foods
-                             where f.Category == "Đồ uống"
-                             group new { pd, f } by new { p.Id, p.CreatedDate, f.Category } into g // Nhóm theo Id, CreatedDate và Category
+                             group new { pd, f } by new { p.Id, p.CreatedDate} into g // Nhóm theo Id, CreatedDate và Category
                              select new ReportTest
                              {
                                  Id = g.Key.Id,
                                  TotalPrice = g.Sum(item => item.pd.Quantity * item.f.Price), // Tính tổng giá
+                                 TotalFoodPrice = g.Sum(item => item.f.Category == "Đồ ăn" ? item.pd.Quantity * item.f.Price : 0), // Tính tổng giá cho Đồ ăn
+                                 TotalDrinkPrice = g.Sum(item => item.f.Category == "Đồ uống" ? item.pd.Quantity * item.f.Price : 0), // Tính tổng giá cho Đồ uống
                                  CreatedDate = g.Key.CreatedDate,
-                                 Category = g.Key.Category
+                                 PaymentDate = g.Key.CreatedDate.ToString(),
                              } into groupedResult // Đưa kết quả vào biến tạm
                               orderby groupedResult.CreatedDate ascending // Sắp xếp theo CreatedDate tăng dần
                               select groupedResult; // Chọn kết quả đã sắp xếp
-            var allDates = resultFood.Select(r => r.CreatedDate).Union(resultDrink.Select(r => r.CreatedDate)).Distinct().ToList();
-
-            var reportFoodList = new ObservableCollection<ReportTest>(resultFood);
-            var reportDrinkList = new ObservableCollection<ReportTest>(resultDrink);
-
-            // Thêm vào danh sách thực phẩm nếu không có mục tương ứng trong đồ uống
-            foreach (var date in allDates)
-            {
-                if (!reportFoodList.Any(r => r.CreatedDate == date))
-                {
-                    reportFoodList.Add(new ReportTest
-                    {
-                        CreatedDate = date,
-                        TotalPrice = 0 // Hoặc giá trị mặc định khác
-                    });
-                }
-            }
-
-            foreach (var date in allDates)
-            {
-                if (!reportDrinkList.Any(r => r.CreatedDate == date))
-                {
-                    reportDrinkList.Add(new ReportTest
-                    {
-                        CreatedDate = date,
-                        TotalPrice = 0 // Hoặc giá trị mặc định khác
-                    });
-                }
-            }
-
-            var sortedReportFood = new ObservableCollection<ReportTest>(reportFoodList.OrderBy(r => r.CreatedDate));
-            var sortedReportDrink = new ObservableCollection<ReportTest>(reportDrinkList.OrderBy(r => r.CreatedDate));
-
-            // Cập nhật lại
-            ReportFood = sortedReportFood;
-            ReportDrink = sortedReportDrink;
+            
+            Report = new ObservableCollection<ReportTest>(result);
         }
     }
 }

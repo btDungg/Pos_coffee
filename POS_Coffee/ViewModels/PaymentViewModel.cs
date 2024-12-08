@@ -158,6 +158,17 @@ namespace POS_Coffee.ViewModels
                 };
                 await failDialog.ShowAsync();
             }
+            else if (Discount < 0)
+            {
+                var failDialog = new ContentDialog()
+                {
+                    XamlRoot = _xamlRoot,
+                    Content = "Phần trăm giảm giá không hợp lệ",
+                    Title = "Thất bại",
+                    CloseButtonText = "Ok",
+                };
+                await failDialog.ShowAsync();
+            }
             else
             {
                 var payment = new PaymentModel

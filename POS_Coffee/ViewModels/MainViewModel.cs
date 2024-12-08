@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace POS_Coffee.ViewModels
 {
-    public class MainViewModel 
+    public class MainViewModel : ViewModelBase
     {
         public event Action<string> NavigationCompleted;
         private readonly INavigation _navigation;

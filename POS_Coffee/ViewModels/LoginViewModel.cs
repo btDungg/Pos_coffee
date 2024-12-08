@@ -55,7 +55,7 @@ namespace POS_Coffee.ViewModels
             }
             else
             {
-                string pagekey = "";
+                //string pagekey = "";
                 if (user.password != Password)
                 {
                     ErrorMessage = "Tên đăng nhập hoặc mật khẩu không đúng";
@@ -65,14 +65,14 @@ namespace POS_Coffee.ViewModels
                     if (user.role == "employee")
                     {
                         _navigation.NavigateTo(typeof(HomePage), user);
-                        pagekey = "HomePage";
+                        //pagekey = "HomePage";
                     }
                     else if (user.role == "admin")
                     {
                         _navigation.NavigateTo(typeof(StockManagementPage), user);
-                        pagekey = "StockManagement";
+                        //pagekey = "StockManagement";
                     }
-                    OnLoginSuccess?.Invoke(pagekey);
+                    OnLoginSuccess?.Invoke(user.role);
                 }              
             }
         }

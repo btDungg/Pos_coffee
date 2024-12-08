@@ -25,6 +25,7 @@
     <None Remove="Assets\trungnguyen.jpg" />
     <None Remove="Assets\Vinamilk.jpg" />
     <None Remove="Views\AdminHomePage.xaml" />
+    <None Remove="Views\CreatePromotionPage.xaml" />
     <None Remove="Views\PaymentDetailDialog.xaml" />
     <None Remove="Views\FinancialReportPage.xaml" />
     <None Remove="Views\PromotionManagementPage.xaml" />
@@ -53,6 +54,7 @@
     <None Remove="Views\AdminHomePage.xaml" />
     <None Remove="Views\PaymentManagementPage.xaml" />
     <None Remove="Views\PaymentPage.xaml" />
+    <None Remove="Views\UpdatePromotion.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -199,6 +201,12 @@
     <None Update="Assets\pepsi.webp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\UpdatePromotion.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\CreatePromotionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\PromotionPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

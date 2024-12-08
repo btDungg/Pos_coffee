@@ -15,6 +15,8 @@ namespace POS_Coffee.Repositories
             Task<List<PromotionModel>> GetAllPromotionsAsync(string searchQuery = null, bool? isActive = null, bool? isExpired = null, bool? isUpcoming = null);
             Task<PromotionModel> GetPromotionByIdAsync(int id);
             Task AddPromotionAsync(PromotionModel promotion);
-        
+            Task DeletePromotionAsync(PromotionModel promotion);
+            Task UpdatePromotionAsync(PromotionModel promotion);
+
     }
 }

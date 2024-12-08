@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.UI.Xaml.Controls;
 using POS_Coffee.Models;
 using POS_Coffee.Repositories;
 using POS_Coffee.Utilities;
 using POS_Coffee.Views;
+using RelayCommand = CommunityToolkit.Mvvm.Input.RelayCommand;
 
 namespace POS_Coffee.ViewModels
 {
@@ -20,17 +17,19 @@ namespace POS_Coffee.ViewModels
         private readonly INavigation _navigation;
 
         public ICommand AddNewPromotionCommand { get; }
-        //public ICommand EditPromotionCommand { get; }
-        //public ICommand DeletePromotionCommand { get; }
+
+        public ICommand UpdateSelectedPromotionCommand {  get; }
+        public ICommand DeleteSelectedPromotionCommand { get; }
 
         public PromotionViewModel(IPromotionDao dao, INavigation navigation)
         {
             _dao = dao;
             _navigation = navigation;
 
-            AddNewPromotionCommand = new Utilities.RelayCommand(ExecuteAddNewPromotion);
-            //EditPromotionCommand = new Utilities.RelayCommand<PromotionModel>(ExecuteEditPromotion);
-            //DeletePromotionCommand = new Utilities.RelayCommand<PromotionModel>(ExecuteDeletePromotion);
+            AddNewPromotionCommand = new RelayCommand(ExecuteAddNewPromotion);
+            UpdateSelectedPromotionCommand = new RelayCommand<PromotionModel>(UpdatePromotionAsync);
+
+            DeleteSelectedPromotionCommand = new RelayCommand<PromotionModel>(async (promotion) => await DeletePromotionAsync(promotion));
 
             LoadPromotions();
         }
@@ -94,14 +93,21 @@ namespace POS_Coffee.ViewModels
             }
         }
 
-        // Asynchronous method to load promotions
+        private PromotionModel _selectedPromotion;
+        public PromotionModel SelectedPromotion
+        {
+            get => _selectedPromotion;
+            set => SetProperty(ref _selectedPromotion, value);
+        }
+
+        // Load all promotions
         private async void LoadPromotions()
         {
             var promotions = await _dao.GetAllPromotionsAsync();
             Promotions = new ObservableCollection<PromotionModel>(promotions);
         }
 
-        // Asynchronous method to filter promotions based on the filters and search query
+        // Filter promotions based on query and filters
         private async void FilterPromotions()
         {
             var promotions = await _dao.GetAllPromotionsAsync(SearchQuery, IsActiveFilter, IsExpiredFilter, IsUpcomingFilter);
@@ -110,27 +116,51 @@ namespace POS_Coffee.ViewModels
 
         private void ExecuteAddNewPromotion()
         {
-            // Navigate to the AddPromotion page
-            _navigation.NavigateTo(typeof(PromotionManagementPage));
+            _navigation.NavigateTo(typeof(CreatePromotionPage));
         }
 
-        //private async void ExecuteEditPromotion(PromotionModel promotion)
-        //{
-        //    // Navigate to the EditPromotion page
-        //    if (promotion != null)
-        //    {
-        //        _navigation.NavigateTo(typeof(EditPromotionPage), promotion);
-        //    }
-        //}
+        private async Task DeletePromotionAsync(PromotionModel promotion)
+        {
+            try
+            {
+                if (promotion != null)
+                {
+                    await _dao.DeletePromotionAsync(promotion);
+                    Promotions.Remove(promotion);
+                    ShowMessage("Promotion deleted successfully!");
+                }
+            }
+            catch (Exception ex)
+            {
+                LogError(ex);
+                ShowMessage("An error occurred while deleting the promotion. Please try again.");
+            }
+        }
 
-        //private async void ExecuteDeletePromotion(PromotionModel promotion)
-        //{
-        //    if (promotion != null)
-        //    {
-        //        // Assuming _dao.DeletePromotionAsync exists and handles the async deletion
-        //        await _dao.DeletePromotionAsync(promotion);
-        //        LoadPromotions(); // Refresh list after deletion
-        //    }
-        //}
+        private void UpdatePromotionAsync(PromotionModel promotion)
+        {
+            try
+            {
+                if (promotion != null)
+                {
+                    _navigation.NavigateTo(typeof(UpdatePromotion), promotion);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogError(ex);
+                ShowMessage("An error occurred while updating the promotion.");
+            }
+        }
+
+        private void ShowMessage(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        private void LogError(Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
     }
 }

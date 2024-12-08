@@ -27,6 +27,7 @@
                         <FontIcon Glyph="&#xE9F9;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+                <NavigationViewItem Icon="Manage" Content="Quản lý khuyến mãi" x:Name="PromotionManagement" />
             </NavigationView.MenuItems>
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem Content="Đăng xuất" Tag="SamplePage5" x:Name="LogOut">
@@ -35,9 +36,7 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.FooterMenuItems>
-
             <Frame x:Name="mainFrame"/>
         </NavigationView>
     </Grid>
-    
 </Window>

@@ -69,6 +69,7 @@ namespace POS_Coffee
             services.AddSingleton<IPaymentDao, SqlPaymentDao>();
             services.AddSingleton<IAccountDao, SqlAccountDao>();
             services.AddSingleton<IPaymentDetailDao, SqlPaymentDetailDao>();
+            services.AddSingleton<IPromotionDao,SqlPromotionDao>();
 
             services.AddTransient<MainViewModel>();
             services.AddSingleton<LoginViewModel>();
@@ -78,6 +79,7 @@ namespace POS_Coffee
             services.AddTransient<CartItemViewModel>();
             services.AddTransient<PaymentViewModel>();
             services.AddTransient<ReportViewModel>();
+            services.AddTransient<PromotionViewModel>();
 
             services.AddDbContext<PosDbContext>(option =>
             option.UseSqlServer("Server=localhost;Database=PosCoffeeDb;Trusted_Connection=True;TrustServerCertificate=True"));

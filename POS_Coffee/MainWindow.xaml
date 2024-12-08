@@ -17,13 +17,15 @@
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xF0E3;"/>
                 </NavigationViewItem.Icon>
-            </NavigationViewItem>    
+            </NavigationViewItem>
             <NavigationViewItem Content="Báo cáo tài chính" x:Name="FinancialReport">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE9F9;"/>
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
+            <NavigationViewItem Icon="Manage" Content="Quản lý khuyến mãi" x:Name="PromotionManagement" />
         </NavigationView.MenuItems>
+        
         <NavigationView.FooterMenuItems>
             <NavigationViewItem Content="Đăng xuất" Tag="SamplePage5" x:Name="LogOut">
                 <NavigationViewItem.Icon>

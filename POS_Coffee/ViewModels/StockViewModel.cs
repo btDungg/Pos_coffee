@@ -200,33 +200,7 @@ namespace POS_Coffee.ViewModels
 
         private async void SaveStockClick()
         {
-            //if(stockDetailChanged.Name != null)
-            //{
-            //    StockDetail.Name = stockDetailChanged.Name;
-            //    stockDetailChanged.Name = null;
-            //}
-            //if (stockDetailChanged.Description != null)
-            //{
-            //    StockDetail.Description = stockDetailChanged.Description;
-            //    stockDetailChanged.Description = null;
-            //}
-            //if (stockDetailChanged.Unit != null)
-            //{
-            //    StockDetail.Unit = stockDetailChanged.Unit;
-            //    stockDetailChanged.Unit = null;
-            //}
-            //if (stockDetailChanged.Price >= 0)
-            //{
-            //    StockDetail.Price = stockDetailChanged.Price;
-            //    stockDetailChanged.Price = -1;
-            //}
-            //if (stockDetailChanged.StockNumber >= 0)
-            //{
-            //    StockDetail.StockNumber = stockDetailChanged.StockNumber;
-            //    stockDetailChanged.StockNumber = -1;
-            //}
             await _dao.UpdateStock(StockDetail);
-            //StockDetail = updatedStock;
             var stocks = await _dao.getAllStock();
             Stocks = new ObservableCollection<StockModel>(stocks);
             isReadOnly = true;

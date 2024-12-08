@@ -72,7 +72,7 @@
   + Lập biểu đồ cột chồng tổng tiền đã bán được giữa đồ ăn và nước uống theo ngày, tháng, quý, năm.
   + Lập biểu đồ cột chồng tổng tiền đã bán được giữa đồ ăn và nước uống theo ngày, tháng, quý, năm sau khi thêm mới một hóa đơn.
 * Số giờ làm việc: 2 giờ.
-* * Người thực hiện: 21120443 - Phạm Thế Duyệt
+* Người thực hiện: 21120443 - Phạm Thế Duyệt
 ## 7. Chức năng Quản lý khuyến mãi:
 * Đã làm được:
   + Xem khuyến mãi.
@@ -83,7 +83,7 @@
   + Xóa khuyến mãi.
   + Áp dụng vào hóa đơn.
 * Số giờ làm việc: 2 giờ
-* * Người thực hiện: 21120434 - Bùi Tiến Dũng
+* Người thực hiện: 21120434 - Bùi Tiến Dũng
 
 # V. Quality Assurance:
 * Tự đánh giá: 10/10

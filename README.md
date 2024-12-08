@@ -34,6 +34,8 @@
     ![image](https://github.com/user-attachments/assets/bbc4db0d-3c63-4744-b239-8c1737dd0382)
 
 # IV. Các chức năng đã thực hiện
+* Tổng số giờ làm việc: 9 giờ.
+* Link: [Video demo](https://www.youtube.com/watch?v=HnSPOsSpo2U)
 ## 1. Thiết kế database và kết nối với SQL Server:
 * Đã làm được:
   + Thiết kế database
@@ -70,7 +72,7 @@
   + Lập biểu đồ cột chồng tổng tiền đã bán được giữa đồ ăn và nước uống theo ngày, tháng, quý, năm.
   + Lập biểu đồ cột chồng tổng tiền đã bán được giữa đồ ăn và nước uống theo ngày, tháng, quý, năm sau khi thêm mới một hóa đơn.
 * Số giờ làm việc: 2 giờ.
-* * Người thực hiện: 21120443 - Phạm Thế Duyệt
+* Người thực hiện: 21120443 - Phạm Thế Duyệt
 ## 7. Chức năng Quản lý khuyến mãi:
 * Đã làm được:
   + Xem khuyến mãi.
@@ -81,14 +83,14 @@
   + Xóa khuyến mãi.
   + Áp dụng vào hóa đơn.
 * Số giờ làm việc: 2 giờ
-* * Người thực hiện: 21120434 - Bùi Tiến Dũng
+* Người thực hiện: 21120434 - Bùi Tiến Dũng
 
 # V. Quality Assurance:
 * Tự đánh giá: 10/10
 * Tạo các nhánh feature để thực hiện các chức năng Link github.
 * Tạo các pull request để review code, trước khi merge vào nhánh main.
 * Số giờ thực hiện test: 1.5 giờ
-* Link drive: [Test report]
+* Link drive: [Test report](https://docs.google.com/spreadsheets/d/1Uh3LyWOOiO5eIof8vTc7Z9HPaGPfTpIo/edit?usp=sharing&ouid=108070913437558414936&rtpof=true&sd=true)
 
 # VI. Team work:
 * Tự đánh giá: 10/10
@@ -100,3 +102,6 @@
 - [MVVM pattern](https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm)
 - [Using the Windows Community Toolkit DataGrid with WinUI 3 and Entity Framework Core](https://xamlbrewer.wordpress.com/2021/09/28/using-the-windows-community-toolkit-datagrid-with-winui-3-and-entity-framework-core/)
 - [MVVM - Commands, RelayCommands and EventToCommand](https://learn.microsoft.com/en-us/archive/msdn-magazine/2013/may/mvvm-commands-relaycommands-and-eventtocommand)
+- [Getting Started with WinUI Chart](https://help.syncfusion.com/winui/chart/getting-started)
+- [Getting Started with WinUI Cartesian Chart (SfCartesianChart)](https://help.syncfusion.com/winui/cartesian-charts/getting-started)
+- [Stacked Charts in WinUI Chart (SfCartesianChart)](https://help.syncfusion.com/winui/cartesian-charts/stacked)

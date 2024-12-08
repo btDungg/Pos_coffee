@@ -28,6 +28,12 @@ namespace POS_Coffee.Views
         public PaymentManagementPage()
         {
             this.InitializeComponent();
+            this.Loaded += PaymentPage_Loaded;
+        }
+
+        private void PaymentPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.SetXamlRoot(this.XamlRoot);
         }
 
         public PaymentViewModel ViewModel { get; set; }

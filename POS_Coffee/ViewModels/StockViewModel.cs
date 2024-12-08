@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
@@ -13,6 +14,7 @@ using POS_Coffee.Models;
 using POS_Coffee.Repositories;
 using POS_Coffee.Utilities;
 using POS_Coffee.Views;
+using RelayCommand = CommunityToolkit.Mvvm.Input.RelayCommand;
 
 namespace POS_Coffee.ViewModels
 {
@@ -20,7 +22,12 @@ namespace POS_Coffee.ViewModels
     {
         public List<StockModel> allStocks { get; set; }
 
-        public StockModel StockDetail { get; set; }
+        private StockModel _stockDetail;
+        public StockModel StockDetail
+        {
+            get => _stockDetail;
+            set => SetProperty(ref _stockDetail, value);
+        }
 
         private readonly IStockDAO _dao;
 
@@ -38,6 +45,7 @@ namespace POS_Coffee.ViewModels
         public ICommand SaveStockClickCmd { get; }
         public ICommand CancelStockClickCmd { get; }
         public ICommand ChangeDetailCmd { get; }
+        public IAsyncRelayCommand LoadStocksCommand;
 
         //Variable
         private ObservableCollection<StockModel> _stocks;
@@ -64,12 +72,7 @@ namespace POS_Coffee.ViewModels
             set => SetProperty(ref _saveStatus, value);
         }
 
-        private StockModel _stockDetailChanged;
-        public StockModel stockDetailChanged
-        {
-            get => _stockDetailChanged;
-            set => SetProperty(ref _stockDetailChanged, value);
-        }
+        
 
         public ObservableCollection<StockModel> Stocks
         {
@@ -92,19 +95,8 @@ namespace POS_Coffee.ViewModels
         public StockViewModel(IStockDAO stockDAO, INavigation navigation) 
         { 
             _dao = stockDAO;
-            allStocks = new List<StockModel>(_dao.getAllStock());
-            Stocks = new ObservableCollection<StockModel>(allStocks);
             _navigation = navigation;
-            StockDetail = new StockModel();
-            stockDetailChanged = new StockModel();
-            if (allStocks.Any())
-            {
-                StockDetail = allStocks[0];
-            }
-            else
-            {
-                StockDetail = null;
-            }    
+              
             AllStockClickCmd = new RelayCommand(() => AllStockClick());
             NormalStockClickCmd = new RelayCommand(() => NormalStockClick());
             LowStockClickCmd = new RelayCommand(() => LowStockClick());
@@ -115,6 +107,23 @@ namespace POS_Coffee.ViewModels
             SearchButtonClickCmd = new RelayCommand(() => SearchStockClick());
             SaveStockClickCmd = new RelayCommand(()=>SaveStockClick());
             CancelStockClickCmd = new RelayCommand(() => CancelStockClick());
+            LoadStocksCommand = new AsyncRelayCommand(LoadStocks);
+            LoadStocksCommand.Execute(null);
+        }
+
+        private async Task LoadStocks()
+        {
+            var stocks = await _dao.getAllStock();
+            allStocks = new List<StockModel>(stocks);
+            if (allStocks.Any())
+            {
+                StockDetail = allStocks[0];
+            }
+            else
+            {
+                StockDetail = null;
+            }
+            Stocks = new ObservableCollection<StockModel>(allStocks);
         }
 
         private void AllStockClick() 
@@ -143,9 +152,10 @@ namespace POS_Coffee.ViewModels
             Stocks = new ObservableCollection<StockModel>(filteredStocks);
         }
 
-        private void SearchStockClick()
+        private async void SearchStockClick()
         {
-            Stocks = new ObservableCollection<StockModel>(_dao.getSearchStock(searchQuery));
+            var stocks = await _dao.getSearchStock(searchQuery);
+            Stocks = new ObservableCollection<StockModel>(stocks);
         }
 
         private void AddStockClick()
@@ -190,31 +200,35 @@ namespace POS_Coffee.ViewModels
 
         private async void SaveStockClick()
         {
-            if(stockDetailChanged.Name != null)
-            {
-                StockDetail.Name = stockDetailChanged.Name;
-                stockDetailChanged.Name = null;
-            }
-            if (stockDetailChanged.Description != null)
-            {
-                StockDetail.Description = stockDetailChanged.Description;
-                stockDetailChanged.Description = null;
-            }
-            if (stockDetailChanged.Unit != null)
-            {
-                StockDetail.Unit = stockDetailChanged.Unit;
-                stockDetailChanged.Unit = null;
-            }
-            if (stockDetailChanged.Price >= 0)
-            {
-                StockDetail.Price = stockDetailChanged.Price;
-                stockDetailChanged.Price = -1;
-            }
-            if (stockDetailChanged.StockNumber >= 0)
-            {
-                StockDetail.StockNumber = stockDetailChanged.StockNumber;
-                stockDetailChanged.StockNumber = -1;
-            }
+            //if(stockDetailChanged.Name != null)
+            //{
+            //    StockDetail.Name = stockDetailChanged.Name;
+            //    stockDetailChanged.Name = null;
+            //}
+            //if (stockDetailChanged.Description != null)
+            //{
+            //    StockDetail.Description = stockDetailChanged.Description;
+            //    stockDetailChanged.Description = null;
+            //}
+            //if (stockDetailChanged.Unit != null)
+            //{
+            //    StockDetail.Unit = stockDetailChanged.Unit;
+            //    stockDetailChanged.Unit = null;
+            //}
+            //if (stockDetailChanged.Price >= 0)
+            //{
+            //    StockDetail.Price = stockDetailChanged.Price;
+            //    stockDetailChanged.Price = -1;
+            //}
+            //if (stockDetailChanged.StockNumber >= 0)
+            //{
+            //    StockDetail.StockNumber = stockDetailChanged.StockNumber;
+            //    stockDetailChanged.StockNumber = -1;
+            //}
+            await _dao.UpdateStock(StockDetail);
+            //StockDetail = updatedStock;
+            var stocks = await _dao.getAllStock();
+            Stocks = new ObservableCollection<StockModel>(stocks);
             isReadOnly = true;
             visibilityStatus = "Visible";
             saveStatus = "Collapsed";

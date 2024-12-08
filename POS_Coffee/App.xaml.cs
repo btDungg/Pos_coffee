@@ -80,6 +80,7 @@ namespace POS_Coffee
             services.AddTransient<PaymentViewModel>();
             services.AddTransient<ReportViewModel>();
             services.AddTransient<PromotionViewModel>();
+            services.AddTransient<CreatePromotionViewModel>();
 
             services.AddDbContext<PosDbContext>(option =>
             option.UseSqlServer("Server=localhost;Database=PosCoffeeDb;Trusted_Connection=True;TrustServerCertificate=True"));

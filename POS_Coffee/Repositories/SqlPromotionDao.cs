@@ -57,5 +57,25 @@ namespace POS_Coffee.Repositories
         {
             return await _dbContext.Promotions.FirstOrDefaultAsync(p => p.Id == id);
         }
+
+        public async Task DeletePromotionAsync(PromotionModel promotion)
+        {
+            try
+            {
+                var existingPromotion = await _dbContext.Promotions
+                    .FirstOrDefaultAsync(p => p.Id == promotion.Id);
+
+                if (existingPromotion != null)
+                {
+                    _dbContext.Promotions.Remove(existingPromotion);
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle or log the exception
+                throw new Exception("Error deleting promotion from the database.", ex);
+            }
+        }
     }
 }

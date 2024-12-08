@@ -15,7 +15,7 @@
         <StackPanel Spacing="15">
             <!-- Thông tin thanh toán -->
             <StackPanel>
-                <TextBlock Text="Thông tin hóa đơn:" FontSize="16" FontWeight="Bold" />
+                <TextBlock Text="Thông tin hóa đơn:" FontSize="16" FontWeight="Bold" Margin="60 0 0 0"/>
                 <StackPanel Orientation="Horizontal" Spacing="10">
                     <TextBlock Text="Tổng tiền:" FontWeight="SemiBold" />
                     <TextBlock Text="{Binding SelectedPayment.TotalPrice, Mode=TwoWay}" />
@@ -44,14 +44,13 @@
 
             <!-- Danh sách chi tiết thanh toán -->
             <StackPanel>
-                <TextBlock Text="Payment Details:" FontSize="16" FontWeight="Bold" Margin="0,10,0,5" />
+                <TextBlock Text="Chi tiết hóa đơn:" FontSize="16" FontWeight="Bold" Margin="60,10,0,5" />
                 <ListView ItemsSource="{Binding SelectedPaymentItems}" Height="200" BorderThickness="1" BorderBrush="Gray">
                     <ListView.HeaderTemplate>
                         <!-- Header cho danh sách -->
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Background="#E0E0E0" Padding="5">
                                 <TextBlock Text="Mã món ăn" Width="100" FontWeight="Bold" />
-                                <TextBlock Text="Ghi chú" Width="200" FontWeight="Bold" />
                                 <TextBlock Text="Số lượng" Width="100" FontWeight="Bold" TextAlignment="Right" />
                             </StackPanel>
                         </DataTemplate>
@@ -59,9 +58,8 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Spacing="10">
-                                <TextBlock Text="{Binding FoodId}" />
-                                <TextBlock Text="{Binding Note}" />
-                                <TextBlock Text="{Binding Quantity}" />
+                                <TextBlock Text="{Binding FoodId}" Margin="20 0 0 0"/>
+                                <TextBlock Text="{Binding Quantity}" Margin="120 0 0 0"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>

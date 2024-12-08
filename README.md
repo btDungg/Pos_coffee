@@ -90,6 +90,7 @@
 
 # VI. Team work:
 * Tự đánh giá: 10/10
+* Tổng số giờ làm việc: 10.5 giờ
 * Link drive: [Biên bản họp nhóm milestone 2](https://drive.google.com/drive/folders/1FyAP845olfxLxhFwVeVoSRRMkitoKC7m?usp=sharing)
 
 # VII. Tài liệu tham khảo:

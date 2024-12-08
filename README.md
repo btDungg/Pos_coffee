@@ -40,18 +40,22 @@
   + Kết nối được với SQL Server
   + Thực hiện đọc dữ liệu từ dưới database, ghi dữ liệu xuống database 
 * Số giờ làm việc: 1 giờ
+* Người thực hiện: 21120470 - Nguyễn Võ Nhật Huy
 ## 2. Chức năng Đăng nhập:
 * Đã làm thêm được: Phân quyền người dùng (admin và employ có giao diện khác nhau) 
 * Chưa làm được: Khóa tài khoản sau 3 lần đăng nhập sai.
 * Số giờ làm việc: 0.5 giờ
+* Người thực hiện: 21120470 - Nguyễn Võ Nhật Huy
 ## 3. Chức năng Quản lý kho hàng:
 * Đã làm thêm được: chỉnh sửa lại chi tiết của nguyên liệu
 * Chưa làm được: thêm nguyên liệu mới, tạo thông báo khi nguyên liệu sắp hết
 * Số giờ làm việc: 1 giờ
+* Người thực hiện: 21120443 - Phạm Thế Duyệt
 ## 4. Chức năng Quản lý thanh toán:
 * Đã làm thêm được: cập nhật lại số lượng món hàng sau khi thanh toán.
 * Chưa làm được: chọn hình thức thanh toán như tiền mặt, thẻ tín dụng.
 * Số giờ làm việc: 1 giờ
+* Người thực hiện: 21120434 - Bùi Tiến Dũng
 ## 5. Chức năng Quản lý hóa đơn:
 * Đã làm được:
   + Xây dựng giao diện trang quản lý hóa đơn.
@@ -59,12 +63,14 @@
   + Xem chi tiết hóa đơn được chọn.
 * Chưa làm được: lọc danh sách hóa đơn theo ngày, tháng, năm.
 * Số giờ làm việc: 1.5 giờ.
+* Người thực hiện: 21120470 - Nguyễn Võ Nhật Huy
 ## 6. Chức năng Báo cáo tài chính:
 * Đã làm được:
   + Xây dựng giao diện trang báo cáo tài chính.
   + Lập biểu đồ cột chồng tổng tiền đã bán được giữa đồ ăn và nước uống theo ngày, tháng, quý, năm.
   + Lập biểu đồ cột chồng tổng tiền đã bán được giữa đồ ăn và nước uống theo ngày, tháng, quý, năm sau khi thêm mới một hóa đơn.
 * Số giờ làm việc: 2 giờ.
+* * Người thực hiện: 21120443 - Phạm Thế Duyệt
 ## 7. Chức năng Quản lý khuyến mãi:
 * Đã làm được:
   + Xem khuyến mãi.
@@ -75,6 +81,7 @@
   + Xóa khuyến mãi.
   + Áp dụng vào hóa đơn.
 * Số giờ làm việc: 2 giờ
+* * Người thực hiện: 21120434 - Bùi Tiến Dũng
 
 # V. Quality Assurance:
 * Số giờ thực hiện test: 1.5 giờ

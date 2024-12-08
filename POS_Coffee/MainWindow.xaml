@@ -6,31 +6,38 @@
     xmlns:local="using:POS_Coffee"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converter="using:POS_Coffee.Converters"
     mc:Ignorable="d">
+    <Grid>
+        <Grid.Resources>
+            <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        </Grid.Resources>
+        <NavigationView x:Name="nvSample" PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" IsSettingsVisible="False">
+                        <!--SelectionFollowsFocus="Enabled"--> 
+            <NavigationView.MenuItems>
+                <NavigationViewItem Icon="Home" Content="Trang chủ" x:Name="HomePage"/>
+                <NavigationViewItem Icon="Library" Content="Quản lý kho" x:Name="StockManagement"/>
+                <NavigationViewItem Content="Quản lý hóa đơn" x:Name="PaymentPage">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xF0E3;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Báo cáo tài chính" x:Name="FinancialReport">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE9F9;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem Content="Đăng xuất" Tag="SamplePage5" x:Name="LogOut">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xF3B1;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.FooterMenuItems>
 
-    <NavigationView x:Name="nvSample" PaneDisplayMode="Top"
-    SelectionFollowsFocus="Enabled" IsBackButtonVisible="Collapsed" IsSettingsVisible="False">
-        <NavigationView.MenuItems>
-            <NavigationViewItem Icon="Home" Content="Trang chủ" x:Name="HomePage"/>
-            <NavigationViewItem Icon="Library" Content="Quản lý kho" x:Name="StockManagement" />
-            <NavigationViewItem Content="Quán lý hóa đơn" x:Name="PaymentPage">
-                <NavigationViewItem.Icon>
-                    <FontIcon Glyph="&#xF0E3;"/>
-                </NavigationViewItem.Icon>
-            </NavigationViewItem>    
-            <NavigationViewItem Content="Báo cáo tài chính" x:Name="FinancialReport">
-                <NavigationViewItem.Icon>
-                    <FontIcon Glyph="&#xE9F9;"/>
-                </NavigationViewItem.Icon>
-            </NavigationViewItem>
-        </NavigationView.MenuItems>
-        <NavigationView.FooterMenuItems>
-            <NavigationViewItem Content="Đăng xuất" Tag="SamplePage5" x:Name="LogOut">
-                <NavigationViewItem.Icon>
-                    <FontIcon Glyph="&#xF3B1;"/>
-                </NavigationViewItem.Icon>
-            </NavigationViewItem>
-        </NavigationView.FooterMenuItems>
-        <Frame x:Name="mainFrame"/>
-    </NavigationView>
+            <Frame x:Name="mainFrame"/>
+        </NavigationView>
+    </Grid>
+    
 </Window>

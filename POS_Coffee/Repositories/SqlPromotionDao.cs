@@ -29,7 +29,7 @@ namespace POS_Coffee.Repositories
 
             if (isActive.HasValue && isActive.Value == true)
             {
-                query = query.Where(p => p.start_date >= DateTime.Now && p.end_date <= DateTime.Now);
+                query = query.Where(p => p.start_date <= DateTime.Now && p.end_date >= DateTime.Now);
             }
 
             if (isExpired.HasValue && isExpired.Value == true)

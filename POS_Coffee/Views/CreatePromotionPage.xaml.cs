@@ -28,9 +28,10 @@ namespace POS_Coffee.Views
         public CreatePromotionPage()
         {
             this.InitializeComponent();
+            DataContext = ViewModel;
         }
 
-        public CreatePromotionViewModel viewModel { get; set; }
+        public CreatePromotionViewModel ViewModel { get; set; }
         = App.Current.Services.GetService<CreatePromotionViewModel>();
     }
 }

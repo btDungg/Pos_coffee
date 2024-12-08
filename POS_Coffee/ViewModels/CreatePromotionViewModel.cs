@@ -145,20 +145,19 @@ namespace POS_Coffee.ViewModels
                     newPromotion.start_date > newPromotion.end_date)
                 {
                     ShowMessage("Invalid input. Please check the data and try again.");
-                    _navigation.NavigateTo(typeof(CreatePromotionPage));
                     return;
                 }
 
                 await _dao.AddPromotionAsync(newPromotion);
 
                 ShowMessage("Promotion saved successfully!");
-                _navigation.NavigateTo(typeof(CreatePromotionPage));
+                _navigation.NavigateTo(typeof(PromotionPage));
             }
             catch (Exception ex)
             {
                 LogError(ex);
                 ShowMessage("An error occurred while saving the promotion. Please try again.");
-                _navigation.NavigateTo(typeof(CreatePromotionPage));
+                _navigation.NavigateTo(typeof(PromotionPage));
             }
         }
 

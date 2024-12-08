@@ -33,7 +33,7 @@
                      PlaceholderText="Mô tả chi tiết khuyến mại"/>
 
             <ComboBox Header="Loại giảm giá" 
-                      ItemsSource="{Binding DiscountTypes}"
+                      ItemsSource="{Binding DiscountTypes, Mode=OneWay}"
                       SelectedItem="{Binding DiscountType, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}"
                       PlaceholderText="Chọn loại giảm giá"/>
 

@@ -676,5 +676,30 @@ namespace POS_Coffee.Repositories
             }
             return stockModels;
         }
+
+        Task<List<StockModel>> IStockDAO.getAllStock()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<StockModel> IStockDAO.getStockByID(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<StockModel> IStockDAO.RemoveStock(StockModel deletedStock)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<StockModel>> IStockDAO.getSearchStock(string searchQuery)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<StockModel> UpdateStock(StockModel stock)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

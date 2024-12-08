@@ -16,55 +16,56 @@
 
     <StackPanel Orientation="Vertical" Width="Auto" Height="Auto" Background="FloralWhite" Margin="10 10 10 10">
         <TextBlock Text="QUẢN LÝ KHO HÀNG" FontSize="25" Margin="0,10,0,0" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Center"/>
-        <StackPanel Orientation="Horizontal" Margin="10 10 10 0" Width="Auto">
-            <Button Name="allStockButton" Width="125" Height="35" Content="Tất cả" Foreground="Blue" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.AllStockClickCmd}"/>
-            <Button Name="normalStockButton" Width="125" Height="35" Content="Bình thường" Foreground="Green" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.NormalStockClickCmd}"/>
-            <Button Name="lowStockButton" Width="125" Height="35" Content="Sắp hết hàng" Foreground="Yellow" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.LowStockClickCmd}"/>
-            <Button Name="useUpStockButton" Width="125" Height="35" Content="Đã hết hàng" Foreground="Red" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.UseUpStockClickCmd}"/>
-
-            <StackPanel Orientation="Horizontal" Margin="10,0,0,0" HorizontalAlignment="Right" Width="Auto">
+        <Grid Width="Auto" Margin="10 10 10 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width ="*"/>
+                <ColumnDefinition Width ="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Column="0">
+                <Button Name="allStockButton" Width="125" Height="35" Content="Tất cả" Foreground="Blue" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.AllStockClickCmd}"/>
+                <Button Name="normalStockButton" Width="125" Height="35" Content="Bình thường" Foreground="Green" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.NormalStockClickCmd}"/>
+                <Button Name="lowStockButton" Width="125" Height="35" Content="Sắp hết hàng" Foreground="Yellow" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.LowStockClickCmd}"/>
+                <Button Name="useUpStockButton" Width="125" Height="35" Content="Đã hết hàng" Foreground="Red" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.UseUpStockClickCmd}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
                 <TextBox Width="400" Height="35" HorizontalAlignment="Right" PlaceholderText="Tìm nguyên liệu" Margin="10,0,0,0" Text="{x:Bind ViewModel.searchQuery, Mode=TwoWay}"/>
                 <Button Content="Search" Height="35" Margin="10,0,0,0" HorizontalAlignment="Right" Command="{x:Bind ViewModel.SearchButtonClickCmd}"/>
             </StackPanel>
-        </StackPanel>
+        </Grid>
 
-        
         <SplitView x:Name="splitView" Width="Auto" Height="Auto"
-            IsPaneOpen="True" OpenPaneLength="500" CompactPaneLength="48" DisplayMode="Inline" Margin="10 10 10 0">
+            IsPaneOpen="True" OpenPaneLength="500" CompactPaneLength="48" DisplayMode="Inline" Margin="10 10 0 10">
             <SplitView.Pane>
-                <Button Margin="10 10 10 10" Command="{Binding DataContext.RowSelectedCommand, Mode=TwoWay}" CommandParameter="{Binding}" VerticalAlignment="Top">
-                    <controls:DataGrid x:Name="detailTable"
-                        GridLinesVisibility="All" VerticalAlignment="Top"
-                        IsReadOnly="True" SelectedItem="{x:Bind ViewModel.StockDetail, Mode=TwoWay}"
-                        Margin="10" MaxHeight="500" SelectionMode="Single"
-                        AutoGenerateColumns="False"
-                        ItemsSource="{x:Bind ViewModel.Stocks, Mode=TwoWay}"
-                        DataContext="{x:Bind ViewModel}">
+                <controls:DataGrid x:Name="detailTable"
+                    GridLinesVisibility="All" VerticalAlignment="Top"
+                    IsReadOnly="True" SelectedItem="{x:Bind ViewModel.StockDetail, Mode=TwoWay}"
+                    Margin="10 10 10 10" MaxHeight="550" SelectionMode="Single"
+                    AutoGenerateColumns="False"
+                    ItemsSource="{x:Bind ViewModel.Stocks, Mode=TwoWay}"
+                    DataContext="{x:Bind ViewModel}">
 
-                        <controls:DataGrid.Columns>
-                            <controls:DataGridTextColumn 
-                                Header="Mã nguyên liệu"
-                                Width="*"
-                                Binding="{Binding ID}" 
-                                FontSize="14">
-                            </controls:DataGridTextColumn>
-                            <controls:DataGridTextColumn 
-                                Header="Tên nguyên liệu" 
-                                Width="*"
-                                Binding="{Binding Name}" 
-                                FontSize="14" />
-                            <controls:DataGridTextColumn 
-                                Header="Số lượng tồn" 
-                                Width="*"
-                                Binding="{Binding StockNumber}" 
-                                FontSize="14" />
-                        </controls:DataGrid.Columns>
-                    </controls:DataGrid>
-                    
-                </Button>
+                    <controls:DataGrid.Columns>
+                        <controls:DataGridTextColumn 
+                            Header="Mã nguyên liệu"
+                            Width="*"
+                            Binding="{Binding ID}" 
+                            FontSize="14">
+                        </controls:DataGridTextColumn>                   
+                        <controls:DataGridTextColumn 
+                            Header="Tên nguyên liệu" 
+                            Width="*"
+                            Binding="{Binding Name}" 
+                            FontSize="14" />
+                        <controls:DataGridTextColumn 
+                            Header="Số lượng tồn" 
+                            Width="*"
+                            Binding="{Binding StockNumber}" 
+                            FontSize="14" />
+                    </controls:DataGrid.Columns>
+                </controls:DataGrid>
             </SplitView.Pane>
 
-            <StackPanel Background="WhiteSmoke" Margin="10 0 10 0">
+            <StackPanel Background="WhiteSmoke" Margin="10 0 10 50">
                 <Grid Width="Auto" MaxHeight="650">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -84,38 +85,45 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"/>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock x:Name="ID1" Text="Mã nguyên liệu:" FontWeight="Bold" Grid.Column="0" Grid.Row="0"/>
-                            <TextBlock x:Name="Name1" Text="Tên nguyên liệu:" FontWeight="Bold" Grid.Column="0" Grid.Row="1"/>
-                            <TextBlock x:Name="Description1" Text="Mô tả:" FontWeight="Bold" Grid.Column="0" Grid.Row="2"/>
-                            <TextBlock x:Name="Unit1" Text="Đơn vị:" FontWeight="Bold" Grid.Column="0" Grid.Row="3"/>
-                            <TextBlock x:Name="Price1" Text="Đơn giá:" FontWeight="Bold" Grid.Column="0" Grid.Row="4"/>
-                            <TextBlock x:Name="StockNumber1" Text="Số lượng tồn:" FontWeight="Bold" Grid.Column="0" Grid.Row="5"/>
+                            <!--<TextBlock x:Name="ID1" Text="Mã nguyên liệu:" FontWeight="Bold" Grid.Column="0" Grid.Row="0" Margin="0 5 0 0"/>-->
+                            <TextBlock x:Name="Name1" Text="Tên nguyên liệu:" FontWeight="Bold" Grid.Column="0" Grid.Row="1" Margin="0 5 0 0"/>
+                            <TextBlock x:Name="Description1" Text="Mô tả:" FontWeight="Bold" Grid.Column="0" Grid.Row="2" Margin="0 5 0 0"/>
+                            <TextBlock x:Name="Unit1" Text="Đơn vị:" FontWeight="Bold" Grid.Column="0" Grid.Row="3" Margin="0 5 0 0"/>
+                            <TextBlock x:Name="Price1" Text="Đơn giá:" FontWeight="Bold" Grid.Column="0" Grid.Row="4" Margin="0 5 0 0"/>
+                            <TextBlock x:Name="StockNumber1" Text="Số lượng tồn:" FontWeight="Bold" Grid.Column="0" Grid.Row="5" Margin="0 5 0 0"/>
 
-                            <!--<TextBlock x:Name="ID2" Text="{x:Bind ViewModel.StockDetail.ID, Mode=TwoWay}" Grid.Column="1" Grid.Row="0"/>
-                            <TextBlock x:Name="Name2" Text="{x:Bind ViewModel.StockDetail.Name, Mode=TwoWay}" Grid.Column="1" Grid.Row="1"/>
-                            <TextBlock x:Name="Description2" Text="{x:Bind ViewModel.StockDetail.Description, Mode=TwoWay}" Grid.Column="1" Grid.Row="2"/>
-                            <TextBlock x:Name="Unit2" Text="{x:Bind ViewModel.StockDetail.Unit, Mode=TwoWay}" Grid.Column="1" Grid.Row="3"/>
-                            <TextBlock x:Name="Price2" Text="{x:Bind ViewModel.StockDetail.Price, Mode=TwoWay}" Grid.Column="1" Grid.Row="4"/>
-                            <TextBlock x:Name="StockNumber2" Text="{x:Bind ViewModel.StockDetail.StockNumber, Mode=TwoWay}" Grid.Column="1" Grid.Row="5"/>-->
+                            <!--<TextBox x:Name="ID2" Text="{x:Bind ViewModel.StockDetail.ID, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="0" IsReadOnly="True"/>-->
+                            <TextBox x:Name="Name2" Text="{x:Bind ViewModel.StockDetail.Name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="1" IsReadOnly="{x:Bind ViewModel.isReadOnly, Mode=TwoWay}"/>
+                            <TextBox x:Name="Description2" Text="{x:Bind ViewModel.StockDetail.Description, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="2" IsReadOnly="{x:Bind ViewModel.isReadOnly, Mode=TwoWay}"/>
+                            <TextBox x:Name="Unit2" Text="{x:Bind ViewModel.StockDetail.Unit, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="3" IsReadOnly="{x:Bind ViewModel.isReadOnly, Mode=TwoWay}"/>
+                            <TextBox x:Name="Price2" Text="{x:Bind ViewModel.StockDetail.Price, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="4" IsReadOnly="{x:Bind ViewModel.isReadOnly, Mode=TwoWay}"/>
+                            <TextBox x:Name="StockNumber2" Text="{x:Bind ViewModel.StockDetail.StockNumber, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="5" IsReadOnly="{x:Bind ViewModel.isReadOnly, Mode=TwoWay}"/>
 
-                            <TextBox x:Name="ID2" PlaceholderText="{x:Bind ViewModel.StockDetail.ID, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="0"/>
-                            <TextBox x:Name="Name2" PlaceholderText="{x:Bind ViewModel.StockDetail.Name, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="1"/>
-                            <TextBox x:Name="Description2" PlaceholderText="{x:Bind ViewModel.StockDetail.Description, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="2"/>
-                            <TextBox x:Name="Unit2" PlaceholderText="{x:Bind ViewModel.StockDetail.Unit, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="3"/>
-                            <TextBox x:Name="Price2" PlaceholderText="{x:Bind ViewModel.StockDetail.Price, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="4"/>
-                            <TextBox x:Name="StockNumber2" PlaceholderText="{x:Bind ViewModel.StockDetail.StockNumber, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="5"/>
+                            <!--<TextBlock x:Name="IDChange" Text="New Detail" FontWeight="Bold" HorizontalTextAlignment="Center" Margin="0 0 10 0" Grid.Column="2" Grid.Row="0" Visibility="{x:Bind ViewModel.saveStatus, Mode=TwoWay}"/>
+                            <TextBox x:Name="NameChange" Text="{x:Bind ViewModel.stockDetailChanged.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="2" Grid.Row="1" Visibility="{x:Bind ViewModel.saveStatus, Mode=TwoWay}"/>
+                            <TextBox x:Name="DescriptionChange" Text="{x:Bind ViewModel.stockDetailChanged.Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="2" Grid.Row="2" Visibility="{x:Bind ViewModel.saveStatus, Mode=TwoWay}"/>
+                            <TextBox x:Name="UnitChange" Text="{x:Bind ViewModel.stockDetailChanged.Unit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="2" Grid.Row="3" Visibility="{x:Bind ViewModel.saveStatus, Mode=TwoWay}"/>
+                            <TextBox x:Name="PriceChange" Text="{x:Bind ViewModel.stockDetailChanged.Price, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="2" Grid.Row="4" Visibility="{x:Bind ViewModel.saveStatus, Mode=TwoWay}"/>
+                            <TextBox x:Name="StockNumberChange" Text="{x:Bind ViewModel.stockDetailChanged.StockNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="2" Grid.Row="5" Visibility="{x:Bind ViewModel.saveStatus, Mode=TwoWay}"/>-->
                         </Grid>
                         
                     </StackPanel>
                     
-                    <CommandBar Grid.Row="2" DefaultLabelPosition="Right" HorizontalAlignment="Right" Margin="0 0 0 10">
-                        <AppBarButton Icon="Add" Label="Thêm" Command="{x:Bind ViewModel.AddStockClickCmd}" CommandParameter="{Binding}" Background="CornflowerBlue" CornerRadius="0"/>
-                        <AppBarButton Icon="Delete" Label="Xóa" Command="{x:Bind ViewModel.DeleteStockClickCmd}" CommandParameter="{Binding}" Background="Red" CornerRadius="0"/>
-                        <AppBarButton Icon="Edit" Label="Sửa" Command="{x:Bind ViewModel.UpdateStockClickCmd}" CommandParameter="{Binding}" Background="Olive" CornerRadius="0"/>
+                    <CommandBar Grid.Row="2" DefaultLabelPosition="Right" HorizontalAlignment="Right" Margin="0 0 0 10" Visibility="{x:Bind ViewModel.visibilityStatus, Mode=TwoWay}">
+                        <AppBarButton Icon="Add" Label="Thêm" Command="{x:Bind ViewModel.AddStockClickCmd}" Background="CornflowerBlue" CornerRadius="0"/>
+                        <AppBarButton Icon="Delete" Label="Xóa" Command="{x:Bind ViewModel.DeleteStockClickCmd}" Background="Red" CornerRadius="0"/>
+                        <AppBarButton Icon="Edit" Label="Sửa" Command="{x:Bind ViewModel.UpdateStockClickCmd}" Background="Olive" CornerRadius="0"/>
                     </CommandBar>
+
+                    <CommandBar Grid.Row="2" DefaultLabelPosition="Right" HorizontalAlignment="Right" Margin="0 0 0 10" Visibility="{x:Bind ViewModel.saveStatus, Mode=TwoWay}">
+                        <AppBarButton Icon="Cancel" Label="Hủy" Command="{x:Bind ViewModel.CancelStockClickCmd}" Background="Red" CornerRadius="0"/>
+                        <AppBarButton Icon="Save" Label="Lưu" Command="{x:Bind ViewModel.SaveStockClickCmd}" Background="CornflowerBlue" CornerRadius="0"/>
+                    </CommandBar>
+                    
                 </Grid>
             </StackPanel>
         </SplitView>

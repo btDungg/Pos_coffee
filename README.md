@@ -84,7 +84,9 @@
 * * Người thực hiện: 21120434 - Bùi Tiến Dũng
 
 # V. Quality Assurance:
-* Tự đánh giá: 9/10
+* Tự đánh giá: 10/10
+* Tạo các nhánh feature để thực hiện các chức năng Link github.
+* Tạo các pull request để review code, trước khi merge vào nhánh main.
 * Số giờ thực hiện test: 1.5 giờ
 * Link drive: [Test report]
 

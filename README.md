@@ -84,7 +84,9 @@
 * * Người thực hiện: 21120434 - Bùi Tiến Dũng
 
 # V. Quality Assurance:
+* Tự đánh giá: 9/10
 * Số giờ thực hiện test: 1.5 giờ
+* Link drive: [Test report]
 
 # VI. Team work:
 * Tự đánh giá: 10/10

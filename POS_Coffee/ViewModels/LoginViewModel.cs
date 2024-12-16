@@ -19,6 +19,7 @@ namespace POS_Coffee.ViewModels
         public event Action<string> OnLoginSuccess; 
         private readonly INavigation _navigation;
         private readonly IAccountDao _accountDao;
+        public static string username {  get; private set; }
         private string _username;
         private string _password;
         public string ErrorMessage { get; set; }
@@ -72,6 +73,7 @@ namespace POS_Coffee.ViewModels
                         _navigation.NavigateTo(typeof(StockManagementPage), user);
                         //pagekey = "StockManagement";
                     }
+                    username = user.name;
                     OnLoginSuccess?.Invoke(user.role);
                 }              
             }

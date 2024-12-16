@@ -247,21 +247,24 @@ namespace POS_Coffee.Data
                     Id = 1,
                     username = "emp1",
                     password = "emp1",
-                    role = "employee"
+                    role = "employee",
+                    name = "Nguyễn Võ Nhật Huy"
                 },
                 new AccountModel()
                 {
                     Id = 2,
                     username = "emp2",
                     password = "emp2",
-                    role = "employee"
+                    role = "employee",
+                    name = "Bùi Tiến Dũng"
                 },
                 new AccountModel()
                 {
                     Id = 3,
                     username = "admin1",
                     password = "admin1",
-                    role = "admin"
+                    role = "admin",
+                    name = "Phạm Thế Duyệt"
                 }
             };
 

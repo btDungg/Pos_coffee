@@ -180,6 +180,7 @@ namespace POS_Coffee.ViewModels
                     AmountReceived = (decimal)AmountReceived,
                     Change = Change,
                     CreatedDate = DateTime.Now,
+                    CreatedBy = LoginViewModel.username
                 };
                 //Thực hiện cập nhật lại số lượng 
                 await _foodDao.UpdateQuantity(cartItems);

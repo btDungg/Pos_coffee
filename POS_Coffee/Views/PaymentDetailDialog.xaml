@@ -9,13 +9,13 @@
     Title="Chi tiết hóa đơn"
     PrimaryButtonText="Close"
     DefaultButton="Primary"
-    Width="600">
+    Width="700">
 
     <Grid Padding="10">
         <StackPanel Spacing="15">
             <!-- Thông tin thanh toán -->
             <StackPanel>
-                <TextBlock Text="Thông tin hóa đơn:" FontSize="16" FontWeight="Bold" Margin="60 0 0 0"/>
+                <TextBlock Text="Thông tin hóa đơn:" FontSize="16" FontWeight="Bold" Margin="100 0 0 0"/>
                 <StackPanel Orientation="Horizontal" Spacing="10">
                     <TextBlock Text="Tổng tiền:" FontWeight="SemiBold" />
                     <TextBlock Text="{Binding SelectedPayment.TotalPrice, Mode=TwoWay}" />
@@ -44,13 +44,15 @@
 
             <!-- Danh sách chi tiết thanh toán -->
             <StackPanel>
-                <TextBlock Text="Chi tiết hóa đơn:" FontSize="16" FontWeight="Bold" Margin="60,10,0,5" />
+                <TextBlock Text="Chi tiết hóa đơn:" FontSize="16" FontWeight="Bold" Margin="100,10,0,5" />
                 <ListView ItemsSource="{Binding SelectedPaymentItems}" Height="200" BorderThickness="1" BorderBrush="Gray">
                     <ListView.HeaderTemplate>
                         <!-- Header cho danh sách -->
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Background="#E0E0E0" Padding="5">
                                 <TextBlock Text="Mã món ăn" Width="100" FontWeight="Bold" />
+                                <TextBlock Text="Tên món ăn" Width="100" FontWeight="Bold" />
+                                <TextBlock Text="Giá" Width="100" FontWeight="Bold" />
                                 <TextBlock Text="Số lượng" Width="100" FontWeight="Bold" TextAlignment="Right" />
                             </StackPanel>
                         </DataTemplate>
@@ -59,11 +61,17 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Spacing="10">
                                 <TextBlock Text="{Binding FoodId}" Margin="20 0 0 0"/>
+                                <TextBlock Text="{Binding Food.Name}" Margin="70 0 0 0"/>
+                                <TextBlock Text="{Binding Food.Price}" Margin="20 0 0 0"/>
                                 <TextBlock Text="{Binding Quantity}" Margin="120 0 0 0"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBlock Text="Người tạo:" FontWeight="SemiBold" />
+                <TextBlock Text="{Binding SelectedPayment.CreatedBy, Mode=TwoWay}" />
             </StackPanel>
         </StackPanel>
   </Grid>

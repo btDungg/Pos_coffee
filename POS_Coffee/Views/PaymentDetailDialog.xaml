@@ -81,25 +81,33 @@
                 <DataTemplate>
                     <Grid Background="#E0E0E0" Padding="5">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="130"/>
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" 
-                         Text="Mã món ăn" 
-                         FontWeight="Bold"/>
+                           Text="Mã" 
+                           FontWeight="Bold" 
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="1" 
-                         Text="Tên món ăn" 
-                         FontWeight="Bold"/>
-                        <TextBlock Grid.Column="2" 
-                         Text="Giá" 
-                         FontWeight="Bold"/>
-                        <TextBlock Grid.Column="3" 
-                         Text="Số lượng" 
-                         FontWeight="Bold" 
-                         TextAlignment="Right"/>
+                           Text="Tên món ăn" 
+                           FontWeight="Bold" 
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Center"/>
+                         <TextBlock Grid.Column="2" 
+                           Text="Giá" 
+                           FontWeight="Bold" 
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Center"/>
+                          <TextBlock Grid.Column="3" 
+                           Text="Số lượng" 
+                           FontWeight="Bold" 
+                           TextAlignment="Right" 
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center"/>
                     </Grid>
                 </DataTemplate>
             </ListView.HeaderTemplate>
@@ -108,25 +116,31 @@
                 <DataTemplate>
                     <Grid Padding="5">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="130"/>
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" 
                          Text="{Binding FoodId}" 
-                         Margin="20,0,0,0"/>
+                         HorizontalAlignment="Left" 
+                         VerticalAlignment="Center"/>
+                        
+                        
                         <TextBlock Grid.Column="1" 
                          Text="{Binding Food.Name}" 
-                         Margin="0,0,0,0"/>
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="2" 
                          Text="{Binding Food.Price}" 
-                         Margin="0,0,0,0"/>
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="3" 
                          Text="{Binding Quantity}" 
                          TextAlignment="Right"
-                         Margin="0,0,20,0"/>
+                         HorizontalAlignment="Center" 
+                        VerticalAlignment="Center"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

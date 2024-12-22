@@ -69,7 +69,10 @@
         </StackPanel>
 
         <!-- Danh sách chi tiết thanh toán -->
-         <TextBlock Grid.Row="1" Text="Chi tiết hóa đơn:" FontSize="16" FontWeight="Bold" Margin="50,30,0,5" />
+         <TextBlock Grid.Row="1" Text="Chi tiết hóa đơn:"
+                    FontSize="16" FontWeight="Bold"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"/>
         <ListView Grid.Row="2" 
           ItemsSource="{Binding SelectedPaymentItems}"
           Height="200" 
@@ -84,22 +87,25 @@
                             <ColumnDefinition Width="50"/>
                             <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="130"/>
-                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="60"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" 
+                           Padding="10 0 0 0"
                            Text="Mã" 
                            FontWeight="Bold" 
                            HorizontalAlignment="Left" 
                            VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="1" 
                            Text="Tên món ăn" 
+                                   Padding="10 0 0 0"
                            FontWeight="Bold" 
                            HorizontalAlignment="Left" 
                            VerticalAlignment="Center"/>
                          <TextBlock Grid.Column="2" 
                            Text="Giá" 
-                           FontWeight="Bold" 
+                           FontWeight="Bold"
+                                    Padding="30 0 0 0"
                            HorizontalAlignment="Left" 
                            VerticalAlignment="Center"/>
                           <TextBlock Grid.Column="3" 
@@ -119,7 +125,7 @@
                             <ColumnDefinition Width="50"/>
                             <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="130"/>
-                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="60"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" 

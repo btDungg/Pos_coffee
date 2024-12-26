@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using POS_Coffee.Data;
 
@@ -11,9 +12,11 @@ using POS_Coffee.Data;
 namespace POS_Coffee.Migrations
 {
     [DbContext(typeof(PosDbContext))]
-    partial class PosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241216084337_update-foreignkey-paymentdetail")]
+    partial class updateforeignkeypaymentdetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,9 +32,6 @@ namespace POS_Coffee.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("password")
                         .HasColumnType("nvarchar(max)");
@@ -50,7 +50,6 @@ namespace POS_Coffee.Migrations
                         new
                         {
                             Id = 1,
-                            name = "Nguyễn Võ Nhật Huy",
                             password = "emp1",
                             role = "employee",
                             username = "emp1"
@@ -58,7 +57,6 @@ namespace POS_Coffee.Migrations
                         new
                         {
                             Id = 2,
-                            name = "Bùi Tiến Dũng",
                             password = "emp2",
                             role = "employee",
                             username = "emp2"
@@ -66,7 +64,6 @@ namespace POS_Coffee.Migrations
                         new
                         {
                             Id = 3,
-                            name = "Phạm Thế Duyệt",
                             password = "admin1",
                             role = "admin",
                             username = "admin1"
@@ -301,9 +298,6 @@ namespace POS_Coffee.Migrations
                     b.Property<decimal>("Change")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -390,7 +384,7 @@ namespace POS_Coffee.Migrations
                             Name = "Giảm 10% cho hóa đơn lớn hơn 500,000",
                             applicable_to = "all",
                             created_by = 3,
-                            created_date = new DateTime(2024, 12, 16, 16, 15, 6, 317, DateTimeKind.Local).AddTicks(1828),
+                            created_date = new DateTime(2024, 12, 16, 15, 43, 36, 481, DateTimeKind.Local).AddTicks(8148),
                             discount_type = "percent",
                             discount_value = 10m,
                             end_date = new DateTime(2024, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -398,7 +392,7 @@ namespace POS_Coffee.Migrations
                             min_order_value = 500000m,
                             start_date = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             updated_by = 3,
-                            updated_date = new DateTime(2024, 12, 16, 16, 15, 6, 318, DateTimeKind.Local).AddTicks(6357)
+                            updated_date = new DateTime(2024, 12, 16, 15, 43, 36, 482, DateTimeKind.Local).AddTicks(9356)
                         },
                         new
                         {
@@ -407,7 +401,7 @@ namespace POS_Coffee.Migrations
                             Name = "Giảm 50,000 cho hóa đơn từ 300,000 trở lên",
                             applicable_to = "all",
                             created_by = 3,
-                            created_date = new DateTime(2024, 12, 16, 16, 15, 6, 318, DateTimeKind.Local).AddTicks(6940),
+                            created_date = new DateTime(2024, 12, 16, 15, 43, 36, 482, DateTimeKind.Local).AddTicks(9820),
                             discount_type = "amount",
                             discount_value = 50000m,
                             end_date = new DateTime(2023, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -415,7 +409,7 @@ namespace POS_Coffee.Migrations
                             min_order_value = 300000m,
                             start_date = new DateTime(2023, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             updated_by = 3,
-                            updated_date = new DateTime(2024, 12, 16, 16, 15, 6, 318, DateTimeKind.Local).AddTicks(6941)
+                            updated_date = new DateTime(2024, 12, 16, 15, 43, 36, 482, DateTimeKind.Local).AddTicks(9821)
                         },
                         new
                         {
@@ -424,7 +418,7 @@ namespace POS_Coffee.Migrations
                             Name = "Giảm giá 15% cho danh mục Đồ uống",
                             applicable_to = "categories",
                             created_by = 3,
-                            created_date = new DateTime(2024, 12, 16, 16, 15, 6, 318, DateTimeKind.Local).AddTicks(6947),
+                            created_date = new DateTime(2024, 12, 16, 15, 43, 36, 482, DateTimeKind.Local).AddTicks(9826),
                             discount_type = "percent",
                             discount_value = 15m,
                             end_date = new DateTime(2024, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -432,7 +426,7 @@ namespace POS_Coffee.Migrations
                             min_order_value = 0m,
                             start_date = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             updated_by = 3,
-                            updated_date = new DateTime(2024, 12, 16, 16, 15, 6, 318, DateTimeKind.Local).AddTicks(6947)
+                            updated_date = new DateTime(2024, 12, 16, 15, 43, 36, 482, DateTimeKind.Local).AddTicks(9827)
                         });
                 });
 

@@ -16,5 +16,6 @@ namespace POS_Coffee.Models
         public decimal Change {  get; set; }
         public string PaymetMethod { get; set; }
         public DateTime CreatedDate { get; set; }
+        public string CreatedBy { get; set; }
     }
 }

@@ -48,8 +48,9 @@ namespace POS_Coffee.Repositories
 
         public async Task<List<PaymentDetailModel>> GetPaymentDetailById(Guid paymentID)
         {
-            var items = await _dbContext.PaymentDetails.Where(x => x.PaymentID == paymentID).ToListAsync();
-            return items;
+            var items = _dbContext.PaymentDetails.Include("Food").AsQueryable();
+            items = items.Where(x => x.PaymentID == paymentID);
+            return await items.ToListAsync();
         }
     }
 }

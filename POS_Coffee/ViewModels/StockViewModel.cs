@@ -14,7 +14,11 @@ using POS_Coffee.Models;
 using POS_Coffee.Repositories;
 using POS_Coffee.Utilities;
 using POS_Coffee.Views;
+using Windows.ApplicationModel.Payments;
 using RelayCommand = CommunityToolkit.Mvvm.Input.RelayCommand;
+using Windows.Storage;
+using Windows.Storage.Pickers;
+using WinRT.Interop;
 
 namespace POS_Coffee.ViewModels
 {
@@ -22,14 +26,7 @@ namespace POS_Coffee.ViewModels
     {
         public List<StockModel> allStocks { get; set; }
 
-        private StockModel _stockDetail;
-        public StockModel StockDetail
-        {
-            get => _stockDetail;
-            set => SetProperty(ref _stockDetail, value);
-        }
-
-        private readonly IStockDAO _dao;
+        private readonly IStockDAO _stockDao;
 
         private INavigation _navigation;
 
@@ -44,12 +41,27 @@ namespace POS_Coffee.ViewModels
         public ICommand SearchButtonClickCmd { get; }
         public ICommand SaveStockClickCmd { get; }
         public ICommand CancelStockClickCmd { get; }
-        public ICommand ChangeDetailCmd { get; }
+        public ICommand UploadImageClickCmd { get; }
+
         public IAsyncRelayCommand LoadStocksCommand;
 
         //Variable
-        private ObservableCollection<StockModel> _stocks;
         private XamlRoot _xamlRoot;
+
+        private StockModel _stockDetail;
+        public StockModel StockDetail
+        {
+            get => _stockDetail;
+            set => SetProperty(ref _stockDetail, value);
+        }
+
+        private StockModel _stockAddition;
+        public StockModel StockAddition
+        {
+            get => _stockAddition;
+            set => SetProperty(ref _stockAddition, value);
+        }
+
 
         private bool _isReadOnly = true;
         public bool isReadOnly
@@ -72,8 +84,7 @@ namespace POS_Coffee.ViewModels
             set => SetProperty(ref _saveStatus, value);
         }
 
-        
-
+        private ObservableCollection<StockModel> _stocks;
         public ObservableCollection<StockModel> Stocks
         {
             get => _stocks;
@@ -87,16 +98,17 @@ namespace POS_Coffee.ViewModels
             set => SetProperty(ref _searchQuery, value);
         }
 
+        public string imagePath { get; set; }
+
         public StockViewModel(IStockDAO stockDAO)
         {
-            _dao = stockDAO;
+            _stockDao = stockDAO;
         }
 
         public StockViewModel(IStockDAO stockDAO, INavigation navigation) 
-        { 
-            _dao = stockDAO;
+        {
+            _stockDao = stockDAO;
             _navigation = navigation;
-              
             AllStockClickCmd = new RelayCommand(() => AllStockClick());
             NormalStockClickCmd = new RelayCommand(() => NormalStockClick());
             LowStockClickCmd = new RelayCommand(() => LowStockClick());
@@ -107,13 +119,14 @@ namespace POS_Coffee.ViewModels
             SearchButtonClickCmd = new RelayCommand(() => SearchStockClick());
             SaveStockClickCmd = new RelayCommand(()=>SaveStockClick());
             CancelStockClickCmd = new RelayCommand(() => CancelStockClick());
+            UploadImageClickCmd = new RelayCommand(() => UploadImageClick());
             LoadStocksCommand = new AsyncRelayCommand(LoadStocks);
             LoadStocksCommand.Execute(null);
         }
 
         private async Task LoadStocks()
         {
-            var stocks = await _dao.getAllStock();
+            var stocks = await _stockDao.GetAllStock();
             allStocks = new List<StockModel>(stocks);
             if (allStocks.Any())
             {
@@ -154,18 +167,41 @@ namespace POS_Coffee.ViewModels
 
         private async void SearchStockClick()
         {
-            var stocks = await _dao.getSearchStock(searchQuery);
+            var stocks = await _stockDao.GetSearchStock(searchQuery);
             Stocks = new ObservableCollection<StockModel>(stocks);
         }
 
-        private void AddStockClick()
+        private async void AddStockClick()
         {
+            StockAddition = new StockModel
+            {
+                ImagePath = "",
+                Name = "",
+                Description = "",
+                Unit = "",
+                Price = 0,
+                StockNumber = 0,
+            };
+            // Hiển thị dialog
+            var dialog = new StockAdditionDialog
+            {
+                XamlRoot = _xamlRoot,
+                AddedStock = StockAddition
+            };
+            await dialog.ShowAsync();
+            StockAddition.ImagePath = imagePath;
+            StockAddition = dialog.AddedStock;
+            dialog.PrimaryButtonClick += Dialog_PrimaryButtonClick;
+        }
 
+        private async void Dialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            await _stockDao.AddStock(StockAddition);
         }
 
         private async void DeleteStockClick()
         {
-            var temp = _dao.RemoveStock(StockDetail);
+            var temp = _stockDao.RemoveStock(StockDetail);
             if (temp != null)
             {
                 Stocks.Remove(StockDetail);
@@ -225,9 +261,9 @@ namespace POS_Coffee.ViewModels
             //    StockDetail.StockNumber = stockDetailChanged.StockNumber;
             //    stockDetailChanged.StockNumber = -1;
             //}
-            await _dao.UpdateStock(StockDetail);
-            //StockDetail = updatedStock;
-            var stocks = await _dao.getAllStock();
+            StockDetail.ImagePath = imagePath;
+            await _stockDao.UpdateStock(StockDetail);
+            var stocks = await _stockDao.GetAllStock();
             Stocks = new ObservableCollection<StockModel>(stocks);
             isReadOnly = true;
             visibilityStatus = "Visible";
@@ -248,6 +284,25 @@ namespace POS_Coffee.ViewModels
             visibilityStatus = "Visible";
             saveStatus = "Collapsed";
         }
+        private async void UploadImageClick()
+        {
+            FileOpenPicker fileOpenPicker = new()
+            {
+                ViewMode = PickerViewMode.Thumbnail,
+                FileTypeFilter = { ".jpg", ".jpeg", ".png", ".gif" },
+            };
+
+            var windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(App.Window);
+            WinRT.Interop.InitializeWithWindow.Initialize(fileOpenPicker, windowHandle);
+
+            StorageFile file = await fileOpenPicker.PickSingleFileAsync();
+
+            if (file != null)
+            {
+                imagePath = file.Path;
+            }
+        }
+        
 
         public void SetXamlRoot(XamlRoot xamlRoot)
         {

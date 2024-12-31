@@ -74,7 +74,13 @@
                     </Grid.RowDefinitions>
                     <TextBlock Text="CHI TIẾT NGUYÊN LIỆU" Margin="0,10,0,0" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Center"/>
                     <StackPanel x:Name="Content" Grid.Row="1" Margin="10,10,0,0" Orientation="Vertical">
-                        <Image x:Name="StockImage" MaxWidth="1000" Height="320" Margin="0 10 10 10" Stretch="Uniform" HorizontalAlignment="Left" Source="{x:Bind ViewModel.StockDetail.ImagePath, Mode=OneWay}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Image x:Name="StockImage" MaxWidth="1000" Height="320" Margin="0 10 10 10" Stretch="Uniform" 
+                                   HorizontalAlignment="Left" Source="{x:Bind ViewModel.StockDetail.ImagePath, Mode=OneWay}"/>
+                            <Button x:Name="UploadButton" Content="Upload Image" Foreground="Blue" VerticalAlignment="Center"
+                                    FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.UploadImageClickCmd}"
+                                    Visibility="{x:Bind ViewModel.saveStatus, Mode=TwoWay}"/>
+                        </StackPanel>
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>

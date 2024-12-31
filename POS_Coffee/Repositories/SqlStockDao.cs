@@ -16,7 +16,7 @@ namespace POS_Coffee.Repositories
         {
             _dbcontext = dbContext;
         }
-        public async Task<List<StockModel>> getAllStock()
+        public async Task<List<StockModel>> GetAllStock()
         {
             try
             {
@@ -31,7 +31,7 @@ namespace POS_Coffee.Repositories
 
         }
 
-        public async Task<List<StockModel>> getSearchStock(string searchQuery)
+        public async Task<List<StockModel>> GetSearchStock(string searchQuery)
         {
             var stocks = _dbcontext.Stocks.AsQueryable();
             if (!string.IsNullOrWhiteSpace(searchQuery))
@@ -41,7 +41,7 @@ namespace POS_Coffee.Repositories
             return await stocks.ToListAsync();
         }
 
-        public async Task<StockModel> getStockByID(int id)
+        public async Task<StockModel> GetStockByID(int id)
         {
             var stock = await _dbcontext.Stocks.FirstOrDefaultAsync(x => x.ID == id);   
             if (stock == null)
@@ -70,6 +70,7 @@ namespace POS_Coffee.Repositories
             {
                 return null;
             }
+            Updatedstock.ImagePath = stock.ImagePath;
             Updatedstock.Price = stock.Price;
             Updatedstock.StockNumber = stock.StockNumber;
             Updatedstock.Name = stock.Name;
@@ -77,6 +78,13 @@ namespace POS_Coffee.Repositories
             Updatedstock.Description = stock.Description;
             await _dbcontext.SaveChangesAsync();
             return Updatedstock;
+        }
+
+        public async Task<StockModel> AddStock(StockModel stock)
+        {
+            await _dbcontext.AddAsync(stock);
+            await _dbcontext.SaveChangesAsync();
+            return stock;
         }
     }
 }

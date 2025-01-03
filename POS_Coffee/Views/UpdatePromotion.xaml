@@ -50,6 +50,10 @@
                    ItemsSource="{Binding ApplicableToOptions}"
                    SelectedItem="{Binding ApplicableTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                    PlaceholderText="Chọn phạm vi áp dụng"/>
+            <ToggleSwitch Header="Kích hoạt" 
+              IsOn="{Binding IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+              OnContent="Đang kích hoạt" 
+              OffContent="Không kích hoạt"/>
 
             <CalendarDatePicker Header="Ngày bắt đầu" 
                               Date="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

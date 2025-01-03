@@ -23,7 +23,11 @@ namespace POS_Coffee.ViewModels
             _dao = dao;
             _navigation = navigation;
 
+            DiscountTypes = new ObservableCollection<string> { "Phần trăm", "Số tiền cố định" };
+            ApplicableToOptions = new ObservableCollection<string> { "Tất cả sản phẩm", "Đồ ăn", "Đồ uống" };
+
             // Khởi tạo dữ liệu từ khuyến mại được truyền vào
+            Id = promotion.Id;
             Name = promotion.Name;
             Description = promotion.Description;
             DiscountType = promotion.discount_type;
@@ -32,12 +36,30 @@ namespace POS_Coffee.ViewModels
             StartDate = promotion.start_date;
             EndDate = promotion.end_date;
             ApplicableTo = promotion.applicable_to;
+            IsActive = promotion.is_active;
 
             SavePromotionCommand = new AsyncRelayCommand(SavePromotionAsync);
             CancelCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(ExecuteCancel);
         }
 
-        // Thuộc tính Binding
+
+
+        public ObservableCollection<string> DiscountTypes { get; }
+        public ObservableCollection<string> ApplicableToOptions { get; }
+
+        private int _id;
+        public int Id
+        {
+            get => _id;
+            set => SetProperty(ref _id, value);
+        }
+        private bool _isActive;
+        public bool IsActive
+        {
+            get => _isActive;
+            set => SetProperty(ref _isActive, value);
+        }
+
         private string _name;
         public string Name
         {
@@ -52,7 +74,6 @@ namespace POS_Coffee.ViewModels
             set => SetProperty(ref _description, value);
         }
 
-        public ObservableCollection<string> DiscountTypes { get; } = new ObservableCollection<string> { "Percentage", "Fixed Amount" };
 
         private string _discountType;
         public string DiscountType
@@ -89,7 +110,6 @@ namespace POS_Coffee.ViewModels
             set => SetProperty(ref _endDate, value);
         }
 
-        public ObservableCollection<string> ApplicableToOptions { get; } = new ObservableCollection<string> { "All Products", "Specific Categories", "Specific Products" };
 
         private string _applicableTo;
         public string ApplicableTo
@@ -109,6 +129,7 @@ namespace POS_Coffee.ViewModels
                 // Tạo đối tượng PromotionModel từ dữ liệu hiện tại
                 var updatedPromotion = new PromotionModel
                 {
+                    Id = Id,
                     Name = Name,
                     Description = Description,
                     discount_type = DiscountType,
@@ -116,7 +137,10 @@ namespace POS_Coffee.ViewModels
                     min_order_value = (decimal)MinOrderValue,
                     start_date = StartDate?.Date ?? DateTime.Now.Date,
                     end_date = EndDate?.Date ?? DateTime.Now.Date,
-                    applicable_to = ApplicableTo
+                    applicable_to = ApplicableTo,
+                    updated_date = DateTime.Now,
+                    is_active = IsActive,
+                    updated_by = LoginViewModel.id
                 };
 
                 await _dao.UpdatePromotionAsync(updatedPromotion);

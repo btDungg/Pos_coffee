@@ -27,7 +27,8 @@ namespace POS_Coffee.ViewModels
             _navigation = navigation;
 
             AddNewPromotionCommand = new RelayCommand(ExecuteAddNewPromotion);
-            UpdateSelectedPromotionCommand = new RelayCommand<PromotionModel>(UpdatePromotionAsync);
+            UpdateSelectedPromotionCommand = new RelayCommand<PromotionModel>(NavigateToUpdatePromotionPage);
+
 
             DeleteSelectedPromotionCommand = new RelayCommand<PromotionModel>(async (promotion) => await DeletePromotionAsync(promotion));
 
@@ -137,7 +138,7 @@ namespace POS_Coffee.ViewModels
             }
         }
 
-        private void UpdatePromotionAsync(PromotionModel promotion)
+        private void NavigateToUpdatePromotionPage(PromotionModel promotion)
         {
             try
             {

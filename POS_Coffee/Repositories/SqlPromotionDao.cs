@@ -95,6 +95,10 @@ namespace POS_Coffee.Repositories
                     existingPromotion.start_date = promotion.start_date;
                     existingPromotion.end_date = promotion.end_date;
                     existingPromotion.applicable_to = promotion.applicable_to;
+                    existingPromotion.is_active = promotion.is_active;
+                    existingPromotion.updated_by = promotion.updated_by;
+                    existingPromotion.updated_date = promotion.updated_date;
+
 
                     await _dbContext.SaveChangesAsync();
                 }

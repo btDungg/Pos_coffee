@@ -120,10 +120,11 @@
                     <TextBlock  Grid.Row="0" Text="{Binding TotalPrice}" FontSize="20" Foreground="Green" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"  />
 
 
-                    <TextBlock Grid.Row="1" Text="Giảm giá(%)" FontSize="20"  HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" />
+                    <TextBlock Grid.Row="1" Text="Số tiền được giảm giá: " FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" />
                     <TextBox Height="30" MinWidth="70" Grid.Row="1" FontSize="18"
                              FontWeight="Bold" Foreground="#bae4d6" HorizontalAlignment="Right" Grid.Column="1"
-                             Text="{x:Bind PaymentViewModel.Discount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                             Text="{x:Bind PaymentViewModel.Discount, Mode=OneWay}"
+                             IsReadOnly="True" Background="Transparent" BorderBrush="Transparent"/>
 
                     <TextBlock Grid.Row="2" Text="Khách cần trả:" FontSize="24" FontWeight="Bold"
                                HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0"/>

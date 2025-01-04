@@ -35,9 +35,10 @@ namespace POS_Coffee.Views
         private void PaymentPage_Loaded(object sender, RoutedEventArgs e)
         {
             PaymentViewModel.SetXamlRoot(this.XamlRoot);
+
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             if (e.Parameter is CartItemViewModel cartItemViewModel)
@@ -48,6 +49,7 @@ namespace POS_Coffee.Views
                 {
                     cartItems.Add(item);
                 }
+                await PaymentViewModel.SetInitialDiscount(cartItems);
                 var CartItemViewModel = new
                 {
                     CartItems = cartItems,

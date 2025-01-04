@@ -109,6 +109,18 @@ namespace POS_Coffee.Repositories
                 throw new Exception("Error updating promotion in the database.", ex);
             }
         }
+
+        public async Task<List<PromotionModel>> GetActivePromotions()
+        {
+            var currentDate = DateTime.Now;
+
+            // Query to get promotions that are active (can be based on start/end date or status)
+            var activePromotions = await _dbContext.Promotions
+                .Where(p => p.is_active && p.start_date <= currentDate && p.end_date >= currentDate)
+                .ToListAsync();
+
+            return activePromotions;
+        }
     }
 
 }

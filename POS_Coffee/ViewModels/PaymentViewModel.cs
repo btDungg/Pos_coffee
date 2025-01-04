@@ -22,30 +22,27 @@ namespace POS_Coffee.ViewModels
         private readonly IPaymentDao _paymentDao;
         private readonly INavigation _navigation;
         private readonly IFoodDao _foodDao;
-        
+        private readonly IPromotionDao _promotionDao; // Assuming you have this repository for promotions
+
         public ICommand ShowDetailCommand { get; }
         public ICommand PayCommand { get; }
         public IAsyncRelayCommand LoadPaymentsCommand { get; }
         public ObservableCollection<PaymentModel> _paymentModels { get; set; }
-        public PaymentViewModel(IPaymentDao paymentDao, INavigation navigation, IFoodDao foodDao)
+
+        public PaymentViewModel(IPaymentDao paymentDao, INavigation navigation, IFoodDao foodDao, IPromotionDao promotionDao)
         {
-            _paymentDao = paymentDao;          
+            _paymentDao = paymentDao;
             _navigation = navigation;
             _foodDao = foodDao;
+            _promotionDao = promotionDao; // Initialize the promotion DAO
+            
             LoadPaymentsCommand = new AsyncRelayCommand(LoadPayments);
             PayCommand = new RelayCommand<List<CartItemModel>>(AddPayment);
             ShowDetailCommand = new RelayCommand(() => LoadPaymentDetail());
             LoadPaymentsCommand.Execute(null);
             
         }
-        //private PaymentModel _selectedPayment;
-        //public PaymentModel SelectedPayment
-        //{
-        //    get => _selectedPayment;
-        //    set => SetProperty(ref _selectedPayment, value);
-        //}
 
-        //public ObservableCollection<PaymentDetailModel> SelectedPaymentItems { get; set; }
         private decimal _totalPrice;
         public decimal TotalPrice
         {
@@ -61,8 +58,8 @@ namespace POS_Coffee.ViewModels
 
         public PaymentModel PaymentItem { get; set; }
 
-        private float _discount;
-        public float Discount
+        private decimal _discount;
+        public decimal Discount
         {
             get => _discount;
             set
@@ -74,11 +71,15 @@ namespace POS_Coffee.ViewModels
             }
         }
 
-        private void UpdatePriceAfterDiscount()
+        public async Task SetInitialDiscount(List<CartItemModel> cartItems)
         {
-            PriceAfterDiscount = TotalPrice - TotalPrice * (decimal)(Discount / 100);
+            Discount = await ApplyHighestDiscountForAllProducts(cartItems); // Use await here
         }
 
+        private void UpdatePriceAfterDiscount()
+        {
+            PriceAfterDiscount = TotalPrice - Discount;
+        }
 
         private float _amountReceived;
         public float AmountReceived
@@ -92,7 +93,6 @@ namespace POS_Coffee.ViewModels
                 }
             }
         }
-
 
         private decimal _change;
         public decimal Change
@@ -147,6 +147,10 @@ namespace POS_Coffee.ViewModels
             {
                 return;
             }
+
+            // Apply highest discount automatically based on promotions
+            await ApplyHighestDiscountForAllProducts(cartItems);
+
             if ((decimal)AmountReceived < PriceAfterDiscount)
             {
                 var failDialog = new ContentDialog()
@@ -163,7 +167,7 @@ namespace POS_Coffee.ViewModels
                 var failDialog = new ContentDialog()
                 {
                     XamlRoot = _xamlRoot,
-                    Content = "Phần trăm giảm giá không hợp lệ",
+                    Content = "Giảm giá không hợp lệ",
                     Title = "Thất bại",
                     CloseButtonText = "Ok",
                 };
@@ -175,17 +179,19 @@ namespace POS_Coffee.ViewModels
                 {
                     Id = Guid.NewGuid(),
                     TotalPrice = TotalPrice,
-                    Discount = Discount,
+                    Discount =(float) Discount,
                     PriceAfterDiscount = PriceAfterDiscount,
                     AmountReceived = (decimal)AmountReceived,
                     Change = Change,
                     CreatedDate = DateTime.Now,
                     CreatedBy = LoginViewModel.username
                 };
-                //Thực hiện cập nhật lại số lượng 
+
+                // Update quantities
                 await _foodDao.UpdateQuantity(cartItems);
                 await _paymentDao.AddPayment(payment);
                 await _paymentDao.AddPaymentDetail(cartItems, payment.Id);
+
                 var dialog = new ContentDialog()
                 {
                     XamlRoot = _xamlRoot,
@@ -196,7 +202,6 @@ namespace POS_Coffee.ViewModels
                 dialog.PrimaryButtonClick += Dialog_PrimaryButtonClick;
                 await dialog.ShowAsync();
             }
-            
         }
 
         private void Dialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -204,19 +209,56 @@ namespace POS_Coffee.ViewModels
             _navigation.NavigateTo(typeof(HomePage));
         }
 
-        private  async void LoadPaymentDetail()
+        private async void LoadPaymentDetail()
         {
             if (PaymentItem == null) { return; }
             var items = await _paymentDao.GetPaymentDetailById(PaymentItem.Id);
-            // Hiển thị dialog
             var dialog = new PaymentDetailDialog
             {
-                 XamlRoot = _xamlRoot,
-                 SelectedPayment = PaymentItem,
-                 SelectedPaymentItems = new ObservableCollection<PaymentDetailModel>(items)
+                XamlRoot = _xamlRoot,
+                SelectedPayment = PaymentItem,
+                SelectedPaymentItems = new ObservableCollection<PaymentDetailModel>(items)
             };
             await dialog.ShowAsync();
         }
 
+        public async Task<decimal> ApplyHighestDiscountForAllProducts(List<CartItemModel> cartItems)
+        {
+            decimal totalPrice = cartItems.Sum(item => item.Price * item.Quantity);
+            var promotions = await _promotionDao.GetActivePromotions();
+            var applicablePromotions = promotions.Where(p => p.applicable_to == "Tất cả sản phẩm");
+
+            var bestPromotion = applicablePromotions
+                .Where(p => totalPrice >= p.min_order_value)
+                .Select(p => new
+                {
+                    Promotion = p,
+                    DiscountAmount = p.discount_type == "Phần trăm"
+                        ? totalPrice * (p.discount_value / 100)
+                        : p.discount_value
+                })
+                .OrderByDescending(x => x.DiscountAmount)
+                .FirstOrDefault();
+
+            if (bestPromotion != null)
+            {
+                decimal discountAmount = bestPromotion.DiscountAmount;
+                decimal priceAfterDiscount = totalPrice - discountAmount;
+
+                Discount = discountAmount;
+                TotalPrice = totalPrice;
+                PriceAfterDiscount = priceAfterDiscount;
+
+                Console.WriteLine($"Giảm giá: {discountAmount} | Giá sau giảm: {priceAfterDiscount}");
+
+                return discountAmount;  // Return the discount applied
+            }
+            else
+            {
+                Console.WriteLine("Không có chương trình khuyến mãi hợp lệ hoặc giá trị đơn hàng không đủ lớn.");
+
+                return 0;  // No discount applied
+            }
+        }
     }
 }

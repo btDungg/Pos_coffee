@@ -18,5 +18,7 @@ namespace POS_Coffee.Repositories
             Task DeletePromotionAsync(PromotionModel promotion);
             Task UpdatePromotionAsync(PromotionModel promotion);
 
+            Task<List<PromotionModel>> GetActivePromotions();
+
     }
 }

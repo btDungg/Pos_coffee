@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using POS_Coffee.Models;
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,10 @@ namespace POS_Coffee.Data
         public DbSet<StockModel> Stocks { get; set; }
         public DbSet<PaymentModel> Payments { get; set; }
         public DbSet<PaymentDetailModel> PaymentDetails { get; set; }
+        public DbSet<PromotionModel> Promotions { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
+            optionsBuilder.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -56,6 +58,26 @@ namespace POS_Coffee.Data
             modelBuilder.Entity<PaymentDetailModel>(entity =>
             {
                 entity.HasKey(e => new{ e.PaymentID, e.FoodId});
+            });
+
+            modelBuilder.Entity<PromotionModel>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Name)
+                      .IsRequired()
+                      .HasMaxLength(255);
+
+                entity.Property(e => e.Description)
+                      .HasMaxLength(500);
+
+                entity.Property(e => e.discount_type)
+                      .IsRequired()
+                      .HasMaxLength(50);
+
+                entity.Property(e => e.applicable_to)
+                      .IsRequired()
+                      .HasMaxLength(50);
             });
 
             var foods = new List<FoodModel>
@@ -225,21 +247,24 @@ namespace POS_Coffee.Data
                     Id = 1,
                     username = "emp1",
                     password = "emp1",
-                    role = "employee"
+                    role = "employee",
+                    name = "Nguyễn Võ Nhật Huy"
                 },
                 new AccountModel()
                 {
                     Id = 2,
                     username = "emp2",
                     password = "emp2",
-                    role = "employee"
+                    role = "employee",
+                    name = "Bùi Tiến Dũng"
                 },
                 new AccountModel()
                 {
                     Id = 3,
                     username = "admin1",
                     password = "admin1",
-                    role = "admin"
+                    role = "admin",
+                    name = "Phạm Thế Duyệt"
                 }
             };
 
@@ -304,6 +329,61 @@ namespace POS_Coffee.Data
 
             modelBuilder.Entity<StockModel>().HasData(stockModels);
 
+            var promotions = new List<PromotionModel>
+            {
+                new PromotionModel
+               {
+                   Id = 1,
+                   Name = "Giảm 10% cho hóa đơn lớn hơn 500,000",
+                   Description = "Khuyến mãi áp dụng từ 01/01/2024 đến 31/01/2024",
+                   discount_type = "percent",
+                   discount_value = 10,
+                   min_order_value = 500000,
+                   start_date = new DateTime(2024, 1, 1),
+                   end_date = new DateTime(2024, 1, 31),
+                   is_active = true,
+                   applicable_to = "all",
+                   created_date = DateTime.Now,
+                   updated_date = DateTime.Now,
+                   created_by = 3,
+                   updated_by = 3
+                },
+               new PromotionModel
+               {
+                   Id = 2,
+                   Name = "Giảm 50,000 cho hóa đơn từ 300,000 trở lên",
+                   Description = "Khuyến mãi cho tất cả đơn hàng từ 15/12/2023 đến 31/12/2023",
+                   discount_type = "amount",
+                   discount_value = 50000,
+                   min_order_value = 300000,
+                   start_date = new DateTime(2023, 12, 15),
+                   end_date = new DateTime(2023, 12, 31),
+                   is_active = true,
+                   applicable_to = "all",
+                   created_date = DateTime.Now,
+                   updated_date = DateTime.Now,
+                   created_by = 3,
+                   updated_by = 3
+               },
+               new PromotionModel
+               {
+                   Id = 3,
+                   Name = "Giảm giá 15% cho danh mục Đồ uống",
+                   Description = "Khuyến mãi áp dụng riêng cho danh mục Đồ uống từ 01/02/2024 đến 28/02/2024",
+                   discount_type = "percent",
+                   discount_value = 15,
+                   min_order_value = 0,
+                   start_date = new DateTime(2024, 2, 1),
+                   end_date = new DateTime(2024, 2, 28),
+                   is_active = true,
+                   applicable_to = "categories",
+                   created_date = DateTime.Now,
+                   updated_date = DateTime.Now,
+                   created_by = 3,
+                   updated_by = 3
+               }                    
+            };
+            modelBuilder.Entity<PromotionModel>().HasData(promotions);
         }
     }
 }

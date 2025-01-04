@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using POS_Coffee.Data;
 
@@ -11,9 +12,11 @@ using POS_Coffee.Data;
 namespace POS_Coffee.Migrations
 {
     [DbContext(typeof(PosDbContext))]
-    partial class PosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241208040521_AddPromotionTable")]
+    partial class AddPromotionTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,9 +32,6 @@ namespace POS_Coffee.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("password")
                         .HasColumnType("nvarchar(max)");
@@ -50,7 +50,6 @@ namespace POS_Coffee.Migrations
                         new
                         {
                             Id = 1,
-                            name = "Nguyễn Võ Nhật Huy",
                             password = "emp1",
                             role = "employee",
                             username = "emp1"
@@ -58,7 +57,6 @@ namespace POS_Coffee.Migrations
                         new
                         {
                             Id = 2,
-                            name = "Bùi Tiến Dũng",
                             password = "emp2",
                             role = "employee",
                             username = "emp2"
@@ -66,7 +64,6 @@ namespace POS_Coffee.Migrations
                         new
                         {
                             Id = 3,
-                            name = "Phạm Thế Duyệt",
                             password = "admin1",
                             role = "admin",
                             username = "admin1"
@@ -284,8 +281,6 @@ namespace POS_Coffee.Migrations
 
                     b.HasKey("PaymentID", "FoodId");
 
-                    b.HasIndex("FoodId");
-
                     b.ToTable("PaymentDetails");
                 });
 
@@ -300,9 +295,6 @@ namespace POS_Coffee.Migrations
 
                     b.Property<decimal>("Change")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -390,7 +382,7 @@ namespace POS_Coffee.Migrations
                             Name = "Giảm 10% cho hóa đơn lớn hơn 500,000",
                             applicable_to = "all",
                             created_by = 3,
-                            created_date = new DateTime(2024, 12, 16, 16, 15, 6, 317, DateTimeKind.Local).AddTicks(1828),
+                            created_date = new DateTime(2024, 12, 8, 11, 5, 15, 762, DateTimeKind.Local).AddTicks(3263),
                             discount_type = "percent",
                             discount_value = 10m,
                             end_date = new DateTime(2024, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -398,7 +390,7 @@ namespace POS_Coffee.Migrations
                             min_order_value = 500000m,
                             start_date = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             updated_by = 3,
-                            updated_date = new DateTime(2024, 12, 16, 16, 15, 6, 318, DateTimeKind.Local).AddTicks(6357)
+                            updated_date = new DateTime(2024, 12, 8, 11, 5, 15, 764, DateTimeKind.Local).AddTicks(2164)
                         },
                         new
                         {
@@ -407,7 +399,7 @@ namespace POS_Coffee.Migrations
                             Name = "Giảm 50,000 cho hóa đơn từ 300,000 trở lên",
                             applicable_to = "all",
                             created_by = 3,
-                            created_date = new DateTime(2024, 12, 16, 16, 15, 6, 318, DateTimeKind.Local).AddTicks(6940),
+                            created_date = new DateTime(2024, 12, 8, 11, 5, 15, 764, DateTimeKind.Local).AddTicks(3153),
                             discount_type = "amount",
                             discount_value = 50000m,
                             end_date = new DateTime(2023, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -415,7 +407,7 @@ namespace POS_Coffee.Migrations
                             min_order_value = 300000m,
                             start_date = new DateTime(2023, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             updated_by = 3,
-                            updated_date = new DateTime(2024, 12, 16, 16, 15, 6, 318, DateTimeKind.Local).AddTicks(6941)
+                            updated_date = new DateTime(2024, 12, 8, 11, 5, 15, 764, DateTimeKind.Local).AddTicks(3157)
                         },
                         new
                         {
@@ -424,7 +416,7 @@ namespace POS_Coffee.Migrations
                             Name = "Giảm giá 15% cho danh mục Đồ uống",
                             applicable_to = "categories",
                             created_by = 3,
-                            created_date = new DateTime(2024, 12, 16, 16, 15, 6, 318, DateTimeKind.Local).AddTicks(6947),
+                            created_date = new DateTime(2024, 12, 8, 11, 5, 15, 764, DateTimeKind.Local).AddTicks(3161),
                             discount_type = "percent",
                             discount_value = 15m,
                             end_date = new DateTime(2024, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -432,7 +424,7 @@ namespace POS_Coffee.Migrations
                             min_order_value = 0m,
                             start_date = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             updated_by = 3,
-                            updated_date = new DateTime(2024, 12, 16, 16, 15, 6, 318, DateTimeKind.Local).AddTicks(6947)
+                            updated_date = new DateTime(2024, 12, 8, 11, 5, 15, 764, DateTimeKind.Local).AddTicks(3162)
                         });
                 });
 
@@ -517,17 +509,6 @@ namespace POS_Coffee.Migrations
                             StockNumber = 20,
                             Unit = "kg"
                         });
-                });
-
-            modelBuilder.Entity("POS_Coffee.Models.PaymentDetailModel", b =>
-                {
-                    b.HasOne("POS_Coffee.Models.FoodModel", "Food")
-                        .WithMany()
-                        .HasForeignKey("FoodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Food");
                 });
 #pragma warning restore 612, 618
         }

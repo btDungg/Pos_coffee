@@ -39,7 +39,7 @@ namespace POS_Coffee
             this.InitializeComponent();
             nvSample.ItemInvoked += OnItemInvoked;
             ViewModel.NavigationCompleted += OnNavigationCompleted;
-            LoginViewModel.OnLoginSuccess += InitializeNavigation;
+            LoginViewModel.OnLoginSuccess += ShowNavigationItems;
             SetWindowSize(this, 1300, 825);
             CenterWindowOnScreen(this);
             DisableWindowResize(this);
@@ -54,43 +54,47 @@ namespace POS_Coffee
             {
                 if (item is NavigationViewItem navItem)
                 {
-                    //navItem.Visibility = Visibility.Collapsed;
-                    navItem.IsEnabled = false;
+                    navItem.Visibility = Visibility.Collapsed;
+                    //navItem.IsEnabled = false;
                 }
             }
             foreach (var item in nvSample.FooterMenuItems)
             {
                 if (item is NavigationViewItem navItem)
                 {
-                    //navItem.Visibility = Visibility.Collapsed;
-                    navItem.IsEnabled = false;
+                    navItem.Visibility = Visibility.Collapsed;
+                    //navItem.IsEnabled = false;
                 }
             }
         }
 
-        private void ShowNavigationItems()
+        private void ShowNavigationItems(string role)
         {
             foreach (var item in nvSample.MenuItems)
             {
                 if (item is NavigationViewItem navItem)
                 {
-                    //navItem.Visibility = Visibility.Visible;
-                    navItem.IsEnabled = true;
+                    if((navItem.Name == "HomePage" || navItem.Name == "PaymentPage") && role == "employee")
+                    {
+                        navItem.Visibility = Visibility.Visible;
+                    }
+                    if ((navItem.Name == "StockManagement" || navItem.Name == "PaymentPage" || navItem.Name == "FinancialReport" || navItem.Name == "PromotionManagement")
+                        && role == "admin")
+                    {
+                        navItem.Visibility = Visibility.Visible;
+                    }
+                    //navItem.IsEnabled = true;
                 }
             }
             foreach (var item in nvSample.FooterMenuItems)
             {
                 if (item is NavigationViewItem navItem)
                 {
-                    navItem.IsEnabled = true;
-                   // navItem.Visibility = Visibility.Visible;
+                    //navItem.IsEnabled = true;
+                   navItem.Visibility = Visibility.Visible;
                 }
-            }       
-        }
-
-        private void InitializeNavigation(string pagekey)
-        {
-            ShowNavigationItems();
+            }
+           
         }
 
         private void OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
@@ -110,14 +114,20 @@ namespace POS_Coffee
             {
                 if (item is NavigationViewItem navItem)
                 {
-                    navItem.Visibility = isLoginPage ? Visibility.Collapsed : Visibility.Visible;
+                    if (isLoginPage == true)
+                    {
+                        navItem.Visibility = Visibility.Collapsed;
+                    }
                 }
             }
             foreach (var item in nvSample.FooterMenuItems)
             {
                 if (item is NavigationViewItem navItem)
                 {
-                    navItem.Visibility = isLoginPage ? Visibility.Collapsed : Visibility.Visible;
+                    if (isLoginPage == true)
+                    {
+                        navItem.Visibility = Visibility.Collapsed;
+                    }
                 }
             }
         }

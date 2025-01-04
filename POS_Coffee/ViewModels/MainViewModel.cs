@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace POS_Coffee.ViewModels
 {
-    public class MainViewModel 
+    public class MainViewModel : ViewModelBase
     {
         public event Action<string> NavigationCompleted;
         private readonly INavigation _navigation;
@@ -40,6 +40,13 @@ namespace POS_Coffee.ViewModels
                 case "StockManagement":
                     _navigation.NavigateTo(typeof(StockManagementPage));
                     break;
+                case "FinancialReport":
+                    _navigation.NavigateTo(typeof(FinancialReportPage));
+                    break;
+                case "PromotionManagement":
+                    _navigation.NavigateTo(typeof(PromotionPage));
+                    break;
+
             }
             NavigationCompleted?.Invoke(pageName);
         }

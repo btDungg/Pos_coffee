@@ -205,6 +205,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Page Update="Views\StockAdditionDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\UpdatePromotion.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

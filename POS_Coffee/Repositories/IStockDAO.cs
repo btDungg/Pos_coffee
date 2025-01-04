@@ -9,10 +9,11 @@ namespace POS_Coffee.Repositories
 {
     public interface IStockDAO
     {
-        Task<List<StockModel>> getAllStock();
-        Task<StockModel> getStockByID(int id);
+        Task<List<StockModel>> GetAllStock();
+        Task<StockModel> GetStockByID(int id);
         Task<StockModel> RemoveStock(StockModel deletedStock);
-        Task<List<StockModel>> getSearchStock(string searchQuery);
+        Task<List<StockModel>> GetSearchStock(string searchQuery);
         Task<StockModel> UpdateStock(StockModel stock);
+        Task<StockModel> AddStock(StockModel stock);
     }
 }

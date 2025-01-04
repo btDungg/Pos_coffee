@@ -56,7 +56,7 @@ namespace POS_Coffee
             mainWindow = window;
         }
         public static MainWindow mainWindow { get; private set; }
-
+        public static Window Window => mainWindow;
         private static IServiceProvider ConfigureServices()
         {
             var services = new ServiceCollection();

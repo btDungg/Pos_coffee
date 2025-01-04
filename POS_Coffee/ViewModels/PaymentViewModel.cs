@@ -6,13 +6,17 @@ using POS_Coffee.Models;
 using POS_Coffee.Repositories;
 using POS_Coffee.Utilities;
 using POS_Coffee.Views;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Export;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.Devices.PointOfService;
 using RelayCommand = CommunityToolkit.Mvvm.Input.RelayCommand;
 
 namespace POS_Coffee.ViewModels
@@ -43,6 +47,26 @@ namespace POS_Coffee.ViewModels
             
         }
 
+        private bool _isCheckedCash = true;
+        public bool IsCheckedCash
+        {
+            get => _isCheckedCash;
+            set => SetProperty(ref _isCheckedCash, value);
+        }
+
+        private bool _isCheckedCard;
+        public bool IsCheckedCard
+        {
+            get => _isCheckedCard;
+            set
+            {
+                if (SetProperty(ref _isCheckedCard, value))
+                {
+                    AmountReceived = (float)PriceAfterDiscount;
+                }
+            }
+        }
+        
         private decimal _totalPrice;
         public decimal TotalPrice
         {
@@ -158,7 +182,7 @@ namespace POS_Coffee.ViewModels
                     XamlRoot = _xamlRoot,
                     Content = "Số tiền khách thanh toán không hợp lệ",
                     Title = "Thất bại",
-                    CloseButtonText = "Ok",
+                    CloseButtonText = "OK",
                 };
                 await failDialog.ShowAsync();
             }
@@ -169,12 +193,21 @@ namespace POS_Coffee.ViewModels
                     XamlRoot = _xamlRoot,
                     Content = "Giảm giá không hợp lệ",
                     Title = "Thất bại",
-                    CloseButtonText = "Ok",
+                    CloseButtonText = "OK",
                 };
                 await failDialog.ShowAsync();
             }
             else
             {
+                var PaymentMethod = "";
+                if (IsCheckedCash == true)
+                {
+                    PaymentMethod = "Tiền mặt";
+                }
+                else if (IsCheckedCard == true)
+                {
+                    PaymentMethod = "Chuyển khoản";
+                }
                 var payment = new PaymentModel
                 {
                     Id = Guid.NewGuid(),
@@ -182,6 +215,7 @@ namespace POS_Coffee.ViewModels
                     Discount =(float) Discount,
                     PriceAfterDiscount = PriceAfterDiscount,
                     AmountReceived = (decimal)AmountReceived,
+                    PaymetMethod = PaymentMethod,
                     Change = Change,
                     CreatedDate = DateTime.Now,
                     CreatedBy = LoginViewModel.username
@@ -219,6 +253,7 @@ namespace POS_Coffee.ViewModels
                 SelectedPayment = PaymentItem,
                 SelectedPaymentItems = new ObservableCollection<PaymentDetailModel>(items)
             };
+            dialog.PrimaryButtonClick += PaymentDialog_PrimaryButtonClick;
             await dialog.ShowAsync();
         }
 
@@ -259,6 +294,19 @@ namespace POS_Coffee.ViewModels
 
                 return 0;  // No discount applied
             }
+        }
+        
+        private void PaymentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            var report = new StiReport();
+            report.Load("D:/Window Programing/Project/POS_Coffee/POS_Coffee/Reports/Invoice.mrt");
+            report.Dictionary.Variables["PaymentID"].Value = PaymentItem.Id.ToString();
+            report.Compile();
+            report.Render();
+            //report.Show();
+            var pdfFilePath = Path.Combine("D:/Window Programing/Project/POS_Coffee/POS_Coffee", "PDFs", "Invoice_" + PaymentItem.Id + ".pdf");
+            //var pdfExport = new StiPdfExportService();
+            report.ExportDocument(StiExportFormat.Pdf, pdfFilePath);
         }
     }
 }

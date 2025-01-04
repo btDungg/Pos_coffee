@@ -44,13 +44,7 @@
                     ItemsSource="{x:Bind ViewModel.Stocks, Mode=TwoWay}"
                     DataContext="{x:Bind ViewModel}">
 
-                    <controls:DataGrid.Columns>
-                        <controls:DataGridTextColumn 
-                            Header="Mã nguyên liệu"
-                            Width="*"
-                            Binding="{Binding ID}" 
-                            FontSize="14">
-                        </controls:DataGridTextColumn>                   
+                    <controls:DataGrid.Columns>                
                         <controls:DataGridTextColumn 
                             Header="Tên nguyên liệu" 
                             Width="*"
@@ -61,6 +55,12 @@
                             Width="*"
                             Binding="{Binding StockNumber}" 
                             FontSize="14" />
+                        <controls:DataGridTextColumn 
+                            Header="Đơn giá"
+                            Width="*"
+                            Binding="{Binding Price}" 
+                            FontSize="14">
+                        </controls:DataGridTextColumn>
                     </controls:DataGrid.Columns>
                 </controls:DataGrid>
             </SplitView.Pane>

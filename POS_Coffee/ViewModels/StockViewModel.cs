@@ -98,7 +98,7 @@ namespace POS_Coffee.ViewModels
             set => SetProperty(ref _searchQuery, value);
         }
 
-        public string imagePath { get; set; }
+        public static string imagePath { get; set; }
 
         public StockViewModel(IStockDAO stockDAO)
         {
@@ -188,15 +188,17 @@ namespace POS_Coffee.ViewModels
                 XamlRoot = _xamlRoot,
                 AddedStock = StockAddition
             };
-            await dialog.ShowAsync();
-            StockAddition.ImagePath = imagePath;
-            StockAddition = dialog.AddedStock;
             dialog.PrimaryButtonClick += Dialog_PrimaryButtonClick;
+            await dialog.ShowAsync();
+            StockAddition = dialog.AddedStock;
         }
 
         private async void Dialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            StockAddition.ImagePath = imagePath;
             await _stockDao.AddStock(StockAddition);
+            var stocks = await _stockDao.GetAllStock();
+            Stocks = new ObservableCollection<StockModel>(stocks);
         }
 
         private async void DeleteStockClick()
@@ -300,6 +302,7 @@ namespace POS_Coffee.ViewModels
             if (file != null)
             {
                 imagePath = file.Path;
+                //ImagePreview.Source = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(file.Path));
             }
         }
         

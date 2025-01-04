@@ -168,9 +168,10 @@ namespace POS_Coffee.ViewModels
             _navigation.NavigateTo(typeof(PromotionPage));
         }
 
+        int currentUserId = LoginViewModel.id;
         private int GetCurrentUserId()
         {
-            return 3;
+            return currentUserId;
         }
 
         private void ShowMessage(string message)

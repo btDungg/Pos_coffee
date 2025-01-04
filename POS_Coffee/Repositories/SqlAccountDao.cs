@@ -23,7 +23,14 @@ namespace POS_Coffee.Repositories
             {
                 return null;
             }
-            return account;
+            return new AccountModel
+            {
+                Id = account.Id,
+                username = account.username,
+                password = account.password,
+                role = account.role,
+                name = account.name
+            };
         }
     }
 }

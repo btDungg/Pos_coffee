@@ -55,11 +55,21 @@
               OnContent="Đang kích hoạt" 
               OffContent="Không kích hoạt"/>
 
-            <CalendarDatePicker Header="Ngày bắt đầu" 
-                              Date="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="Ngày bắt đầu:" 
+                        VerticalAlignment="Center" 
+                        Margin="0,0,10,0"/>
+                <!-- Header -->
+                <CalendarDatePicker Date="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
 
-            <CalendarDatePicker Header="Ngày kết thúc" 
-                              Date="{Binding EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="Ngày kết thúc:" 
+               VerticalAlignment="Center" 
+               Margin="0,0,10,0"/>
+                <!-- Header -->
+                <CalendarDatePicker Date="{Binding EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">

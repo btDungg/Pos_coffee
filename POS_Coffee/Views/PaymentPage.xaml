@@ -122,7 +122,7 @@
 
 
                     <TextBlock Grid.Row="1" Text="Số tiền được giảm giá: " FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" />
-                    <TextBox Height="30" MinWidth="70" Grid.Row="1" FontSize="18"
+                    <TextBox Height="40" MinWidth="70" Grid.Row="1" FontSize="18"
                              FontWeight="Bold" Foreground="#bae4d6" HorizontalAlignment="Right" Grid.Column="1"
                              Text="{x:Bind PaymentViewModel.Discount, Mode=OneWay}"
                              IsReadOnly="True" Background="Transparent" BorderBrush="Transparent"/>
@@ -134,7 +134,7 @@
                                 Text="{x:Bind PaymentViewModel.PriceAfterDiscount, Mode=OneWay}"/>
 
                     <TextBlock Grid.Row="3" Text="Khách thanh toán:" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"  HorizontalAlignment="Left" Grid.Column="0" />
-                    <TextBox Height="30" MinWidth="70" Grid.Row="3" PlaceholderText="0"  FontSize="18" FontWeight="Black"
+                    <TextBox Height="40" MinWidth="70" Grid.Row="3" PlaceholderText="0"  FontSize="18" FontWeight="Black"
                              Foreground="#bae4d6" HorizontalAlignment="Right" Grid.Column="1"
                              Text="{x:Bind PaymentViewModel.AmountReceived, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 

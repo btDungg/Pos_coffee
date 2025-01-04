@@ -266,8 +266,6 @@ namespace POS_Coffee.ViewModels
             StockDetail.ImagePath = imagePath;
             await _stockDao.UpdateStock(StockDetail);
             var stocks = await _stockDao.GetAllStock();
-            await _dao.UpdateStock(StockDetail);
-            var stocks = await _dao.getAllStock();
             Stocks = new ObservableCollection<StockModel>(stocks);
             isReadOnly = true;
             visibilityStatus = "Visible";

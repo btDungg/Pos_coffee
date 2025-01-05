@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ContentDialog
     x:Class="POS_Coffee.Views.PaymentDetailDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -5,67 +6,162 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="Chi tiết hóa đơn"
-    PrimaryButtonText="Close"
+    Title="Hóa đơn"
+    SecondaryButtonText="Đóng"
+    PrimaryButtonText="In hóa đơn"
     DefaultButton="Primary"
-    Width="600">
+    Width="700">
 
-    <Grid Padding="10">
-        <StackPanel Spacing="15">
-            <!-- Thông tin thanh toán -->
-            <StackPanel>
-                <TextBlock Text="Thông tin hóa đơn:" FontSize="16" FontWeight="Bold" />
-                <StackPanel Orientation="Horizontal" Spacing="10">
-                    <TextBlock Text="Tổng tiền:" FontWeight="SemiBold" />
-                    <TextBlock Text="{Binding SelectedPayment.TotalPrice, Mode=TwoWay}" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Spacing="10">
-                    <TextBlock Text="Giảm giá:" FontWeight="SemiBold" />
-                    <TextBlock Text="{Binding SelectedPayment.Discount, Mode=TwoWay}" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Spacing="10">
-                    <TextBlock Text="Tiền cần thanh toán:" FontWeight="SemiBold" />
-                    <TextBlock Text="{Binding SelectedPayment.PriceAfterDiscount, Mode=TwoWay}" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Spacing="10">
-                    <TextBlock Text="Tiền nhận:" FontWeight="SemiBold" />
-                    <TextBlock Text="{Binding SelectedPayment.AmountReceived, Mode=TwoWay}" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Spacing="10">
-                    <TextBlock Text="Tiền thối:" FontWeight="SemiBold" />
-                    <TextBlock Text="{Binding SelectedPayment.Change, Mode=TwoWay}" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Spacing="10">
-                    <TextBlock Text="Ngày tạo:" FontWeight="SemiBold" />
-                    <TextBlock Text="{Binding SelectedPayment.CreatedDate, Mode=TwoWay}" />
-                </StackPanel>
-            </StackPanel>
+    <ContentDialog.TitleTemplate>
+        <DataTemplate>
+            <Border Background="#19aad6" Padding="10" Width="700">
+                <TextBlock Text="Hóa đơn" Foreground="White"
+                           FontSize="20" FontWeight="Bold"/>
+            </Border>
+        </DataTemplate>
+    </ContentDialog.TitleTemplate>
+    
+    <Grid Padding="20" MaxWidth="800">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"  Spacing="8">
+            <TextBlock Text="Thông tin hóa đơn" Style="{ThemeResource SubtitleTextBlockStyle}" 
+                 Margin="0,0,0,12"/>
 
-            <!-- Danh sách chi tiết thanh toán -->
-            <StackPanel>
-                <TextBlock Text="Payment Details:" FontSize="16" FontWeight="Bold" Margin="0,10,0,5" />
-                <ListView ItemsSource="{Binding SelectedPaymentItems}" Height="200" BorderThickness="1" BorderBrush="Gray">
-                    <ListView.HeaderTemplate>
-                        <!-- Header cho danh sách -->
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Background="#E0E0E0" Padding="5">
-                                <TextBlock Text="Mã món ăn" Width="100" FontWeight="Bold" />
-                                <TextBlock Text="Ghi chú" Width="200" FontWeight="Bold" />
-                                <TextBlock Text="Số lượng" Width="100" FontWeight="Bold" TextAlignment="Right" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.HeaderTemplate>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Spacing="10">
-                                <TextBlock Text="{Binding FoodId}" />
-                                <TextBlock Text="{Binding Note}" />
-                                <TextBlock Text="{Binding Quantity}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackPanel>
+
+            <Grid ColumnSpacing="24" RowSpacing="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Tổng tiền:" FontWeight="SemiBold" Grid.Row="0" Grid.Column="0" />
+                <TextBlock Text="{Binding SelectedPayment.TotalPrice, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" />
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Giảm giá:" FontWeight="SemiBold" />
+                <TextBlock Grid.Row="1" Grid.Column="1"  Text="{Binding SelectedPayment.Discount, Mode=TwoWay}" />
+
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Tiền cần thanh toán:" FontWeight="SemiBold" />
+                <TextBlock Grid.Row="2" Grid.Column="1"  Text="{Binding SelectedPayment.PriceAfterDiscount, Mode=TwoWay}" />
+                
+                
+                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Tiền nhận:" FontWeight="SemiBold" />
+                 <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding SelectedPayment.AmountReceived, Mode=TwoWay}" />
+
+
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Tiền thối:" FontWeight="SemiBold" />
+                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding SelectedPayment.Change, Mode=TwoWay}" />
+               
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="Ngày tạo:" FontWeight="SemiBold" />
+                <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding SelectedPayment.CreatedDate, Mode=TwoWay}" />
+            </Grid>
         </StackPanel>
-    </Grid>
+
+        <!-- Danh sách chi tiết thanh toán -->
+         <TextBlock Grid.Row="1" Text="Chi tiết hóa đơn"
+                    FontSize="16" FontWeight="Bold"
+                    HorizontalAlignment="Center"
+                    Margin="0 20 0 0"
+                    VerticalAlignment="Center"/>
+        <ListView Grid.Row="2" 
+          ItemsSource="{Binding SelectedPaymentItems}"
+          Height="200" 
+          BorderThickness="1" 
+          BorderBrush="Gray"
+          Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
+
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <Grid Background="#E0E0E0" Padding="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="130"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" 
+                           Padding="10 0 0 0"
+                           Text="Mã" 
+                           FontWeight="Bold" 
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" 
+                           Text="Tên món ăn" 
+                                   Padding="10 0 0 0"
+                           FontWeight="Bold" 
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Center"/>
+                         <TextBlock Grid.Column="2" 
+                           Text="Giá" 
+                           FontWeight="Bold"
+                                    Padding="30 0 0 0"
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Center"/>
+                          <TextBlock Grid.Column="3" 
+                           Text="Số lượng" 
+                           FontWeight="Bold" 
+                           TextAlignment="Right" 
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="130"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" 
+                         Text="{Binding FoodId}" 
+                         HorizontalAlignment="Left" 
+                         VerticalAlignment="Center"/>
+                        
+                        
+                        <TextBlock Grid.Column="1" 
+                         Text="{Binding Food.Name}" 
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" 
+                         Text="{Binding Food.Price}" 
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="3" 
+                         Text="{Binding Quantity}" 
+                         TextAlignment="Right"
+                         HorizontalAlignment="Center" 
+                        VerticalAlignment="Center"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="10" Margin="0,10,0,0">
+                <TextBlock Text="Người tạo:" FontWeight="SemiBold" />
+                <TextBlock Text="{Binding SelectedPayment.CreatedBy, Mode=TwoWay}" />
+          </StackPanel>
+        
+        
+  </Grid>
 </ContentDialog>

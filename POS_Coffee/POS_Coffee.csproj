@@ -27,8 +27,12 @@
     <None Remove="Views\AdminHomePage.xaml" />
     <None Remove="Views\FoodAdditionDialog.xaml" />
     <None Remove="Views\FoodManagementPage.xaml" />
+    <None Remove="Views\CreatePromotionPage.xaml" />
     <None Remove="Views\PaymentDetailDialog.xaml" />
     <None Remove="Views\StockAdditionDialog.xaml" />
+    <None Remove="Views\FinancialReportPage.xaml" />
+    <None Remove="Views\PromotionManagementPage.xaml" />
+    <None Remove="Views\PromotionPage.xaml" />
     <None Remove="Views\StockManagementPage.xaml" />
     <Content Remove="Assets\bac-xiu.jpg" />
     <Content Remove="Assets\banhmingot.jpg" />
@@ -53,6 +57,7 @@
     <None Remove="Views\AdminHomePage.xaml" />
     <None Remove="Views\PaymentManagementPage.xaml" />
     <None Remove="Views\PaymentPage.xaml" />
+    <None Remove="Views\UpdatePromotion.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -84,10 +89,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="9.0.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240923002" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+    <PackageReference Include="Stimulsoft.Reports.Engine.NetCore" Version="2025.1.2" />
+    <PackageReference Include="Syncfusion.Chart.WinUI" Version="27.2.2" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
@@ -205,9 +213,24 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\StockAdditionDialog.xaml">
+		<Generator>MSBuild:Compile</Generator>
+	</Page>
+    <Page Update="Views\UpdatePromotion.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\CreatePromotionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\PromotionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\PromotionManagementPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\PaymentDetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\FinancialReportPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\PaymentManagementPage.xaml">
@@ -224,6 +247,9 @@
     <Page Update="Views\AdminHomePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="PDFs\" />
   </ItemGroup>
 
   <!--

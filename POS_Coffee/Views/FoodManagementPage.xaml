@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="POS_Coffee.Views.FoodManagementPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:POS_Coffee.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:POS_Coffee.Models"
+    xmlns:viewmodels="using:POS_Coffee.ViewModels"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity" 
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:converter="using:POS_Coffee.Converters"
+    mc:Ignorable="d">
+    
+    <Page.Resources>
+        <converter:PriceConverter x:Key="PriceConverter"/>
+    </Page.Resources>
+
+    <StackPanel Orientation="Vertical" Width="Auto" Height="Auto" Background="FloralWhite" Margin="10 10 10 10">
+        <TextBlock Text="QUẢN LÝ ĐỒ ĂN, ĐỒ UỐNG" FontSize="25" Margin="0,10,0,0" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Center"/>
+        <Grid Width="Auto" Margin="10 10 10 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width ="*"/>
+                <ColumnDefinition Width ="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Column="0">
+                <Button Name="allFoodButton" Width="125" Height="35" Content="Tất cả" Foreground="Blue" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.AllGoodsClickCmd}"/>
+                <Button Name="normalFoodButton" Width="125" Height="35" Content="Đồ ăn" Foreground="Green" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.DrinkButtonClickCmd}"/>
+                <Button Name="lowFoodButton" Width="125" Height="35" Content="Đồ uống" Foreground="Yellow" FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.FoodButtonClickCmd}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
+                <TextBox Width="400" Height="35" HorizontalAlignment="Right" PlaceholderText="Tìm nguyên liệu" Margin="10,0,0,0" Text="{x:Bind ViewModel.searchQuery, Mode=TwoWay}"/>
+                <Button Content="Search" Height="35" Margin="10,0,0,0" HorizontalAlignment="Right" Command="{x:Bind ViewModel.SearchButtonClickCmd}"/>
+            </StackPanel>
+        </Grid>
+
+        <SplitView x:Name="splitView" Width="Auto" Height="Auto"
+        IsPaneOpen="True" OpenPaneLength="500" CompactPaneLength="48" DisplayMode="Inline" Margin="10 10 0 10">
+            <SplitView.Pane>
+                <controls:DataGrid x:Name="detailTable"
+                GridLinesVisibility="All" VerticalAlignment="Top"
+                IsReadOnly="True" SelectedItem="{x:Bind ViewModel.FoodDetail, Mode=TwoWay}"
+                Margin="10 10 10 10" MaxHeight="550" SelectionMode="Single"
+                AutoGenerateColumns="False"
+                ItemsSource="{x:Bind ViewModel.Foods, Mode=TwoWay}"
+                DataContext="{x:Bind ViewModel}">
+
+                    <controls:DataGrid.Columns>
+                        <controls:DataGridTextColumn 
+                        Header="Tên món ăn" 
+                        Width="*"
+                        Binding="{Binding Name}" 
+                        FontSize="14" />
+                        <controls:DataGridTextColumn 
+                        Header="Số lượng tồn" 
+                        Width="*"
+                        Binding="{Binding Amount}" 
+                        FontSize="14" />
+                        <controls:DataGridTextColumn 
+                        Header="Đơn giá"
+                        Width="*"
+                        Binding="{Binding Price}" 
+                        FontSize="14">
+                        </controls:DataGridTextColumn>
+                    </controls:DataGrid.Columns>
+                </controls:DataGrid>
+            </SplitView.Pane>
+
+            <StackPanel Background="WhiteSmoke" Margin="10 0 10 50">
+                <Grid Width="Auto" MaxHeight="650">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="CHI TIẾT ĐỒ ĂN, ĐỒ UỐNG" Margin="0,10,0,0" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Center"/>
+                    <StackPanel x:Name="Content" Grid.Row="1" Margin="10,10,0,0" Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <Image x:Name="FoodImage" MaxWidth="1000" Height="320" Margin="0 10 10 10" Stretch="Uniform" 
+                               HorizontalAlignment="Left" Source="{x:Bind ViewModel.FoodDetail.Image, Mode=OneWay}"/>
+                            <Button x:Name="UploadButton" Content="Upload Image" Foreground="Blue" VerticalAlignment="Center"
+                                FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.UploadImageClickCmd}"
+                                Visibility="{x:Bind ViewModel.saveStatus, Mode=TwoWay}"/>
+                        </StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="140"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <!--<TextBlock x:Name="ID1" Text="Mã nguyên liệu:" FontWeight="Bold" Grid.Column="0" Grid.Row="0" Margin="0 5 0 0"/>-->
+                            <TextBlock x:Name="NameTitle" Text="Tên đồ ăn, đồ uống:" FontWeight="Bold" Grid.Column="0" Grid.Row="1" Margin="0 5 0 0"/>
+                            <TextBlock x:Name="DescriptionTitle" Text="Mô tả:" FontWeight="Bold" Grid.Column="0" Grid.Row="2" Margin="0 5 0 0"/>
+                            <TextBlock x:Name="PriceTitle" Text="Giá bán:" FontWeight="Bold" Grid.Column="0" Grid.Row="3" Margin="0 5 0 0"/>
+                            <TextBlock x:Name="AmountTitle" Text="Số lượng:" FontWeight="Bold" Grid.Column="0" Grid.Row="4" Margin="0 5 0 0"/>
+                            <TextBlock x:Name="CategoryTitle" Text="Phân loại:" FontWeight="Bold" Grid.Column="0" Grid.Row="5" Margin="0 5 0 0"/>
+
+                            <!--<TextBox x:Name="ID2" Text="{x:Bind ViewModel.StockDetail.ID, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="0" IsReadOnly="True"/>-->
+                            <TextBox x:Name="NameData" Text="{x:Bind ViewModel.FoodDetail.Name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="1" IsReadOnly="{x:Bind ViewModel.isReadOnly, Mode=TwoWay}"/>
+                            <TextBox x:Name="DescriptionData" Text="{x:Bind ViewModel.FoodDetail.Description, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="2" IsReadOnly="{x:Bind ViewModel.isReadOnly, Mode=TwoWay}"/>
+                            <TextBox x:Name="PriceData" Text="{x:Bind ViewModel.FoodDetail.Price, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource PriceConverter}}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="3" IsReadOnly="{x:Bind ViewModel.isReadOnly, Mode=TwoWay}"/>
+                            <TextBox x:Name="AmountData" Text="{x:Bind ViewModel.FoodDetail.Amount, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="4" IsReadOnly="{x:Bind ViewModel.isReadOnly, Mode=TwoWay}"/>
+                            <TextBox x:Name="CategoryData" Text="{x:Bind ViewModel.FoodDetail.Category, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="0 0 10 0" Grid.Column="1" Grid.Row="5" IsReadOnly="{x:Bind ViewModel.isReadOnly, Mode=TwoWay}"/>
+
+                            <!--<TextBlock x:Name="IDChange" Text="New Detail" FontWeight="Bold" HorizontalTextAlignment="Center" Margin="0 0 10 0" Grid.Column="2" Grid.Row="0" Visibility="{x:Bind ViewModel.saveStatus, Mode=TwoWay}"/>
+                        <TextBox x:Name="NameChange" Text="{x:Bind ViewModel.stockDetailChanged.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="2" Grid.Row="1" Visibility="{x:Bind ViewModel.saveStatus, Mode=TwoWay}"/>
+                        <TextBox x:Name="DescriptionChange" Text="{x:Bind ViewModel.stockDetailChanged.Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="2" Grid.Row="2" Visibility="{x:Bind ViewModel.saveStatus, Mode=TwoWay}"/>
+                        <TextBox x:Name="UnitChange" Text="{x:Bind ViewModel.stockDetailChanged.Unit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="2" Grid.Row="3" Visibility="{x:Bind ViewModel.saveStatus, Mode=TwoWay}"/>
+                        <TextBox x:Name="PriceChange" Text="{x:Bind ViewModel.stockDetailChanged.Price, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="2" Grid.Row="4" Visibility="{x:Bind ViewModel.saveStatus, Mode=TwoWay}"/>
+                        <TextBox x:Name="StockNumberChange" Text="{x:Bind ViewModel.stockDetailChanged.StockNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0 0 10 0" Grid.Column="2" Grid.Row="5" Visibility="{x:Bind ViewModel.saveStatus, Mode=TwoWay}"/>-->
+                        </Grid>
+
+                    </StackPanel>
+
+                    <CommandBar Grid.Row="2" DefaultLabelPosition="Right" HorizontalAlignment="Right" Margin="0 0 0 10" Visibility="{x:Bind ViewModel.visibilityStatus, Mode=TwoWay}">
+                        <AppBarButton Icon="Add" Label="Thêm" Command="{x:Bind ViewModel.AddFoodClickCmd}" Background="CornflowerBlue" CornerRadius="0"/>
+                        <AppBarButton Icon="Delete" Label="Xóa" Command="{x:Bind ViewModel.DeleteFoodClickCmd}" Background="Red" CornerRadius="0"/>
+                        <AppBarButton Icon="Edit" Label="Sửa" Command="{x:Bind ViewModel.UpdateFoodClickCmd}" Background="Olive" CornerRadius="0"/>
+                    </CommandBar>
+
+                    <CommandBar Grid.Row="2" DefaultLabelPosition="Right" HorizontalAlignment="Right" Margin="0 0 0 10" Visibility="{x:Bind ViewModel.saveStatus, Mode=TwoWay}">
+                        <AppBarButton Icon="Cancel" Label="Hủy" Command="{x:Bind ViewModel.CancelFoodClickCmd}" Background="Red" CornerRadius="0"/>
+                        <AppBarButton Icon="Save" Label="Lưu" Command="{x:Bind ViewModel.SaveFoodClickCmd}" Background="CornflowerBlue" CornerRadius="0"/>
+                    </CommandBar>
+
+                </Grid>
+            </StackPanel>
+        </SplitView>
+    </StackPanel>
+</Page>

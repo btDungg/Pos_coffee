@@ -62,7 +62,6 @@ namespace POS_Coffee.ViewModels
             set => SetProperty(ref _stockAddition, value);
         }
 
-
         private bool _isReadOnly = true;
         public bool isReadOnly
         {
@@ -128,6 +127,7 @@ namespace POS_Coffee.ViewModels
         {
             var stocks = await _stockDao.GetAllStock();
             allStocks = new List<StockModel>(stocks);
+            StockDetail = new StockModel();
             if (allStocks.Any())
             {
                 StockDetail = allStocks[0];
@@ -263,10 +263,13 @@ namespace POS_Coffee.ViewModels
             //    StockDetail.StockNumber = stockDetailChanged.StockNumber;
             //    stockDetailChanged.StockNumber = -1;
             //}
-            StockDetail.ImagePath = imagePath;
-            await _stockDao.UpdateStock(StockDetail);
-            var stocks = await _stockDao.GetAllStock();
-            Stocks = new ObservableCollection<StockModel>(stocks);
+            if (imagePath != null)
+            {
+                StockDetail.ImagePath = imagePath;
+                imagePath = null;
+            }
+            var id = StockDetail.ID;
+            StockDetail = await _stockDao.UpdateStock(StockDetail);
             isReadOnly = true;
             visibilityStatus = "Visible";
             saveStatus = "Collapsed";
@@ -278,6 +281,9 @@ namespace POS_Coffee.ViewModels
                 CloseButtonText = "Ok",
             };
             await dialog.ShowAsync();
+            var stocks = await _stockDao.GetAllStock();
+            Stocks = new ObservableCollection<StockModel>(stocks);
+            StockDetail = Stocks.Where(x => x.ID == id).FirstOrDefault();
         }
 
         private void CancelStockClick()

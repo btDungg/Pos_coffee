@@ -192,5 +192,19 @@ namespace POS_Coffee.Repositories
         {
             throw new NotImplementedException();
         }
+
+        Task<FoodModel> IFoodDao.RemoveFood(FoodModel deletedStock)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<FoodModel> UpdateFood(FoodModel stock)
+        {
+            throw new NotImplementedException();
+        }
+        public Task<FoodModel> AddFood(FoodModel stock)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

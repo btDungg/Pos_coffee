@@ -47,5 +47,41 @@ namespace POS_Coffee.Repositories
                 await _dbcontext.SaveChangesAsync();
             }
         }
+
+        public async Task<FoodModel> RemoveFood(FoodModel food)
+        {
+            var DeletedFood = await _dbcontext.Foods.FirstOrDefaultAsync(x => x.Id == food.Id);
+            if (DeletedFood == null)
+            {
+                return null;
+            }
+            _dbcontext.Remove(DeletedFood);
+            await _dbcontext.SaveChangesAsync();
+            return DeletedFood;
+        }
+
+        public async Task<FoodModel> UpdateFood(FoodModel food)
+        {
+            var UpdatedFood = await _dbcontext.Foods.FirstOrDefaultAsync(x => x.Id == food.Id);
+            if (UpdatedFood == null)
+            {
+                return null;
+            }
+            UpdatedFood.Image = food.Image;
+            UpdatedFood.Price = food.Price;
+            UpdatedFood.Amount = food.Amount;
+            UpdatedFood.Name = food.Name;
+            UpdatedFood.Category = food.Category;
+            UpdatedFood.Description = food.Description;
+            await _dbcontext.SaveChangesAsync();
+            return UpdatedFood;
+        }
+
+        public async Task<FoodModel> AddFood(FoodModel food)
+        {
+            await _dbcontext.AddAsync(food);
+            await _dbcontext.SaveChangesAsync();
+            return food;
+        }
     }
 }

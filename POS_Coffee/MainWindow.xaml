@@ -13,6 +13,7 @@
         <NavigationView.MenuItems>
             <NavigationViewItem Icon="Home" Content="Trang chủ" x:Name="HomePage"/>
             <NavigationViewItem Icon="Manage" Content="Quản lý kho" x:Name="StockManagement" />
+            <NavigationViewItem Icon="Manage" Content="Quản lý đồ ăn, đồ uống" x:Name="FoodManagement" />
             <NavigationViewItem Icon="Manage" Content="Quán lý hóa đơn" x:Name="PaymentPage" />
         </NavigationView.MenuItems>
         <NavigationView.FooterMenuItems>

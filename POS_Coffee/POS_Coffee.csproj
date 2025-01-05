@@ -25,6 +25,8 @@
     <None Remove="Assets\trungnguyen.jpg" />
     <None Remove="Assets\Vinamilk.jpg" />
     <None Remove="Views\AdminHomePage.xaml" />
+    <None Remove="Views\FoodAdditionDialog.xaml" />
+    <None Remove="Views\FoodManagementPage.xaml" />
     <None Remove="Views\PaymentDetailDialog.xaml" />
     <None Remove="Views\StockAdditionDialog.xaml" />
     <None Remove="Views\StockManagementPage.xaml" />
@@ -196,6 +198,12 @@
     <None Update="Assets\pepsi.webp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\FoodAdditionDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\FoodManagementPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\StockAdditionDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

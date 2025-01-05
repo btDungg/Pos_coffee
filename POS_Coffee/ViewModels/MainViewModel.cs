@@ -40,6 +40,9 @@ namespace POS_Coffee.ViewModels
                 case "StockManagement":
                     _navigation.NavigateTo(typeof(StockManagementPage));
                     break;
+                case "FoodManagement":
+                    _navigation.NavigateTo(typeof(FoodManagementPage));
+                    break;
             }
             NavigationCompleted?.Invoke(pageName);
         }

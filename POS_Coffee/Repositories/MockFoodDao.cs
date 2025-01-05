@@ -183,6 +183,11 @@ namespace POS_Coffee.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<int> GetQuantityById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task UpdateQuantity(List<CartItemModel> cartItems)
         {
             throw new NotImplementedException();

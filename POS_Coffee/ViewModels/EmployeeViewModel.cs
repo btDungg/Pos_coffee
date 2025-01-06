@@ -121,7 +121,7 @@ namespace POS_Coffee.ViewModels
             }
             else
             {
-                var existedTimeKeeping = _dao.GetTimeKeppingModel(LoginViewModel.Id, DateOnly.FromDateTime(WorkDate.DateTime));
+                var existedTimeKeeping = _dao.GetTimeKeppingModel(LoginViewModel.id, DateOnly.FromDateTime(WorkDate.DateTime));
                 if (existedTimeKeeping != null)
                 {
                     var failDialog = new ContentDialog()
@@ -137,7 +137,7 @@ namespace POS_Coffee.ViewModels
                 {
                     var timeKeeping = new TimeKeppingModel
                     {
-                        EmployeeID = LoginViewModel.Id,
+                        EmployeeID = LoginViewModel.id,
                         WorkDate = DateOnly.FromDateTime(WorkDate.DateTime),
                         StartTime = TimeOnly.FromTimeSpan(StartTime),
                         EndTime = TimeOnly.FromTimeSpan(EndTime),

@@ -1,4 +1,4 @@
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -28,22 +28,27 @@ namespace POS_Coffee.Views
     /// </summary>
     public sealed partial class UpdatePromotion : Page
     {
+        public UpdatePromotionViewModel ViewModel { get; private set; }
+
         public UpdatePromotion()
         {
             this.InitializeComponent();
-            //DataContext = ViewModel;
         }
-        //protected override void OnNavigatedTo(NavigationEventArgs e)
-        //{
-        //    if (e.Parameter is PromotionModel promotion)
-        //    {
-        //        DataContext = new UpdatePromotionViewModel(new PromotionDao(), new NavigationService(), promotion);
-        //    }
-        //    base.OnNavigatedTo(e);
-        //}
 
-        public UpdatePromotionViewModel ViewModel { get; set; }
-            = App.Current.Services.GetService<UpdatePromotionViewModel>();
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if (e.Parameter is PromotionModel promotion)
+            {
+                // Sử dụng DI để lấy các dependency cần thiết và khởi tạo ViewModel
+                var dao = App.Current.Services.GetService<IPromotionDao>();
+                var navigationService = App.Current.Services.GetService<INavigation>();
+
+                ViewModel = new UpdatePromotionViewModel(dao, navigationService, promotion);
+                DataContext = ViewModel; // Gắn ViewModel vào DataContext
+            }
+            base.OnNavigatedTo(e);
+        }
+
 
     }
 }

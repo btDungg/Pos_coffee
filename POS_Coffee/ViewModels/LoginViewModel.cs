@@ -20,7 +20,7 @@ namespace POS_Coffee.ViewModels
         private readonly INavigation _navigation;
         private readonly IAccountDao _accountDao;
         public static string username {  get; private set; }
-        public static int Id { get; private set; }
+        public static int id { get; private set; }
         private string _username;
         private string _password;
         public string ErrorMessage { get; set; }
@@ -46,7 +46,7 @@ namespace POS_Coffee.ViewModels
             LoginCommand = new RelayCommand(() => Login());
         }
 
-        
+
 
         private async void Login()
         {
@@ -57,27 +57,27 @@ namespace POS_Coffee.ViewModels
             }
             else
             {
-                //string pagekey = "";
                 if (user.password != Password)
                 {
                     ErrorMessage = "Tên đăng nhập hoặc mật khẩu không đúng";
                 }
                 else
                 {
+                    id = user.Id;
+                    username = user.name;
+
+                    // Điều hướng dựa trên vai trò của người dùng
                     if (user.role == "employee")
                     {
                         _navigation.NavigateTo(typeof(HomePage), user);
-                        //pagekey = "HomePage";
                     }
                     else if (user.role == "admin")
                     {
                         _navigation.NavigateTo(typeof(StockManagementPage), user);
-                        //pagekey = "StockManagement";
                     }
-                    username = user.name;
-                    Id = user.Id;
+
                     OnLoginSuccess?.Invoke(user.role);
-                }              
+                }
             }
         }
     }

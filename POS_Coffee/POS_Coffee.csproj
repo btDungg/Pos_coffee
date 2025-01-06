@@ -27,6 +27,8 @@
     <None Remove="Views\AddEmployeeDialog.xaml" />
     <None Remove="Views\AdminHomePage.xaml" />
     <None Remove="Views\CreatePromotionPage.xaml" />
+    <None Remove="Views\PaymentDetailDialog.xaml" />
+    <None Remove="Views\StockAdditionDialog.xaml" />
     <None Remove="Views\EmployeeManagementPage.xaml" />
     <None Remove="Views\FinancialReportPage.xaml" />
     <None Remove="Views\PromotionManagementPage.xaml" />
@@ -89,10 +91,12 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="9.0.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240923002" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+    <PackageReference Include="Stimulsoft.Reports.Engine.NetCore" Version="2025.1.2" />
     <PackageReference Include="Syncfusion.Chart.WinUI" Version="27.2.2" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
@@ -204,6 +208,9 @@
     <None Update="Assets\pepsi.webp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\StockAdditionDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\SalaryListPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -245,6 +252,9 @@
     <Page Update="Views\AdminHomePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="PDFs\" />
   </ItemGroup>
 
   <!--

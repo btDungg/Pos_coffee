@@ -14,6 +14,7 @@
     Background="#cfe4dd">
     <Page.Resources>
         <converter:PriceConverter x:Key="PriceConverter"/>
+        <converter:PaymentMethodToBoolConverter x:Key="PaymentMethodToBoolConverter"/>
     </Page.Resources>
 
     <Grid>
@@ -120,10 +121,11 @@
                     <TextBlock  Grid.Row="0" Text="{Binding TotalPrice, Converter={StaticResource PriceConverter}}" FontSize="20" Foreground="Green" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"  />
 
 
-                    <TextBlock Grid.Row="1" Text="Giảm giá(%)" FontSize="20"  HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" />
-                    <TextBox Height="30" MinWidth="70" Grid.Row="1" FontSize="18"
+                    <TextBlock Grid.Row="1" Text="Số tiền được giảm giá: " FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" />
+                    <TextBox Height="40" MinWidth="70" Grid.Row="1" FontSize="18"
                              FontWeight="Bold" Foreground="#bae4d6" HorizontalAlignment="Right" Grid.Column="1"
-                             Text="{x:Bind PaymentViewModel.Discount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                             Text="{x:Bind PaymentViewModel.Discount, Mode=OneWay}"
+                             IsReadOnly="True" Background="Transparent" BorderBrush="Transparent"/>
 
                     <TextBlock Grid.Row="2" Text="Khách cần trả:" FontSize="24" FontWeight="Bold"
                                HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0"/>
@@ -132,14 +134,14 @@
                                 Text="{x:Bind PaymentViewModel.PriceAfterDiscount, Mode=OneWay, Converter={StaticResource PriceConverter}}"/>
 
                     <TextBlock Grid.Row="3" Text="Khách thanh toán:" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"  HorizontalAlignment="Left" Grid.Column="0" />
-                    <TextBox Height="30" MinWidth="70" Grid.Row="3" PlaceholderText="0"  FontSize="18" FontWeight="Black"
+                    <TextBox Height="40" MinWidth="70" Grid.Row="3" PlaceholderText="0"  FontSize="18" FontWeight="Black"
                              Foreground="#bae4d6" HorizontalAlignment="Right" Grid.Column="1"
                              Text="{x:Bind PaymentViewModel.AmountReceived, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
 
                     <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <RadioButton Content="Tiền mặt" GroupName="PaymentMethod" Margin="0,0,10,0" />
-                        <RadioButton Content="Chuyển khoản" GroupName="PaymentMethod" />
+                        <RadioButton Content="Tiền mặt" GroupName="PaymentMethod" Margin="0,0,10,0" IsChecked="{x:Bind PaymentViewModel.IsCheckedCash, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <RadioButton Content="Chuyển khoản" GroupName="PaymentMethod" IsChecked="{x:Bind PaymentViewModel.IsCheckedCard, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
 
                     <TextBlock Grid.Row="5" Text="Tiền thừa trả khách:" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" />

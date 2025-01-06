@@ -1,5 +1,7 @@
 ﻿using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using POS_Coffee.Models;
+using POS_Coffee.Repositories;
 using POS_Coffee.Utilities;
 using POS_Coffee.Views;
 using System;
@@ -15,7 +17,7 @@ namespace POS_Coffee.ViewModels
     public class CartItemViewModel : ViewModelBase
     {
         private readonly INavigation _navigation;
-
+        private readonly IFoodDao _dao;
         private ObservableCollection<CartItemModel> _cartItems = new ObservableCollection<CartItemModel>();
         public ObservableCollection<CartItemModel> CartItems
         {
@@ -37,9 +39,10 @@ namespace POS_Coffee.ViewModels
 
 
 
-        public CartItemViewModel(INavigation navigation)
+        public CartItemViewModel(INavigation navigation, IFoodDao dao)
         {
             _navigation = navigation;
+            _dao = dao;
             SelectFoodCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<FoodModel>(SelectFood_Click);
             IncreaseQuantityCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<CartItemModel>(IncreaseQuantity);
             DecreaseQuantityCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<CartItemModel>(DecreaseQuantity);
@@ -47,7 +50,7 @@ namespace POS_Coffee.ViewModels
             RemoveItemCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<CartItemModel>(RemoveItem);
         }
 
-        private void SelectFood_Click(FoodModel selectedFood)
+        private async void SelectFood_Click(FoodModel selectedFood)
         {
             if (selectedFood != null)
             {
@@ -55,8 +58,13 @@ namespace POS_Coffee.ViewModels
                 
                 if (SelectedItem != null)
                 {
-                    // Tăng số lượng nếu sản phẩm đã có trong giỏ hàng
-                    SelectedItem.Quantity += 1;
+                    var qnt = await _dao.GetQuantityById(SelectedItem.Id);
+                    if (SelectedItem.Quantity < qnt)
+                    {
+                        // Tăng số lượng nếu sản phẩm đã có trong giỏ hàng
+                        SelectedItem.Quantity += 1;
+                        TotalPrice += selectedFood.Price;
+                    }                 
                 }
                 else
                 {
@@ -73,17 +81,21 @@ namespace POS_Coffee.ViewModels
                         Category = selectedFood.Category
                     };
                     CartItems.Add(SelectedItem);
+                    TotalPrice += selectedFood.Price;
                 }
             }
-            TotalPrice += selectedFood.Price;
         }
 
-        private void IncreaseQuantity(CartItemModel item)
+        private async void IncreaseQuantity(CartItemModel item)
         {
             if (item != null)
             {
-                item.Quantity += 1;
-                TotalPrice += item.Price;
+                var qnt = await _dao.GetQuantityById(item.Id);
+                if (item.Quantity < qnt)
+                {
+                    item.Quantity += 1;
+                    TotalPrice += item.Price;
+                }
             }
         }
 

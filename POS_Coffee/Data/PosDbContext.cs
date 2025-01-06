@@ -45,6 +45,7 @@ namespace POS_Coffee.Data
             modelBuilder.Entity<AccountModel>(entity =>
             {
                 entity.HasKey(e => e.Id);
+                entity.Property(e => e.isActive).HasDefaultValue(true);
             });
 
             modelBuilder.Entity<StockModel>(entity =>
@@ -258,7 +259,8 @@ namespace POS_Coffee.Data
                     name = "Nguyễn Võ Nhật Huy",
                     phone = "0123456789",
                     email = "emp1@gmail.com",
-                    address = "Thủ Đức, TP Hồ Chí Minh"
+                    address = "Thủ Đức, TP Hồ Chí Minh",
+                    isActive = true,
                 },
                 new AccountModel()
                 {
@@ -269,7 +271,8 @@ namespace POS_Coffee.Data
                     name = "Bùi Tiến Dũng",
                     phone = "0805057891",
                     email = "emp2@gmail.com",
-                    address = "Đông Hòa, Dĩ An, Bình Dương"
+                    address = "Đông Hòa, Dĩ An, Bình Dương",
+                    isActive = true,
                 },
                 new AccountModel()
                 {
@@ -280,7 +283,8 @@ namespace POS_Coffee.Data
                     name = "Phạm Thế Duyệt",
                     phone = "0159753214",
                     email = "admin1@gmail.com",
-                    address = "Thủ Đức, TP Hồ Chí Minh"
+                    address = "Thủ Đức, TP Hồ Chí Minh",
+                    isActive = true,
                 }
             };
 

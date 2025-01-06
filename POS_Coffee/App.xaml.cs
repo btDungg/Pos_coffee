@@ -86,6 +86,8 @@ namespace POS_Coffee
             services.AddTransient<EmployeeViewModel>();
             services.AddTransient<SalaryViewModel>();
             services.AddTransient<MembersViewModel>();
+            services.AddTransient<AddEmployeeViewModel>();
+
 
             services.AddDbContext<PosDbContext>(option =>
             option.UseSqlServer("Server=localhost;Database=PosCoffeeDb;Trusted_Connection=True;TrustServerCertificate=True"));

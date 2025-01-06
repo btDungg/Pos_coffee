@@ -35,9 +35,19 @@ namespace POS_Coffee.Repositories
             return await foods.ToListAsync();
         }
 
+        public async Task<int> GetQuantityById(int id)
+        {
+            var food = await  _dbcontext.Foods.FirstOrDefaultAsync(x => x.Id == id);  
+            if (food == null)
+            {
+                return 0;
+            }
+            return food.Amount;
+        }
+
         public async Task UpdateQuantity(List<CartItemModel> cartItems)
         {
-            foreach(var item in cartItems)
+            foreach (var item in cartItems)
             {
                 var food = await _dbcontext.Foods.FirstOrDefaultAsync(x => x.Id == item.Id);
                 if (food != null)
@@ -47,5 +57,7 @@ namespace POS_Coffee.Repositories
                 await _dbcontext.SaveChangesAsync();
             }
         }
+
+
     }
 }

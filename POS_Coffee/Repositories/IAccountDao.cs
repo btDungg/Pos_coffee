@@ -19,5 +19,7 @@ namespace POS_Coffee.Repositories
         Task<TimeKeppingModel> GetTimeKeppingModel(int empId, DateOnly workDate);
         Task<AccountModel> AddEmployee (AccountModel employee);
         List<SalaryDTO> GetSalaryByMonth(int month, int year);
+        Task<AccountModel> RemoveEmployee(AccountModel employee);
+        Task<List<AccountModel>> GetEmployeesByName(string searchQuery);   
     }
 }

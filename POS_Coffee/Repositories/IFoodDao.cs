@@ -12,5 +12,6 @@ namespace POS_Coffee.Repositories
         Task<List<FoodModel>> GetAllFood(string searchQuery);
         Task<List<FoodModel>> GetFoodsByCategory(string category);
         Task UpdateQuantity(List<CartItemModel> cartItems);
+        Task<int> GetQuantityById(int id);
     }
 }

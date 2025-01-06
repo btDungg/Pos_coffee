@@ -208,33 +208,59 @@ namespace POS_Coffee.ViewModels
                 {
                     PaymentMethod = "Chuyển khoản";
                 }
-                var payment = new PaymentModel
+                var isTrue = true;
+                foreach (var item in cartItems)
                 {
-                    Id = Guid.NewGuid(),
-                    TotalPrice = TotalPrice,
-                    Discount =(float) Discount,
-                    PriceAfterDiscount = PriceAfterDiscount,
-                    AmountReceived = (decimal)AmountReceived,
-                    PaymetMethod = PaymentMethod,
-                    Change = Change,
-                    CreatedDate = DateTime.Now,
-                    CreatedBy = LoginViewModel.username
-                };
-
-                // Update quantities
-                await _foodDao.UpdateQuantity(cartItems);
-                await _paymentDao.AddPayment(payment);
-                await _paymentDao.AddPaymentDetail(cartItems, payment.Id);
-
-                var dialog = new ContentDialog()
+                    var qnt = await _foodDao.GetQuantityById(item.Id);
+                    if (item.Quantity > qnt)
+                    {
+                        isTrue = false;
+                        break;
+                    }
+                }
+                if (isTrue == true)
                 {
-                    XamlRoot = _xamlRoot,
-                    Content = "Thanh toán thành công",
-                    Title = "Thành công",
-                    PrimaryButtonText = "Ok",
-                };
-                dialog.PrimaryButtonClick += Dialog_PrimaryButtonClick;
-                await dialog.ShowAsync();
+                    var payment = new PaymentModel
+                    {
+                        Id = Guid.NewGuid(),
+                        TotalPrice = TotalPrice,
+                        Discount = (float)Discount,
+                        PriceAfterDiscount = PriceAfterDiscount,
+                        AmountReceived = (decimal)AmountReceived,
+                        PaymetMethod = PaymentMethod,
+                        Change = Change,
+                        CreatedDate = DateTime.Now,
+                        CreatedBy = LoginViewModel.username
+                    };
+
+                    // Update quantities
+                    await _foodDao.UpdateQuantity(cartItems);
+                    await _paymentDao.AddPayment(payment);
+                    await _paymentDao.AddPaymentDetail(cartItems, payment.Id);
+
+                    var dialog = new ContentDialog()
+                    {
+                        XamlRoot = _xamlRoot,
+                        Content = "Thanh toán thành công",
+                        Title = "Thành công",
+                        PrimaryButtonText = "Ok",
+                    };
+                    dialog.PrimaryButtonClick += Dialog_PrimaryButtonClick;
+                    await dialog.ShowAsync();
+                }
+                else
+                {
+                    var failDialog = new ContentDialog()
+                    {
+                        XamlRoot = _xamlRoot,
+                        Content = "Số lượng món ăn không đủ",
+                        Title = "Thất bại",
+                        CloseButtonText = "OK",
+                    };
+                    await failDialog.ShowAsync();
+                }
+
+                
             }
         }
 

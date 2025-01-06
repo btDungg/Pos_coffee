@@ -25,7 +25,10 @@ namespace POS_Coffee.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            throw new NotImplementedException();
+            string priceString = value.ToString();
+            priceString = priceString.Replace(" VND", ""); // Loại bỏ " VND"
+            decimal priceDecimal = decimal.Parse(priceString);
+            return priceDecimal;
         }
     }
 }

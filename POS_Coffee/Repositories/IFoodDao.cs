@@ -13,5 +13,8 @@ namespace POS_Coffee.Repositories
         Task<List<FoodModel>> GetFoodsByCategory(string category);
         Task UpdateQuantity(List<CartItemModel> cartItems);
         Task<int> GetQuantityById(int id);
+        Task<FoodModel> RemoveFood(FoodModel food);
+        Task<FoodModel> UpdateFood(FoodModel food);
+        Task<FoodModel> AddFood(FoodModel food);
     }
 }

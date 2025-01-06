@@ -31,12 +31,12 @@
             <!--left top -->
             <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
                 <StackPanel Margin="5 0 0 0"  Orientation="Horizontal">
-                <Button Command="{x:Bind ViewModel.AllGoodsClick}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="70" Background="#ffffff" CornerRadius="10">
+                <Button Command="{x:Bind ViewModel.AllGoodsClickCmd}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="70" Background="#ffffff" CornerRadius="10">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBlock FontWeight="Bold" VerticalAlignment="Center">Tất cả</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button Command="{x:Bind ViewModel.DrinkButtonClick}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="115" Background="#ffffff" CornerRadius="10">
+                <Button Command="{x:Bind ViewModel.DrinkButtonClickCmd}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="115" Background="#ffffff" CornerRadius="10">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBlock FontSize="25" Foreground="White">☕</TextBlock>
 
@@ -44,7 +44,7 @@
                     </StackPanel>
                 </Button>
 
-                <Button  Command="{x:Bind ViewModel.FoodButtonClick}"  HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="100" Background="#ffffff" CornerRadius="10">
+                <Button  Command="{x:Bind ViewModel.FoodButtonClickCmd}"  HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="100" Background="#ffffff" CornerRadius="10">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBlock FontSize="25" Foreground="White">🍽</TextBlock>
                         <TextBlock FontWeight="Bold" VerticalAlignment ="Center">Đồ ăn</TextBlock>
@@ -56,7 +56,7 @@
                         <TextBox Width="200" Height="35" PlaceholderText="Tìm món (F3)" Margin="10,0,0,0"
                                  Text="{x:Bind ViewModel.searchQuery, Mode=TwoWay}" Foreground="#ffffff"/>
                         <Button Content="Search" Height="35" Margin="10,0,0,0" 
-                                Command="{x:Bind ViewModel.SearchButtonClick}"/>
+                                Command="{x:Bind ViewModel.SearchButtonClickCmd}"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

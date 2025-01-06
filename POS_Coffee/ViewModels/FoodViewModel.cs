@@ -19,6 +19,7 @@ using RelayCommand = CommunityToolkit.Mvvm.Input.RelayCommand;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
+using CommunityToolkit.WinUI;
 
 namespace POS_Coffee.ViewModels
 {
@@ -79,6 +80,41 @@ namespace POS_Coffee.ViewModels
             set => SetProperty(ref _saveStatus, value);
         }
 
+        private string _nameErrorStatus = "Collapsed";
+        public string NameErrorStatus
+        {
+            get => _nameErrorStatus;
+            set => SetProperty(ref _nameErrorStatus, value);
+        }
+
+        private string _imageErrorStatus = "Collapsed";
+        public string ImageErrorStatus
+        {
+            get => _imageErrorStatus;
+            set => SetProperty(ref _imageErrorStatus, value);
+        }
+
+        private string _priceErrorStatus = "Collapsed";
+        public string PriceErrorStatus
+        {
+            get => _priceErrorStatus;
+            set => SetProperty(ref _priceErrorStatus, value);
+        }
+
+        private string _amountErrorStatus = "Collapsed";
+        public string AmountErrorStatus
+        {
+            get => _amountErrorStatus;
+            set => SetProperty(ref _amountErrorStatus, value);
+        }
+
+        private string _categoryErrorStatus = "Collapsed";
+        public string CategoryErrorStatus
+        {
+            get => _categoryErrorStatus;
+            set => SetProperty(ref _categoryErrorStatus, value);
+        }
+
         public static string imagePath { get; set; }
 
         // Binding commands
@@ -92,6 +128,8 @@ namespace POS_Coffee.ViewModels
         public ICommand SaveFoodClickCmd { get; }
         public ICommand CancelFoodClickCmd { get; }
         public ICommand UploadImageClickCmd { get; }
+        public ICommand SaveFoodAdditionClickCmd { get; }
+        public ICommand CancelFoodAdditionClickCmd { get; }
         public IAsyncRelayCommand LoadFoodsCommand { get; }
 
         public IAsyncRelayCommand LoadFoodsManagementCmd { get; }
@@ -101,6 +139,7 @@ namespace POS_Coffee.ViewModels
         {
             _navigation = navigation;
             dao = _dao;
+            FoodAddition = new FoodModel();
             //LoadFoodsCommand = new AsyncRelayCommand(LoadFoods);
             LoadFoodsManagementCmd = new AsyncRelayCommand(LoadFoodsManagement);
             AllGoodsClickCmd = new RelayCommand(() => AllFoodsButtonClick());
@@ -113,6 +152,8 @@ namespace POS_Coffee.ViewModels
             SaveFoodClickCmd = new RelayCommand(() => SaveFoodClick());
             CancelFoodClickCmd = new RelayCommand(() => CancelFoodClick());
             UploadImageClickCmd = new RelayCommand(() => UploadImageClick());
+            SaveFoodAdditionClickCmd = new RelayCommand(() => SaveFoodAdditionClick());
+            CancelFoodAdditionClickCmd = new RelayCommand(() => CancelFoodAdditionClick());
             LoadFoodsManagementCmd.Execute(null);
             //LoadFoodsCommand.Execute(null);
         }
@@ -162,34 +203,84 @@ namespace POS_Coffee.ViewModels
             Foods = new ObservableCollection<FoodModel>(foods);
         }
 
-        private async void AddFoodClick()
+        private void AddFoodClick()
         {
-            FoodAddition = new FoodModel
-            {
-                Image = "",
-                Name = "",
-                Description = "",
-                Category = "",
-                Price = 0,
-                Amount = 0,
-            };
-            // Hiển thị dialog
-            var dialog = new FoodAdditionDialog
-            {
-                XamlRoot = _xamlRoot,
-                AddedFood = FoodAddition
-            };
-            dialog.PrimaryButtonClick += Dialog_PrimaryButtonClick;
-            await dialog.ShowAsync();
-            FoodAddition = dialog.AddedFood;
+            _navigation.NavigateTo(typeof(FoodAdditionPage));
         }
 
-        private async void Dialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void SaveFoodAdditionClick()
         {
-            FoodAddition.Image = imagePath;
-            await dao.AddFood(FoodAddition);
-            var foods = await dao.GetAllFood("");
-            Foods = new ObservableCollection<FoodModel>(foods);
+            var name = true;
+            var price = true;
+            var amount = true;
+            var category = true;
+            var image = true;
+            if (FoodAddition.Name == "" || FoodAddition.Name == null)
+            {
+                NameErrorStatus = "Visible";
+                name = false;
+            }
+            if (FoodAddition.Category == "" || FoodAddition.Category == null)
+            {
+                CategoryErrorStatus = "Visible";
+                category = false;
+            }
+            if (FoodAddition.Price.ToString() == null || FoodAddition.Price.ToString() == "" || FoodAddition.Price < 0)
+            {
+                PriceErrorStatus = "Visible";
+                price = false;
+            }
+            if (FoodAddition.Amount.ToString() == null || FoodAddition.Amount.ToString() == "" || FoodAddition.Amount < 0 || !(FoodAddition.Amount is int))
+            {
+                AmountErrorStatus = "Visible";
+                amount = false;
+            }
+            if (imagePath != null)
+            {
+                FoodAddition.Image = imagePath;
+                imagePath = null;
+            }
+            else
+            {
+                ImageErrorStatus = "Visible";
+                image = false;
+            }    
+            var id = FoodAddition.Id;
+            if (name == true && price == true && amount == true && category == true && image == true)
+            {
+                await dao.AddFood(FoodAddition);
+                var dialog = new ContentDialog()
+                {
+                    XamlRoot = _xamlRoot,
+                    Content = "Thêm thành công",
+                    Title = "Thêm món mới",
+                    CloseButtonText = "Ok",
+                };
+                NameErrorStatus = "Collapsed";
+                CategoryErrorStatus = "Collapsed";
+                PriceErrorStatus = "Collapsed";
+                AmountErrorStatus = "Collapsed";
+                isReadOnly = true;
+                visibilityStatus = "Visible";
+                saveStatus = "Collapsed";
+                //var foods = await dao.GetAllFood("");
+                //Foods = new ObservableCollection<FoodModel>(foods);
+                //FoodDetail = Foods.Where(x => x.Id == id).FirstOrDefault();
+                _navigation.NavigateTo(typeof(FoodManagementPage));
+            }
+
+        }
+
+        private void CancelFoodAdditionClick()
+        {
+            NameErrorStatus = "Collapsed";
+            CategoryErrorStatus = "Collapsed";
+            PriceErrorStatus = "Collapsed";
+            AmountErrorStatus = "Collapsed";
+            isReadOnly = true;
+            visibilityStatus = "Visible";
+            saveStatus = "Collapsed";
+            _navigation.NavigateTo(typeof(FoodManagementPage));
         }
 
         private async void DeleteFoodClick()
@@ -229,52 +320,52 @@ namespace POS_Coffee.ViewModels
 
         private async void SaveFoodClick()
         {
-            //if(stockDetailChanged.Name != null)
-            //{
-            //    StockDetail.Name = stockDetailChanged.Name;
-            //    stockDetailChanged.Name = null;
-            //}
-            //if (stockDetailChanged.Description != null)
-            //{
-            //    StockDetail.Description = stockDetailChanged.Description;
-            //    stockDetailChanged.Description = null;
-            //}
-            //if (stockDetailChanged.Unit != null)
-            //{
-            //    StockDetail.Unit = stockDetailChanged.Unit;
-            //    stockDetailChanged.Unit = null;
-            //}
-            //if (stockDetailChanged.Price >= 0)
-            //{
-            //    StockDetail.Price = stockDetailChanged.Price;
-            //    stockDetailChanged.Price = -1;
-            //}
-            //if (stockDetailChanged.StockNumber >= 0)
-            //{
-            //    StockDetail.StockNumber = stockDetailChanged.StockNumber;
-            //    stockDetailChanged.StockNumber = -1;
-            //}
-            if(imagePath != null)
+            var name = true;
+            var price = true;
+            var amount = true;
+            if (FoodDetail.Name == "")
+            {
+                NameErrorStatus = "Visible";
+                name = false;
+            }
+            if (FoodDetail.Price.ToString() == null || FoodDetail.Price.ToString() == "" || FoodDetail.Price < 0)
+            {
+                PriceErrorStatus = "Visible";
+                price = false;
+            }
+            if (FoodDetail.Amount.ToString() == null || FoodDetail.Amount.ToString() == "" || FoodDetail.Amount < 0 || !(FoodDetail.Amount is int))
+            {
+                AmountErrorStatus = "Visible";
+                amount = false;
+            }
+            if (imagePath != null)
             {
                 FoodDetail.Image = imagePath;
                 imagePath = null;
             }
             var id = FoodDetail.Id;
-            await dao.UpdateFood(FoodDetail);
-            isReadOnly = true;
-            visibilityStatus = "Visible";
-            saveStatus = "Collapsed";
-            var dialog = new ContentDialog()
+            if(name == true && price == true && amount == true)
             {
-                XamlRoot = _xamlRoot,
-                Content = "Lưu thành công",
-                Title = "Lưu thay đổi",
-                CloseButtonText = "Ok",
-            };
-            await dialog.ShowAsync();
-            var foods = await dao.GetAllFood("");
-            Foods = new ObservableCollection<FoodModel>(foods);
-            FoodDetail = Foods.Where(x => x.Id == id).FirstOrDefault();
+                await dao.UpdateFood(FoodDetail);
+                name = false;
+                var dialog = new ContentDialog()
+                {
+                    XamlRoot = _xamlRoot,
+                    Content = "Lưu thành công",
+                    Title = "Lưu thay đổi",
+                    CloseButtonText = "Ok",
+                };
+                await dialog.ShowAsync();
+                NameErrorStatus = "Collapsed";
+                PriceErrorStatus = "Collapsed";
+                AmountErrorStatus = "Collapsed";
+                isReadOnly = true;
+                visibilityStatus = "Visible";
+                saveStatus = "Collapsed";
+                var foods = await dao.GetAllFood("");
+                Foods = new ObservableCollection<FoodModel>(foods);
+                FoodDetail = Foods.Where(x => x.Id == id).FirstOrDefault();
+            }
         }
 
         private void CancelFoodClick()
@@ -282,7 +373,11 @@ namespace POS_Coffee.ViewModels
             isReadOnly = true;
             visibilityStatus = "Visible";
             saveStatus = "Collapsed";
+            NameErrorStatus = "Collapsed";
+            PriceErrorStatus = "Collapsed";
+            AmountErrorStatus = "Collapsed";
         }
+
         private async void UploadImageClick()
         {
             FileOpenPicker fileOpenPicker = new()

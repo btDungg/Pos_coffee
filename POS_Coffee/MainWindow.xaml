@@ -17,6 +17,11 @@
             <NavigationView.MenuItems>
                 <NavigationViewItem Icon="Home" Content="Trang chủ" x:Name="HomePage"/>
                 <NavigationViewItem Icon="Library" Content="Quản lý kho" x:Name="StockManagement"/>
+                <NavigationViewItem Content="Quản lý đồ ăn, đồ uống" x:Name="FoodManagement">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xEC09;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
                 <NavigationViewItem Content="Quản lý hóa đơn" x:Name="PaymentPage">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xF0E3;"/>

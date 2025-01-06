@@ -13,7 +13,6 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Extensions.DependencyInjection;
-using POS_Coffee.Models;
 using POS_Coffee.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -24,17 +23,20 @@ namespace POS_Coffee.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class FoodAdditionDialog : ContentDialog
+    public sealed partial class FoodAdditionPage : Page
     {
-        public FoodAdditionDialog()
+        public FoodAdditionPage()
         {
             this.InitializeComponent();
-            DataContext = this;
+            this.Loaded += Announce_Loaded;
         }
 
         public FoodViewModel ViewModel { get; }
            = App.Current.Services.GetService<FoodViewModel>();
 
-        public FoodModel AddedFood { get; set; }
+        private void Announce_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.SetXamlRoot(this.XamlRoot);
+        }
     }
 }

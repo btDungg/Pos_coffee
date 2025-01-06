@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="POS_Coffee.Views.StockAdditionPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:POS_Coffee.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel Width="500">
+        <TextBlock  Text="THÊM NGUYÊN LIỆU" FontWeight="Bold" HorizontalAlignment="Center" Margin="10 10 10 10"/>
+        <StackPanel Orientation="Vertical">
+            <Button x:Name="UploadButton" Width="125" Height="35" Content="Upload Image" Foreground="Blue" Margin="10 10 10 10" 
+            FontWeight="Bold" CornerRadius="0" Command="{x:Bind ViewModel.UploadImageClickCmd}"/>
+            <TextBlock x:Name="ImageError"  Text="*Image is required" Foreground="Red" 
+            Visibility="{x:Bind ViewModel.ImageErrorStatus, Mode=TwoWay}" Margin="10 10 10 10"/>
+        </StackPanel>
+
+        <Grid Padding="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBox x:Name="NameData" Header="Tên đồ ăn, đồ uống:" Grid.Row="0" Margin="0 0 10 10"
+             Text="{x:Bind ViewModel.StockAddition.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock x:Name="NameError" Grid.Row="1" Text="*Name is required" Foreground="Red" 
+               Visibility="{x:Bind ViewModel.NameErrorStatus, Mode=TwoWay}" Margin="0 0 0 10"/>
+
+            <TextBox x:Name="DescriptionData" Margin="0 0 10 10" Header="Mô tả:" Grid.Row="2"
+             Text="{x:Bind ViewModel.StockAddition.Description, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBox x:Name="PriceData" Header="Đơn giá:" Grid.Row="4" Margin="0 0 10 10"
+             Text="{x:Bind ViewModel.StockAddition.Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource PriceConverter}}"/>
+            <TextBlock x:Name="PriceError" Grid.Row="5" Text="*Price must be a positive number" Foreground="Red" Margin="0 0 0 10"
+               Visibility="{x:Bind ViewModel.PriceErrorStatus, Mode=TwoWay}" />
+
+            <TextBox x:Name="AmountData" Header="Số lượng:" Grid.Row="6" Margin="0 0 10 10"
+             Text="{x:Bind ViewModel.StockAddition.StockNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock x:Name="AmountError" Grid.Row="7" Text="*Amount must be a positive integer" Margin="0 0 0 10"
+               Visibility="{x:Bind ViewModel.AmountErrorStatus, Mode=TwoWay}" Foreground="Red"/>
+
+            <TextBox x:Name="UnitData" Header="Đơn vị:" Grid.Row="6" Margin="0 0 10 10"
+                Text="{x:Bind ViewModel.StockAddition.Unit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock x:Name="CategoryError" Grid.Row="9" Text="*Category is required" Margin="0 0 0 10"
+               Visibility="{x:Bind ViewModel.UnitErrorStatus, Mode=TwoWay}" Foreground="Red"/>
+            <CommandBar Grid.Row="10" DefaultLabelPosition="Right" HorizontalAlignment="Center" Margin="0 10 5 5">
+                <AppBarButton Icon="Cancel" Label="Hủy" Command="{x:Bind ViewModel.CancelStockAdditionClickCmd}" Background="Red" CornerRadius="0"/>
+                <AppBarButton Icon="Save" Label="Lưu" Command="{x:Bind ViewModel.SaveStockAdditionClickCmd}" Background="CornflowerBlue" CornerRadius="0"/>
+            </CommandBar>
+
+        </Grid>
+
+
+    </StackPanel>
+</Page>

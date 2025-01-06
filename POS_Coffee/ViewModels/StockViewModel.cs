@@ -41,12 +41,16 @@ namespace POS_Coffee.ViewModels
         public ICommand SearchButtonClickCmd { get; }
         public ICommand SaveStockClickCmd { get; }
         public ICommand CancelStockClickCmd { get; }
+        public ICommand SaveStockAdditionClickCmd { get; }
+        public ICommand CancelStockAdditionClickCmd { get; }
         public ICommand UploadImageClickCmd { get; }
 
         public IAsyncRelayCommand LoadStocksCommand;
 
         //Variable
         private XamlRoot _xamlRoot;
+
+        private StockModel OldStockDetail;
 
         private StockModel _stockDetail;
         public StockModel StockDetail
@@ -97,6 +101,41 @@ namespace POS_Coffee.ViewModels
             set => SetProperty(ref _searchQuery, value);
         }
 
+        private string _nameErrorStatus = "Collapsed";
+        public string NameErrorStatus
+        {
+            get => _nameErrorStatus;
+            set => SetProperty(ref _nameErrorStatus, value);
+        }
+
+        private string _priceErrorStatus = "Collapsed";
+        public string PriceErrorStatus
+        {
+            get => _priceErrorStatus;
+            set => SetProperty(ref _priceErrorStatus, value);
+        }
+
+        private string _amountErrorStatus = "Collapsed";
+        public string AmountErrorStatus
+        {
+            get => _amountErrorStatus;
+            set => SetProperty(ref _amountErrorStatus, value);
+        }
+
+        private string _unitErrorStatus = "Collapsed";
+        public string UnitErrorStatus
+        {
+            get => _unitErrorStatus;
+            set => SetProperty(ref _unitErrorStatus, value);
+        }
+
+        private string _imageErrorStatus = "Collapsed";
+        public string ImageErrorStatus
+        {
+            get => _imageErrorStatus;
+            set => SetProperty(ref _imageErrorStatus, value);
+        }
+
         public static string imagePath { get; set; }
 
         public StockViewModel(IStockDAO stockDAO)
@@ -118,6 +157,8 @@ namespace POS_Coffee.ViewModels
             SearchButtonClickCmd = new RelayCommand(() => SearchStockClick());
             SaveStockClickCmd = new RelayCommand(()=>SaveStockClick());
             CancelStockClickCmd = new RelayCommand(() => CancelStockClick());
+            SaveStockAdditionClickCmd = new RelayCommand(() => SaveStockAdditionClick());
+            CancelStockAdditionClickCmd = new RelayCommand(() => CancelStockAdditionClick());
             UploadImageClickCmd = new RelayCommand(() => UploadImageClick());
             LoadStocksCommand = new AsyncRelayCommand(LoadStocks);
             LoadStocksCommand.Execute(null);
@@ -131,6 +172,8 @@ namespace POS_Coffee.ViewModels
             if (allStocks.Any())
             {
                 StockDetail = allStocks[0];
+                OldStockDetail = new StockModel();
+                OldStockDetail = StockDetail;
             }
             else
             {
@@ -171,35 +214,83 @@ namespace POS_Coffee.ViewModels
             Stocks = new ObservableCollection<StockModel>(stocks);
         }
 
-        private async void AddStockClick()
+        private void AddStockClick()
         {
-            StockAddition = new StockModel
-            {
-                ImagePath = "",
-                Name = "",
-                Description = "",
-                Unit = "",
-                Price = 0,
-                StockNumber = 0,
-            };
-            // Hiển thị dialog
-            var dialog = new StockAdditionDialog
-            {
-                XamlRoot = _xamlRoot,
-                AddedStock = StockAddition
-            };
-            dialog.PrimaryButtonClick += Dialog_PrimaryButtonClick;
-            await dialog.ShowAsync();
-            StockAddition = dialog.AddedStock;
+            _navigation.NavigateTo(typeof(StockAdditionPage));
         }
 
-        private async void Dialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void SaveStockAdditionClick()
         {
-            StockAddition.ImagePath = imagePath;
-            await _stockDao.AddStock(StockAddition);
-            var stocks = await _stockDao.GetAllStock();
-            Stocks = new ObservableCollection<StockModel>(stocks);
+            var name = true;
+            var price = true;
+            var amount = true;
+            var category = true;
+            var image = true;
+            if (StockAddition.Name == "" || StockAddition.Name == null)
+            {
+                NameErrorStatus = "Visible";
+                name = false;
+            }
+            if (StockAddition.Unit == "" || StockAddition.Unit == null)
+            {
+                UnitErrorStatus = "Visible";
+                category = false;
+            }
+            if (StockAddition.Price.ToString() == null || StockAddition.Price.ToString() == "" || StockAddition.Price < 0)
+            {
+                PriceErrorStatus = "Visible";
+                price = false;
+            }
+            if (StockAddition.StockNumber.ToString() == null || StockAddition.StockNumber.ToString() == "" || StockAddition.StockNumber < 0 || !(StockAddition.StockNumber is int))
+            {
+                AmountErrorStatus = "Visible";
+                amount = false;
+            }
+            if (imagePath != null)
+            {
+                StockAddition.ImagePath = imagePath;
+                imagePath = null;
+            }
+            else
+            {
+                ImageErrorStatus = "Visible";
+                image = false;
+            }
+            var id = StockAddition.ID;
+            if (name == true && price == true && amount == true && category == true && image == true)
+            {
+                await _stockDao.AddStock(StockAddition);
+                var dialog = new ContentDialog()
+                {
+                    XamlRoot = _xamlRoot,
+                    Content = "Thêm thành công",
+                    Title = "Thêm món mới",
+                    CloseButtonText = "Ok",
+                };
+                NameErrorStatus = "Collapsed";
+                UnitErrorStatus = "Collapsed";
+                PriceErrorStatus = "Collapsed";
+                AmountErrorStatus = "Collapsed";
+                isReadOnly = true;
+                visibilityStatus = "Visible";
+                saveStatus = "Collapsed";
+                _navigation.NavigateTo(typeof(StockManagementPage));
+            }
+
         }
+
+        private void CancelStockAdditionClick()
+        {
+            NameErrorStatus = "Collapsed";
+            UnitErrorStatus = "Collapsed";
+            PriceErrorStatus = "Collapsed";
+            AmountErrorStatus = "Collapsed";
+            isReadOnly = true;
+            visibilityStatus = "Visible";
+            saveStatus = "Collapsed";
+            _navigation.NavigateTo(typeof(StockManagementPage));
+        }
+
 
         private async void DeleteStockClick()
         {
@@ -238,59 +329,76 @@ namespace POS_Coffee.ViewModels
 
         private async void SaveStockClick()
         {
-            //if(stockDetailChanged.Name != null)
-            //{
-            //    StockDetail.Name = stockDetailChanged.Name;
-            //    stockDetailChanged.Name = null;
-            //}
-            //if (stockDetailChanged.Description != null)
-            //{
-            //    StockDetail.Description = stockDetailChanged.Description;
-            //    stockDetailChanged.Description = null;
-            //}
-            //if (stockDetailChanged.Unit != null)
-            //{
-            //    StockDetail.Unit = stockDetailChanged.Unit;
-            //    stockDetailChanged.Unit = null;
-            //}
-            //if (stockDetailChanged.Price >= 0)
-            //{
-            //    StockDetail.Price = stockDetailChanged.Price;
-            //    stockDetailChanged.Price = -1;
-            //}
-            //if (stockDetailChanged.StockNumber >= 0)
-            //{
-            //    StockDetail.StockNumber = stockDetailChanged.StockNumber;
-            //    stockDetailChanged.StockNumber = -1;
-            //}
+            var name = true;
+            var price = true;
+            var amount = true;
+            var unit = true;
+            if (StockDetail.Name == "")
+            {
+                NameErrorStatus = "Visible";
+                name = false;
+            }
+            if (StockDetail.Unit == "")
+            {
+                UnitErrorStatus = "Visible";
+                unit = false;
+            }
+            if (StockDetail.Price.ToString() == null || StockDetail.Price.ToString() == "" || StockDetail.Price < 0)
+            {
+                PriceErrorStatus = "Visible";
+                price = false;
+            }
+            if (StockDetail.StockNumber.ToString() == null || StockDetail.StockNumber.ToString() == "" || StockDetail.StockNumber < 0 || !(StockDetail.StockNumber is int))
+            {
+                AmountErrorStatus = "Visible";
+                amount = false;
+            }
             if (imagePath != null)
             {
                 StockDetail.ImagePath = imagePath;
                 imagePath = null;
             }
             var id = StockDetail.ID;
-            StockDetail = await _stockDao.UpdateStock(StockDetail);
-            isReadOnly = true;
-            visibilityStatus = "Visible";
-            saveStatus = "Collapsed";
-            var dialog = new ContentDialog()
+            if (name == true && price == true && amount == true && unit == true)
             {
-                XamlRoot = _xamlRoot,
-                Content = "Lưu thành công",
-                Title = "Lưu thay đổi",
-                CloseButtonText = "Ok",
-            };
-            await dialog.ShowAsync();
-            var stocks = await _stockDao.GetAllStock();
-            Stocks = new ObservableCollection<StockModel>(stocks);
-            StockDetail = Stocks.Where(x => x.ID == id).FirstOrDefault();
+                StockDetail = await _stockDao.UpdateStock(StockDetail);
+                isReadOnly = true;
+                visibilityStatus = "Visible";
+                saveStatus = "Collapsed";
+                var dialog = new ContentDialog()
+                {
+                    XamlRoot = _xamlRoot,
+                    Content = "Lưu thành công",
+                    Title = "Lưu thay đổi",
+                    CloseButtonText = "Ok",
+                };
+                await dialog.ShowAsync();
+                NameErrorStatus = "Collapsed";
+                PriceErrorStatus = "Collapsed";
+                AmountErrorStatus = "Collapsed";
+                UnitErrorStatus = "Collapsed";
+                isReadOnly = true;
+                visibilityStatus = "Visible";
+                saveStatus = "Collapsed";
+                var stocks = await _stockDao.GetAllStock();
+                Stocks = new ObservableCollection<StockModel>(stocks);
+                StockDetail = Stocks.Where(x => x.ID == id).FirstOrDefault();
+            }
         }
 
-        private void CancelStockClick()
+        private async void CancelStockClick()
         {
+            string name = OldStockDetail.Name;
             isReadOnly = true;
             visibilityStatus = "Visible";
             saveStatus = "Collapsed";
+            NameErrorStatus = "Collapsed";
+            PriceErrorStatus = "Collapsed";
+            AmountErrorStatus = "Collapsed";
+            UnitErrorStatus = "Collapsed";
+            StockDetail = OldStockDetail;
+            var stocks = await _stockDao.GetAllStock();
+            Stocks = new ObservableCollection<StockModel>(stocks);
         }
         private async void UploadImageClick()
         {

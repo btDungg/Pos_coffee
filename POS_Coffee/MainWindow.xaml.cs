@@ -78,7 +78,7 @@ namespace POS_Coffee
                     {
                         navItem.Visibility = Visibility.Visible;
                     }
-                    if ((navItem.Name == "StockManagement" || navItem.Name == "PaymentPage" || navItem.Name == "FinancialReport" || navItem.Name == "PromotionManagement")
+                    if ((navItem.Name == "StockManagement" || navItem.Name == "PaymentPage" || navItem.Name == "FinancialReport" || navItem.Name == "PromotionManagement" || navItem.Name == "FoodManagement")
                         && role == "admin")
                     {
                         navItem.Visibility = Visibility.Visible;

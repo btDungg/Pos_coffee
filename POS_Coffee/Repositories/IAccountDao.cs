@@ -13,5 +13,11 @@ namespace POS_Coffee.Repositories
         //test
         //List<AccountModel> getAllAccount();
         Task<AccountModel> getAccountByUsername(string username);
+        Task<List<AccountModel>> getAllEmployee();
+        Task<AccountModel> getEmployeeById(int employeeId);
+        Task<TimeKeppingModel> AddTimeKepping(TimeKeppingModel timeKepping);
+        Task<TimeKeppingModel> GetTimeKeppingModel(int empId, DateOnly workDate);
+        Task<AccountModel> AddEmployee (AccountModel employee);
+        List<SalaryDTO> GetSalaryByMonth(int month, int year);
     }
 }

@@ -63,7 +63,6 @@ namespace POS_Coffee.ViewModels
                 }
                 else
                 {
-                    // Lấy id và lưu vào property
                     id = user.Id;
                     username = user.name;
 

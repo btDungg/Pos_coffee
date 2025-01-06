@@ -215,7 +215,7 @@ namespace POS_Coffee.ViewModels
                         hadChange = true;
                     }
 
-                    decimal customerDiscountAmount = PriceAfterDiscount * (decimal)CusDiscount;
+                    decimal customerDiscountAmount = PriceAfterDiscount * (decimal)(CusDiscount/100);
                     PriceAfterDiscount = OriginalPrice - customerDiscountAmount;
                     Discount = orgdiscount + customerDiscountAmount;
                 }
@@ -245,15 +245,15 @@ namespace POS_Coffee.ViewModels
             }
             else if (PointCustomer >= 10 && PointCustomer < 30)
             {
-                CusDiscount = 0.03;
+                CusDiscount = 3;
             }
             else if (PointCustomer >= 30 && PointCustomer < 50)
             {
-                CusDiscount = 0.05;
+                CusDiscount = 5;
             }
             else if (PointCustomer >= 50)
             {
-                CusDiscount = 0.1;
+                CusDiscount = 10;
             }
            
         }
@@ -339,29 +339,6 @@ namespace POS_Coffee.ViewModels
             else
             {
                 var PaymentMethod = IsCheckedCash ? "Tiền mặt" : "Chuyển khoản";
-
-                if(PriceAfterDiscount>0)
-                {
-                    int pointupdate = 0;
-                    if(PriceAfterDiscount<100000)
-                    {
-                        pointupdate = 1;
-                    }
-                    else if (PriceAfterDiscount >= 100000 && PriceAfterDiscount < 300000)
-                    {
-                        pointupdate = 3;
-                    }
-                    else if (PriceAfterDiscount >= 300000 && PriceAfterDiscount < 500000)
-                    {
-                        pointupdate = 5;
-                    }       
-                    else if (PriceAfterDiscount >= 500000)
-                    {
-                        pointupdate = 10;
-                    }
-                    await _membersDao.UpdateMemberPoints(CustomerPhoneNumber, pointupdate);
-                }
-
                 var isTrue = true;
                 foreach (var item in cartItems)
                 {
@@ -391,6 +368,28 @@ namespace POS_Coffee.ViewModels
                     await _foodDao.UpdateQuantity(cartItems);
                     await _paymentDao.AddPayment(payment);
                     await _paymentDao.AddPaymentDetail(cartItems, payment.Id);
+
+                    if (PriceAfterDiscount > 0)
+                    {
+                        int pointupdate = 0;
+                        if (PriceAfterDiscount < 100000)
+                        {
+                            pointupdate = 1;
+                        }
+                        else if (PriceAfterDiscount >= 100000 && PriceAfterDiscount < 300000)
+                        {
+                            pointupdate = 3;
+                        }
+                        else if (PriceAfterDiscount >= 300000 && PriceAfterDiscount < 500000)
+                        {
+                            pointupdate = 5;
+                        }
+                        else if (PriceAfterDiscount >= 500000)
+                        {
+                            pointupdate = 10;
+                        }
+                        await _membersDao.UpdateMemberPoints(CustomerPhoneNumber, pointupdate);
+                    }
 
                     var dialog = new ContentDialog()
                     {

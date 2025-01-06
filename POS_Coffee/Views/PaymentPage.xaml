@@ -177,7 +177,7 @@
                         <TextBlock Grid.Row="0" Grid.Column="2" Text="Số điểm đã tích luỹ" VerticalAlignment="Center"/>
 
                         <TextBlock Grid.Row="1" Grid.Column="0" Text="{x:Bind PaymentViewModel.NameCustomer, Mode=TwoWay}" VerticalAlignment="Center" FontWeight="Bold"/>
-                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind PaymentViewModel.CusDiscount, Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 50 0"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind PaymentViewModel.CusDiscount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 50 0"/>
                         <TextBlock Grid.Row="1" Grid.Column="2" Text="{x:Bind PaymentViewModel.PointCustomer, Mode=TwoWay}" VerticalAlignment="Center"  FontWeight="Bold" HorizontalAlignment="Center"/>
 
 

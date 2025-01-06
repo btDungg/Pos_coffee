@@ -67,7 +67,7 @@
                         <controls:DataGridTextColumn 
                         Header="Đơn giá"
                         Width="*"
-                        Binding="{Binding Price}" 
+                        Binding="{Binding Price, Converter={StaticResource PriceConverter}}" 
                         FontSize="14">
                         </controls:DataGridTextColumn>
                     </controls:DataGrid.Columns>

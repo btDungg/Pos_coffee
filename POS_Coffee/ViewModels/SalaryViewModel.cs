@@ -79,13 +79,13 @@ namespace POS_Coffee.ViewModels
             try
             {
                 var report = new StiReport();
-                report.Load("D:/Window Programing/POS_Coffee/POS_Coffee/Reports/SalaryReport.mrt");
+                report.Load("D:/Window Programing/Project/POS_Coffee/POS_Coffee/Reports/SalaryReport.mrt");
                 report.Dictionary.Variables["Month"].Value = SelectedMonth.ToString();
                 report.Dictionary.Variables["Year"].Value = SelectedYear.ToString();
                 report.Compile();
                 report.Render();
                 //report.Show();
-                var pdfFilePath = Path.Combine("D:/Window Programing/POS_Coffee/POS_Coffee", "PDFs", "SalaryReport_" + SelectedMonth + "_" + SelectedYear + ".pdf");
+                var pdfFilePath = Path.Combine("D:/Window Programing/Project/POS_Coffee/POS_Coffee", "PDFs", "SalaryReport_" + SelectedMonth + "_" + SelectedYear + ".pdf");
                 //var pdfExport = new StiPdfExportService();
                 report.ExportDocument(StiExportFormat.Pdf, pdfFilePath);
                 var dialog = new ContentDialog()

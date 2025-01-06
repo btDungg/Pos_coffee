@@ -80,7 +80,7 @@ namespace POS_Coffee
                     }
                     if ((navItem.Name == "StockManagement" || navItem.Name == "PaymentPage" 
                         || navItem.Name == "FinancialReport" || navItem.Name == "PromotionManagement"
-                        || navItem.Name == "EmployeeManagement"
+                        || navItem.Name == "EmployeeManagement" || navItem.Name == "FoodManagement"
                         || navItem.Name == "MembersManagement")
                         && role == "admin")
                     {

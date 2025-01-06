@@ -17,9 +17,21 @@
         HorizontalAlignment="Center"
         VerticalAlignment="Center"
         Orientation="Vertical"
-        Height="360"
+        Height="500"
         Width="600"
         Background="White">
+            <TextBlock
+            Style="{StaticResource TitleTextBlockStyle}"
+            Text="ỨNG DỤNG QUẢN LÝ QUÁN CÀ PHÊ" FontSize="20"
+            Margin="0 30 10 0"
+            HorizontalAlignment="Center"
+             />
+            <TextBlock
+            Style="{StaticResource TitleTextBlockStyle}"
+            Text="THE COFFE HOUSE" FontWeight="Bold" FontSize="30" Foreground="#4d4d4d"
+            Margin="10 30 10 0"
+            HorizontalAlignment="Center"
+ />
             <TextBlock
             Style="{StaticResource TitleTextBlockStyle}"
             Text="Đăng nhập"

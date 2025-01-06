@@ -25,10 +25,23 @@ namespace POS_Coffee.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            string priceString = value.ToString();
-            priceString = priceString.Replace(" VND", ""); // Loại bỏ " VND"
-            decimal priceDecimal = decimal.Parse(priceString);
-            return priceDecimal;
+            if (value is string priceString)
+            {
+                try
+                {
+                    // Loại bỏ ký hiệu tiền tệ và khoảng trắng không cần thiết
+                    priceString = priceString.Replace("₫", "").Trim();
+                    var priceDecimal = decimal.Parse(priceString, NumberStyles.Number, new CultureInfo("vi-VN"));
+                    return priceDecimal;
+                }
+                catch (FormatException)
+                {
+                    // Trả về giá trị mặc định nếu có lỗi định dạng
+                    return DependencyProperty.UnsetValue;
+                }
+            }
+
+            return DependencyProperty.UnsetValue;
         }
     }
 }

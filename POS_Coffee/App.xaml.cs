@@ -41,7 +41,7 @@ namespace POS_Coffee
         /// </summary>
         public App()
         {
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NDaF1cWGhIYVZpR2Nbek5xdV9EZVZSTGYuP1ZhSXxXd0djX35fdHJVT2dZU0U=");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzY1NzQ4MkAzMjM3MmUzMDJlMzBKSjZLcExNWThuZFNIWEpBNnVQL0YxWmhycEdwaDRjTURkbjB6bE52YndJPQ==");
             this.InitializeComponent();
             Services = ConfigureServices();
         }

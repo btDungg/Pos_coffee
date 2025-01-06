@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -6,9 +6,6 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using POS_Coffee.Models;
-using POS_Coffee.Repositories;
-using POS_Coffee.Utilities;
 using POS_Coffee.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -26,28 +23,21 @@ namespace POS_Coffee.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class UpdatePromotion : Page
+    public sealed partial class AddEmployeePage : Page
     {
-        public UpdatePromotionViewModel ViewModel { get; private set; }
-
-        public UpdatePromotion()
+        public AddEmployeePage()
         {
             this.InitializeComponent();
+            DataContext = ViewModel;
+            this.Loaded += AddEmployeePage_Loaded;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        private void AddEmployeePage_Loaded(object sender, RoutedEventArgs e)
         {
-            if (e.Parameter is PromotionModel promotion)
-            {
-                var dao = App.Current.Services.GetService<IPromotionDao>();
-                var navigationService = App.Current.Services.GetService<INavigation>();
-
-                ViewModel = new UpdatePromotionViewModel(dao, navigationService, promotion);
-                DataContext = ViewModel; 
-            }
-            base.OnNavigatedTo(e);
+            ViewModel.SetXamlRoot(this.XamlRoot);
         }
 
-
+        public AddEmployeeViewModel ViewModel { get; set; }
+        = App.Current.Services.GetService<AddEmployeeViewModel>();
     }
 }

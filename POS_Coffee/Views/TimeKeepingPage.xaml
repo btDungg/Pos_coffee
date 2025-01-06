@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="POS_Coffee.Views.TimeKeepingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:POS_Coffee.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converter="using:POS_Coffee.Converters"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Chấm công nhân viên"
+                   FontSize="24"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="0, 0, 0, 20" />
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
+            <TextBlock Text="Ngày làm việc:" VerticalAlignment="Center" Margin="0,0,10,0" />
+            <CalendarDatePicker Date="{x:Bind EmployeeViewModel.WorkDate, Mode=TwoWay}" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
+            <TextBlock Text="Giờ bắt đầu:" VerticalAlignment="Center" Margin="0,0,10,0" />
+            <TimePicker SelectedTime="{x:Bind EmployeeViewModel.StartTime, Mode=TwoWay}" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
+            <TextBlock Text="Giờ kết thúc:" VerticalAlignment="Center" Margin="0,0,10,0" />
+            <TimePicker SelectedTime="{x:Bind EmployeeViewModel.EndTime, Mode=TwoWay}" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
+            <TextBlock Text="Số giờ làm việc:" VerticalAlignment="Center" Margin="0,0,10,0" />
+            <TextBox Text="{x:Bind EmployeeViewModel.Hours, Mode=OneWay}" IsReadOnly="True" Width="100" />
+        </StackPanel>
+
+        <Button Content="Xác nhận" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                Command="{x:Bind EmployeeViewModel.SubmitAttendanceCommand}" Background="#3498eb" />
+    </Grid>
+
+</Page>

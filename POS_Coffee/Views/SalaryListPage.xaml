@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="POS_Coffee.Views.SalaryListPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:POS_Coffee.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    mc:Ignorable="d">
+    <!--Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">-->
+
+    <Grid>
+        <StackPanel Orientation="Vertical" Width="Auto" Height="Auto" Background="FloralWhite" Margin="10 10 10 10">
+            <TextBlock Text="BẢNG LƯƠNG" FontSize="25" Margin="0,10,0,0" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Center"/>
+            <!--<Button Command="{x:Bind ViewModel.ShowDetailCommand}">-->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Spacing="10" Margin="10 0 0 0">
+                <ComboBox x:Name="MonthComboBox"
+                  Width="100"
+                  Header="Tháng"
+                  ItemsSource ="{x:Bind SalaryViewModel.Months, Mode=OneWay}"
+                  SelectedItem="{Binding SelectedMonth, Mode=TwoWay}">
+                </ComboBox>
+
+                <ComboBox x:Name="YearComboBox"
+                  Width="100"
+                  Header="Năm"
+                  ItemsSource ="{x:Bind SalaryViewModel.Years, Mode=OneWay}"
+                  SelectedItem="{Binding SelectedYear, Mode=TwoWay}">
+                </ComboBox>
+                <Button Content="Xem" Background="#3498eb" Margin="0 25 0 0" Width="100"
+                    Command="{x:Bind SalaryViewModel.GetSalaryListCommand}" />
+            </StackPanel>
+
+            <controls:DataGrid x:Name="detailTable"
+            GridLinesVisibility="All" VerticalAlignment="Top"
+            IsReadOnly="True" 
+            Margin="10" MaxHeight="500" SelectionMode="Single"
+            AutoGenerateColumns="False" 
+            ItemsSource="{Binding SalaryList, Mode=TwoWay}">
+                <!--DataContext="{x:Bind EmployeeViewModel}">-->
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTextColumn 
+                    Header="Mã nhân viên" 
+                    Width="*"
+                    Binding="{Binding EmpID}" 
+                    FontSize="14" />
+                    <controls:DataGridTextColumn 
+                    Header="Họ và tên" 
+                    Width="*"
+                    Binding="{Binding Name}" 
+                    FontSize="14" />
+                    <controls:DataGridTextColumn 
+                    Header="Số điện thoại" 
+                    Width="*"
+                    Binding="{Binding Phone}" 
+                    FontSize="14" />
+                    <controls:DataGridTextColumn 
+                    Header="Email" 
+                    Width="*"
+                    Binding="{Binding Email}" 
+                    FontSize="14" />
+                    <controls:DataGridTextColumn 
+                    Header="Số giờ làm việc" 
+                    Width="*"
+                    Binding="{Binding TotalHours}" 
+                    FontSize="14" />
+                    <controls:DataGridTextColumn 
+                    Header="Tiền lương" 
+                    Width="*"
+                    Binding="{Binding TotalSalary}" 
+                    FontSize="14" />
+                </controls:DataGrid.Columns>
+
+            </controls:DataGrid>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel HorizontalAlignment="Left">
+                    <Button Content="Trở về" Margin="10 10 10 10" HorizontalAlignment="Right" Background="#3498eb" Command="{x:Bind SalaryViewModel.BackCommand}"></Button>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right">
+                    <Button Content="In bảng lương" Margin="1060 10 10 10" HorizontalAlignment="Right" Background="#3498eb" Command="{x:Bind SalaryViewModel.PrintSalaryListCommand}"></Button>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

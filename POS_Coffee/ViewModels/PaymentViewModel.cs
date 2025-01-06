@@ -26,25 +26,30 @@ namespace POS_Coffee.ViewModels
         private readonly IPaymentDao _paymentDao;
         private readonly INavigation _navigation;
         private readonly IFoodDao _foodDao;
-        private readonly IPromotionDao _promotionDao; // Assuming you have this repository for promotions
+        private readonly IPromotionDao _promotionDao;
+        private readonly IMembersDao _membersDao;
 
         public ICommand ShowDetailCommand { get; }
         public ICommand PayCommand { get; }
         public IAsyncRelayCommand LoadPaymentsCommand { get; }
+        public ICommand ResetFilterCommand { get; }
         public ObservableCollection<PaymentModel> _paymentModels { get; set; }
 
-        public PaymentViewModel(IPaymentDao paymentDao, INavigation navigation, IFoodDao foodDao, IPromotionDao promotionDao)
+        public PaymentViewModel(IPaymentDao paymentDao, INavigation navigation, IFoodDao foodDao, IPromotionDao promotionDao,IMembersDao membersDao)
         {
             _paymentDao = paymentDao;
             _navigation = navigation;
             _foodDao = foodDao;
-            _promotionDao = promotionDao; // Initialize the promotion DAO
-            
+            _promotionDao = promotionDao;
+            _membersDao = membersDao;
+
             LoadPaymentsCommand = new AsyncRelayCommand(LoadPayments);
             PayCommand = new RelayCommand<List<CartItemModel>>(AddPayment);
             ShowDetailCommand = new RelayCommand(() => LoadPaymentDetail());
             LoadPaymentsCommand.Execute(null);
-            
+            ResetFilterCommand = new RelayCommand(ResetFilter);
+            _filteredPaymentModels = new ObservableCollection<PaymentModel>();
+
         }
 
         private bool _isCheckedCash = true;
@@ -82,14 +87,16 @@ namespace POS_Coffee.ViewModels
 
         public PaymentModel PaymentItem { get; set; }
 
+
         private decimal _discount;
         public decimal Discount
         {
-            get => _discount;
+            get =>  _discount;
             set
             {
                 if (SetProperty(ref _discount, value))
                 {
+                    OnPropertyChanged(nameof(Discount));
                     UpdatePriceAfterDiscount();
                 }
             }
@@ -125,6 +132,134 @@ namespace POS_Coffee.ViewModels
             private set => SetProperty(ref _change, value);
         }
 
+        private bool _isCustomerFound;
+        public bool IsCustomerFound
+        {
+            get => _isCustomerFound;
+            set
+            {
+                if (_isCustomerFound != value)
+                {
+                    _isCustomerFound = value;
+                    OnPropertyChanged(nameof(IsCustomerFound));
+
+                }
+            }
+        }
+        private string _customerPhoneNumber;
+        public string CustomerPhoneNumber
+        {
+            get => _customerPhoneNumber;
+            set
+            {
+                _customerPhoneNumber = value;
+                OnPropertyChanged(nameof(CustomerPhoneNumber));
+                CheckCustomerExists();
+            }
+        }
+
+
+
+        private string _nameCustomer;
+        public string NameCustomer
+        {
+            get => _nameCustomer;
+            set
+            {
+                SetProperty(ref _nameCustomer, value);
+            }
+        }
+        private int _pointCustomer;
+        public int PointCustomer
+        {
+            get => _pointCustomer;
+            set
+            {
+                if (SetProperty(ref _pointCustomer, value))
+                {
+                    UpdateDiscount(); 
+                }
+            }
+        }
+        private double _cusDiscount;
+        public double CusDiscount
+        {
+            get => _cusDiscount;
+            set => SetProperty(ref _cusDiscount, value);
+        }
+
+
+        private decimal _originalPrice;
+        public decimal OriginalPrice
+        {
+            get => _originalPrice;
+            set => SetProperty(ref _originalPrice, value);
+        }
+        private decimal orgdiscount;
+        private bool hadChange = false;
+        private async void CheckCustomerExists()
+        {
+            try
+            {
+                var customer = await _membersDao.getMember(CustomerPhoneNumber);
+                if (customer != null)
+                {
+                    IsCustomerFound = true;
+                    NameCustomer = customer.Name;
+                    PointCustomer = customer.point;
+
+                    if (!hadChange)
+                    {
+                        OriginalPrice = PriceAfterDiscount;
+                        orgdiscount = Discount;
+                        hadChange = true;
+                    }
+
+                    decimal customerDiscountAmount = PriceAfterDiscount * (decimal)CusDiscount;
+                    PriceAfterDiscount = OriginalPrice - customerDiscountAmount;
+                    Discount = orgdiscount + customerDiscountAmount;
+                }
+                else
+                {
+                    IsCustomerFound = false;
+                    if (hadChange)
+                    {
+                        PriceAfterDiscount = OriginalPrice;
+                        Discount = orgdiscount;
+                        hadChange = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any potential errors
+                System.Diagnostics.Debug.WriteLine($"Error checking customer: {ex.Message}");
+            }
+        }
+
+        private void UpdateDiscount()
+        {
+            if (PointCustomer < 10)
+            {
+                CusDiscount = 0;
+            }
+            else if (PointCustomer >= 10 && PointCustomer < 30)
+            {
+                CusDiscount = 0.03;
+            }
+            else if (PointCustomer >= 30 && PointCustomer < 50)
+            {
+                CusDiscount = 0.05;
+            }
+            else if (PointCustomer >= 50)
+            {
+                CusDiscount = 0.1;
+            }
+           
+        }
+
+
+
         private decimal _priceAfterDiscount;
         public decimal PriceAfterDiscount
         {
@@ -154,6 +289,7 @@ namespace POS_Coffee.ViewModels
         {
             var payments = await _paymentDao.GetAllPayment();
             _paymentModels = new ObservableCollection<PaymentModel>(payments);
+            FilteredPaymentModels = new ObservableCollection<PaymentModel>(_paymentModels);
             PaymentItem = new PaymentModel();
             if (_paymentModels.Any())
             {
@@ -165,6 +301,8 @@ namespace POS_Coffee.ViewModels
             }
         }
 
+       
+
         public async void AddPayment(List<CartItemModel> cartItems)
         {
             if (cartItems == null)
@@ -172,8 +310,9 @@ namespace POS_Coffee.ViewModels
                 return;
             }
 
-            // Apply highest discount automatically based on promotions
-            await ApplyHighestDiscountForAllProducts(cartItems);
+            //// Apply highest discount automatically based on promotions
+            //await ApplyHighestDiscountForAllProducts(cartItems);
+                
 
             if ((decimal)AmountReceived < PriceAfterDiscount)
             {
@@ -199,42 +338,83 @@ namespace POS_Coffee.ViewModels
             }
             else
             {
-                var PaymentMethod = "";
-                if (IsCheckedCash == true)
-                {
-                    PaymentMethod = "Tiền mặt";
-                }
-                else if (IsCheckedCard == true)
-                {
-                    PaymentMethod = "Chuyển khoản";
-                }
-                var payment = new PaymentModel
-                {
-                    Id = Guid.NewGuid(),
-                    TotalPrice = TotalPrice,
-                    Discount =(float) Discount,
-                    PriceAfterDiscount = PriceAfterDiscount,
-                    AmountReceived = (decimal)AmountReceived,
-                    PaymetMethod = PaymentMethod,
-                    Change = Change,
-                    CreatedDate = DateTime.Now,
-                    CreatedBy = LoginViewModel.username
-                };
+                var PaymentMethod = IsCheckedCash ? "Tiền mặt" : "Chuyển khoản";
 
-                // Update quantities
-                await _foodDao.UpdateQuantity(cartItems);
-                await _paymentDao.AddPayment(payment);
-                await _paymentDao.AddPaymentDetail(cartItems, payment.Id);
-
-                var dialog = new ContentDialog()
+                if(PriceAfterDiscount>0)
                 {
-                    XamlRoot = _xamlRoot,
-                    Content = "Thanh toán thành công",
-                    Title = "Thành công",
-                    PrimaryButtonText = "Ok",
-                };
-                dialog.PrimaryButtonClick += Dialog_PrimaryButtonClick;
-                await dialog.ShowAsync();
+                    int pointupdate = 0;
+                    if(PriceAfterDiscount<100000)
+                    {
+                        pointupdate = 1;
+                    }
+                    else if (PriceAfterDiscount >= 100000 && PriceAfterDiscount < 300000)
+                    {
+                        pointupdate = 3;
+                    }
+                    else if (PriceAfterDiscount >= 300000 && PriceAfterDiscount < 500000)
+                    {
+                        pointupdate = 5;
+                    }       
+                    else if (PriceAfterDiscount >= 500000)
+                    {
+                        pointupdate = 10;
+                    }
+                    await _membersDao.UpdateMemberPoints(CustomerPhoneNumber, pointupdate);
+                }
+
+                var isTrue = true;
+                foreach (var item in cartItems)
+                {
+                    var qnt = await _foodDao.GetQuantityById(item.Id);
+                    if (item.Quantity > qnt)
+                    {
+                        isTrue = false;
+                        break;
+                    }
+                }
+                if (isTrue == true)
+                {
+                    var payment = new PaymentModel
+                    {
+                        Id = Guid.NewGuid(),
+                        TotalPrice = TotalPrice,
+                        Discount = (float)Discount,
+                        PriceAfterDiscount = PriceAfterDiscount,
+                        AmountReceived = (decimal)AmountReceived,
+                        PaymetMethod = PaymentMethod,
+                        Change = Change,
+                        CreatedDate = DateTime.Now,
+                        CreatedBy = LoginViewModel.username
+                    };
+
+                    // Update quantities
+                    await _foodDao.UpdateQuantity(cartItems);
+                    await _paymentDao.AddPayment(payment);
+                    await _paymentDao.AddPaymentDetail(cartItems, payment.Id);
+
+                    var dialog = new ContentDialog()
+                    {
+                        XamlRoot = _xamlRoot,
+                        Content = "Thanh toán thành công",
+                        Title = "Thành công",
+                        PrimaryButtonText = "Ok",
+                    };
+                    dialog.PrimaryButtonClick += Dialog_PrimaryButtonClick;
+                    await dialog.ShowAsync();
+                }
+                else
+                {
+                    var failDialog = new ContentDialog()
+                    {
+                        XamlRoot = _xamlRoot,
+                        Content = "Số lượng món ăn không đủ",
+                        Title = "Thất bại",
+                        CloseButtonText = "OK",
+                    };
+                    await failDialog.ShowAsync();
+                }
+
+                
             }
         }
 
@@ -278,21 +458,19 @@ namespace POS_Coffee.ViewModels
             if (bestPromotion != null)
             {
                 decimal discountAmount = bestPromotion.DiscountAmount;
-                decimal priceAfterDiscount = totalPrice - discountAmount;
+                decimal priceAfterDiscount = (totalPrice - discountAmount);
 
                 Discount = discountAmount;
                 TotalPrice = totalPrice;
                 PriceAfterDiscount = priceAfterDiscount;
 
-                Console.WriteLine($"Giảm giá: {discountAmount} | Giá sau giảm: {priceAfterDiscount}");
 
-                return discountAmount;  // Return the discount applied
+                return discountAmount;  
             }
             else
             {
-                Console.WriteLine("Không có chương trình khuyến mãi hợp lệ hoặc giá trị đơn hàng không đủ lớn.");
 
-                return 0;  // No discount applied
+                return 0;  
             }
         }
         
@@ -308,5 +486,77 @@ namespace POS_Coffee.ViewModels
             //var pdfExport = new StiPdfExportService();
             report.ExportDocument(StiExportFormat.Pdf, pdfFilePath);
         }
+
+        private ObservableCollection<PaymentModel> _filteredPaymentModels;
+        public ObservableCollection<PaymentModel> FilteredPaymentModels
+        {
+            get => _filteredPaymentModels;
+            set => SetProperty(ref _filteredPaymentModels, value);
+        }
+
+        private DateTimeOffset? _startDate;
+        public DateTimeOffset? StartDate
+        {
+            get => _startDate;
+            set
+            {
+                if (SetProperty(ref _startDate, value))
+                {
+                    FilterPayments();
+                }
+            }
+        }
+
+        private DateTimeOffset? _endDate;
+        public DateTimeOffset? EndDate
+        {
+            get => _endDate;
+            set
+            {
+                if (SetProperty(ref _endDate, value))
+                {
+                    FilterPayments();
+                }
+            }
+        }
+        public void FilterPayments()
+        {
+            if (_paymentModels == null) return;
+
+            var filtered = _paymentModels.AsEnumerable();
+
+            if (StartDate.HasValue)
+            {
+                filtered = filtered.Where(p => p.CreatedDate.Date >= StartDate.Value.Date);
+            }
+
+            if (EndDate.HasValue)
+            {
+                filtered = filtered.Where(p => p.CreatedDate.Date <= EndDate.Value.Date);
+            }
+
+            FilteredPaymentModels = new ObservableCollection<PaymentModel>(filtered);
+
+            if (FilteredPaymentModels.Any())
+            {
+                PaymentItem = FilteredPaymentModels[0];
+            }
+            else
+            {
+                PaymentItem = null;
+            }
+        }
+
+        private void ResetFilter()
+        {
+            StartDate = null;
+            EndDate = null;
+            FilteredPaymentModels = new ObservableCollection<PaymentModel>(_paymentModels);
+            if (_paymentModels.Any())
+            {
+                PaymentItem = _paymentModels[0];
+            }
+        }
+
     }
 }

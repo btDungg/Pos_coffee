@@ -18,13 +18,17 @@
         <TextBlock Text="QUẢN LÝ HÓA ĐƠN" FontSize="25" Margin="0,10,0,0" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Center"/>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 10 10 10" Spacing="15">
-            <Button Content="Tất cả" FontWeight="Bold" VerticalAlignment="Center" Margin="10,0,20,0"/>
-
+            <Button Content="Tất cả" 
+            FontWeight="Bold" 
+            VerticalAlignment="Center" 
+            Margin="10,0,20,0"
+            Command="{x:Bind ViewModel.ResetFilterCommand}"/>
             <TextBlock Text="Ngày bắt đầu:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,10,0"/>
-            <CalendarDatePicker />
-
+            <CalendarDatePicker Date="{x:Bind ViewModel.StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                        DateChanged="{x:Bind ViewModel.FilterPayments}"/>
             <TextBlock Text="Ngày kết thúc:" FontWeight="Bold" VerticalAlignment="Center" Margin="20,0,10,0"/>
-            <CalendarDatePicker />
+            <CalendarDatePicker Date="{x:Bind ViewModel.EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        DateChanged="{x:Bind ViewModel.FilterPayments}"/>
         </StackPanel>
 
         <!--<Button Command="{x:Bind ViewModel.ShowDetailCommand}">-->
@@ -33,7 +37,7 @@
                 IsReadOnly="True" 
                 Margin="10" MaxHeight="500" SelectionMode="Single"
                 AutoGenerateColumns="False" SelectedItem="{x:Bind ViewModel.PaymentItem, Mode=TwoWay}"
-                ItemsSource="{x:Bind ViewModel._paymentModels, Mode=TwoWay}"
+                ItemsSource="{x:Bind ViewModel.FilteredPaymentModels, Mode=TwoWay}"
                 DataContext="{x:Bind ViewModel}">
                 <controls:DataGrid.Columns>
                     <controls:DataGridTextColumn 

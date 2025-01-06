@@ -46,6 +46,15 @@ namespace POS_Coffee.ViewModels
                 case "PromotionManagement":
                     _navigation.NavigateTo(typeof(PromotionPage));
                     break;
+                case "EmployeeManagement":
+                    _navigation.NavigateTo(typeof(EmployeeManagementPage));
+                    break;
+                case "TimeKeepingPage":
+                    _navigation.NavigateTo(typeof(TimeKeepingPage));
+                    break;
+                case "MembersManagement":
+                    _navigation.NavigateTo(typeof(MembersManagermentPage));
+                    break;
 
                 case "FoodManagement":
                     _navigation.NavigateTo(typeof(FoodManagementPage));

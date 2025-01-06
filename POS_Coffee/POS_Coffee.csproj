@@ -24,14 +24,19 @@
     <None Remove="Assets\trungga.jpg" />
     <None Remove="Assets\trungnguyen.jpg" />
     <None Remove="Assets\Vinamilk.jpg" />
+    <None Remove="Views\AddEmployeePage.xaml" />
     <None Remove="Views\AdminHomePage.xaml" />
     <None Remove="Views\FoodAdditionPage.xaml" />
     <None Remove="Views\FoodManagementPage.xaml" />
     <None Remove="Views\CreatePromotionPage.xaml" />
+    <None Remove="Views\MembersManagermentPage.xaml" />
     <None Remove="Views\PaymentDetailDialog.xaml" />
+    <None Remove="Views\StockAdditionDialog.xaml" />
+    <None Remove="Views\EmployeeManagementPage.xaml" />
     <None Remove="Views\FinancialReportPage.xaml" />
     <None Remove="Views\PromotionManagementPage.xaml" />
     <None Remove="Views\PromotionPage.xaml" />
+    <None Remove="Views\SalaryListPage.xaml" />
     <None Remove="Views\StockAdditionPage.xaml" />
     <None Remove="Views\StockManagementPage.xaml" />
     <Content Remove="Assets\bac-xiu.jpg" />
@@ -57,6 +62,7 @@
     <None Remove="Views\AdminHomePage.xaml" />
     <None Remove="Views\PaymentManagementPage.xaml" />
     <None Remove="Views\PaymentPage.xaml" />
+    <None Remove="Views\TimeKeepingPage.xaml" />
     <None Remove="Views\UpdatePromotion.xaml" />
   </ItemGroup>
 
@@ -207,6 +213,27 @@
     <None Update="Assets\pepsi.webp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\MembersManagermentPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\StockAdditionDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\AddEmployeePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\StockAdditionDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\SalaryListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\TimeKeepingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\EmployeeManagementPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\StockAdditionPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -226,9 +253,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\PromotionManagementPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\PaymentDetailDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\FinancialReportPage.xaml">

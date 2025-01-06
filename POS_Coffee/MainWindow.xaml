@@ -33,6 +33,13 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItem Icon="Manage" Content="Quản lý khuyến mãi" x:Name="PromotionManagement" />
+                <NavigationViewItem Icon="Manage" Content="Quản lý nhân viên" x:Name="EmployeeManagement" />
+                <NavigationViewItem Icon="Manage" Content="Quản lý khách hàng" x:Name="MembersManagement" />
+                <NavigationViewItem Content="Chấm công" x:Name="TimeKeepingPage">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xEC92;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
             </NavigationView.MenuItems>
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem Content="Đăng xuất" Tag="SamplePage5" x:Name="LogOut">

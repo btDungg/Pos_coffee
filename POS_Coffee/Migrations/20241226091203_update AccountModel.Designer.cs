@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using POS_Coffee.Data;
 
@@ -11,9 +12,11 @@ using POS_Coffee.Data;
 namespace POS_Coffee.Migrations
 {
     [DbContext(typeof(PosDbContext))]
-    partial class PosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241226091203_update AccountModel")]
+    partial class updateAccountModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,11 +38,6 @@ namespace POS_Coffee.Migrations
 
                     b.Property<string>("email")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
 
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
@@ -66,7 +64,6 @@ namespace POS_Coffee.Migrations
                             Id = 1,
                             address = "Thủ Đức, TP Hồ Chí Minh",
                             email = "emp1@gmail.com",
-                            isActive = true,
                             name = "Nguyễn Võ Nhật Huy",
                             password = "emp1",
                             phone = "0123456789",
@@ -78,7 +75,6 @@ namespace POS_Coffee.Migrations
                             Id = 2,
                             address = "Đông Hòa, Dĩ An, Bình Dương",
                             email = "emp2@gmail.com",
-                            isActive = true,
                             name = "Bùi Tiến Dũng",
                             password = "emp2",
                             phone = "0805057891",
@@ -90,7 +86,6 @@ namespace POS_Coffee.Migrations
                             Id = 3,
                             address = "Thủ Đức, TP Hồ Chí Minh",
                             email = "admin1@gmail.com",
-                            isActive = true,
                             name = "Phạm Thế Duyệt",
                             password = "admin1",
                             phone = "0159753214",
@@ -294,44 +289,6 @@ namespace POS_Coffee.Migrations
                         });
                 });
 
-            modelBuilder.Entity("POS_Coffee.Models.MembersModel", b =>
-                {
-                    b.Property<string>("phoneNumber")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("point")
-                        .HasColumnType("int");
-
-                    b.HasKey("phoneNumber");
-
-                    b.ToTable("Members");
-
-                    b.HasData(
-                        new
-                        {
-                            phoneNumber = "0123456789",
-                            Name = "Bùi Tiến Dũng",
-                            point = 100
-                        },
-                        new
-                        {
-                            phoneNumber = "0987654321",
-                            Name = "Nguyễn Võ Nhật Duy",
-                            point = 10
-                        },
-                        new
-                        {
-                            phoneNumber = "0112345678",
-                            Name = "Phạm Thế Duyệt",
-                            point = 50
-                        });
-                });
-
             modelBuilder.Entity("POS_Coffee.Models.PaymentDetailModel", b =>
                 {
                     b.Property<Guid>("PaymentID")
@@ -452,9 +409,9 @@ namespace POS_Coffee.Migrations
                             Id = 1,
                             Description = "Khuyến mãi áp dụng từ 01/01/2024 đến 31/01/2024",
                             Name = "Giảm 10% cho hóa đơn lớn hơn 500,000",
-                            applicable_to = "Tất cả sản phẩm",
+                            applicable_to = "all",
                             created_by = 3,
-                            created_date = new DateTime(2025, 1, 6, 11, 40, 10, 635, DateTimeKind.Local).AddTicks(9282),
+                            created_date = new DateTime(2024, 12, 26, 16, 12, 0, 767, DateTimeKind.Local).AddTicks(2852),
                             discount_type = "percent",
                             discount_value = 10m,
                             end_date = new DateTime(2024, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -462,41 +419,41 @@ namespace POS_Coffee.Migrations
                             min_order_value = 500000m,
                             start_date = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             updated_by = 3,
-                            updated_date = new DateTime(2025, 1, 6, 11, 40, 10, 636, DateTimeKind.Local).AddTicks(8163)
+                            updated_date = new DateTime(2024, 12, 26, 16, 12, 0, 768, DateTimeKind.Local).AddTicks(3031)
                         },
                         new
                         {
                             Id = 2,
                             Description = "Khuyến mãi cho tất cả đơn hàng từ 15/12/2023 đến 31/12/2023",
                             Name = "Giảm 50,000 cho hóa đơn từ 300,000 trở lên",
-                            applicable_to = "Tất cả sản phẩm",
+                            applicable_to = "all",
                             created_by = 3,
-                            created_date = new DateTime(2025, 1, 6, 11, 40, 10, 636, DateTimeKind.Local).AddTicks(8614),
-                            discount_type = "Số tiền cố định",
+                            created_date = new DateTime(2024, 12, 26, 16, 12, 0, 768, DateTimeKind.Local).AddTicks(4582),
+                            discount_type = "amount",
                             discount_value = 50000m,
                             end_date = new DateTime(2023, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             is_active = true,
                             min_order_value = 300000m,
                             start_date = new DateTime(2023, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             updated_by = 3,
-                            updated_date = new DateTime(2025, 1, 6, 11, 40, 10, 636, DateTimeKind.Local).AddTicks(8616)
+                            updated_date = new DateTime(2024, 12, 26, 16, 12, 0, 768, DateTimeKind.Local).AddTicks(4588)
                         },
                         new
                         {
                             Id = 3,
                             Description = "Khuyến mãi áp dụng riêng cho danh mục Đồ uống từ 01/02/2024 đến 28/02/2024",
                             Name = "Giảm giá 15% cho danh mục Đồ uống",
-                            applicable_to = "Tất cả sản phẩm",
+                            applicable_to = "categories",
                             created_by = 3,
-                            created_date = new DateTime(2025, 1, 6, 11, 40, 10, 636, DateTimeKind.Local).AddTicks(8619),
-                            discount_type = "Phần trăm",
+                            created_date = new DateTime(2024, 12, 26, 16, 12, 0, 768, DateTimeKind.Local).AddTicks(4593),
+                            discount_type = "percent",
                             discount_value = 15m,
                             end_date = new DateTime(2024, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             is_active = true,
                             min_order_value = 0m,
                             start_date = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             updated_by = 3,
-                            updated_date = new DateTime(2025, 1, 6, 11, 40, 10, 636, DateTimeKind.Local).AddTicks(8620)
+                            updated_date = new DateTime(2024, 12, 26, 16, 12, 0, 768, DateTimeKind.Local).AddTicks(4594)
                         });
                 });
 
@@ -583,28 +540,6 @@ namespace POS_Coffee.Migrations
                         });
                 });
 
-            modelBuilder.Entity("POS_Coffee.Models.TimeKeppingModel", b =>
-                {
-                    b.Property<int>("EmployeeID")
-                        .HasColumnType("int");
-
-                    b.Property<DateOnly>("WorkDate")
-                        .HasColumnType("date");
-
-                    b.Property<TimeOnly>("EndTime")
-                        .HasColumnType("time");
-
-                    b.Property<double>("Hours")
-                        .HasColumnType("float");
-
-                    b.Property<TimeOnly>("StartTime")
-                        .HasColumnType("time");
-
-                    b.HasKey("EmployeeID", "WorkDate");
-
-                    b.ToTable("TimeKeppingModels");
-                });
-
             modelBuilder.Entity("POS_Coffee.Models.PaymentDetailModel", b =>
                 {
                     b.HasOne("POS_Coffee.Models.FoodModel", "Food")
@@ -614,17 +549,6 @@ namespace POS_Coffee.Migrations
                         .IsRequired();
 
                     b.Navigation("Food");
-                });
-
-            modelBuilder.Entity("POS_Coffee.Models.TimeKeppingModel", b =>
-                {
-                    b.HasOne("POS_Coffee.Models.AccountModel", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
                 });
 #pragma warning restore 612, 618
         }

@@ -73,7 +73,7 @@
                         CornerRadius="15"> 
 
                 <!--list item-->
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="800">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="600">
                 <GridView x:Name="GridFood"
                        ItemsSource="{x:Bind ViewModel.Foods, Mode=TwoWay}">                
                     <GridView.ItemTemplate>

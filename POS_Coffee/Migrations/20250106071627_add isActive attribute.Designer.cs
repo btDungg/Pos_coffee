@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using POS_Coffee.Data;
 
@@ -11,9 +12,11 @@ using POS_Coffee.Data;
 namespace POS_Coffee.Migrations
 {
     [DbContext(typeof(PosDbContext))]
-    partial class PosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250106071627_add isActive attribute")]
+    partial class addisActiveattribute
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -294,44 +297,6 @@ namespace POS_Coffee.Migrations
                         });
                 });
 
-            modelBuilder.Entity("POS_Coffee.Models.MembersModel", b =>
-                {
-                    b.Property<string>("phoneNumber")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("point")
-                        .HasColumnType("int");
-
-                    b.HasKey("phoneNumber");
-
-                    b.ToTable("Members");
-
-                    b.HasData(
-                        new
-                        {
-                            phoneNumber = "0123456789",
-                            Name = "Bùi Tiến Dũng",
-                            point = 100
-                        },
-                        new
-                        {
-                            phoneNumber = "0987654321",
-                            Name = "Nguyễn Võ Nhật Duy",
-                            point = 10
-                        },
-                        new
-                        {
-                            phoneNumber = "0112345678",
-                            Name = "Phạm Thế Duyệt",
-                            point = 50
-                        });
-                });
-
             modelBuilder.Entity("POS_Coffee.Models.PaymentDetailModel", b =>
                 {
                     b.Property<Guid>("PaymentID")
@@ -452,9 +417,9 @@ namespace POS_Coffee.Migrations
                             Id = 1,
                             Description = "Khuyến mãi áp dụng từ 01/01/2024 đến 31/01/2024",
                             Name = "Giảm 10% cho hóa đơn lớn hơn 500,000",
-                            applicable_to = "Tất cả sản phẩm",
+                            applicable_to = "all",
                             created_by = 3,
-                            created_date = new DateTime(2025, 1, 6, 11, 40, 10, 635, DateTimeKind.Local).AddTicks(9282),
+                            created_date = new DateTime(2025, 1, 6, 14, 16, 25, 202, DateTimeKind.Local).AddTicks(5475),
                             discount_type = "percent",
                             discount_value = 10m,
                             end_date = new DateTime(2024, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -462,41 +427,41 @@ namespace POS_Coffee.Migrations
                             min_order_value = 500000m,
                             start_date = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             updated_by = 3,
-                            updated_date = new DateTime(2025, 1, 6, 11, 40, 10, 636, DateTimeKind.Local).AddTicks(8163)
+                            updated_date = new DateTime(2025, 1, 6, 14, 16, 25, 204, DateTimeKind.Local).AddTicks(2674)
                         },
                         new
                         {
                             Id = 2,
                             Description = "Khuyến mãi cho tất cả đơn hàng từ 15/12/2023 đến 31/12/2023",
                             Name = "Giảm 50,000 cho hóa đơn từ 300,000 trở lên",
-                            applicable_to = "Tất cả sản phẩm",
+                            applicable_to = "all",
                             created_by = 3,
-                            created_date = new DateTime(2025, 1, 6, 11, 40, 10, 636, DateTimeKind.Local).AddTicks(8614),
-                            discount_type = "Số tiền cố định",
+                            created_date = new DateTime(2025, 1, 6, 14, 16, 25, 204, DateTimeKind.Local).AddTicks(3155),
+                            discount_type = "amount",
                             discount_value = 50000m,
                             end_date = new DateTime(2023, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             is_active = true,
                             min_order_value = 300000m,
                             start_date = new DateTime(2023, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             updated_by = 3,
-                            updated_date = new DateTime(2025, 1, 6, 11, 40, 10, 636, DateTimeKind.Local).AddTicks(8616)
+                            updated_date = new DateTime(2025, 1, 6, 14, 16, 25, 204, DateTimeKind.Local).AddTicks(3156)
                         },
                         new
                         {
                             Id = 3,
                             Description = "Khuyến mãi áp dụng riêng cho danh mục Đồ uống từ 01/02/2024 đến 28/02/2024",
                             Name = "Giảm giá 15% cho danh mục Đồ uống",
-                            applicable_to = "Tất cả sản phẩm",
+                            applicable_to = "categories",
                             created_by = 3,
-                            created_date = new DateTime(2025, 1, 6, 11, 40, 10, 636, DateTimeKind.Local).AddTicks(8619),
-                            discount_type = "Phần trăm",
+                            created_date = new DateTime(2025, 1, 6, 14, 16, 25, 204, DateTimeKind.Local).AddTicks(3161),
+                            discount_type = "percent",
                             discount_value = 15m,
                             end_date = new DateTime(2024, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             is_active = true,
                             min_order_value = 0m,
                             start_date = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             updated_by = 3,
-                            updated_date = new DateTime(2025, 1, 6, 11, 40, 10, 636, DateTimeKind.Local).AddTicks(8620)
+                            updated_date = new DateTime(2025, 1, 6, 14, 16, 25, 204, DateTimeKind.Local).AddTicks(3162)
                         });
                 });
 

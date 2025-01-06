@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using POS_Coffee.Data;
 
@@ -11,9 +12,11 @@ using POS_Coffee.Data;
 namespace POS_Coffee.Migrations
 {
     [DbContext(typeof(PosDbContext))]
-    partial class PosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250106044012_add members")]
+    partial class addmembers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,11 +38,6 @@ namespace POS_Coffee.Migrations
 
                     b.Property<string>("email")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
 
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
@@ -66,7 +64,6 @@ namespace POS_Coffee.Migrations
                             Id = 1,
                             address = "Thủ Đức, TP Hồ Chí Minh",
                             email = "emp1@gmail.com",
-                            isActive = true,
                             name = "Nguyễn Võ Nhật Huy",
                             password = "emp1",
                             phone = "0123456789",
@@ -78,7 +75,6 @@ namespace POS_Coffee.Migrations
                             Id = 2,
                             address = "Đông Hòa, Dĩ An, Bình Dương",
                             email = "emp2@gmail.com",
-                            isActive = true,
                             name = "Bùi Tiến Dũng",
                             password = "emp2",
                             phone = "0805057891",
@@ -90,7 +86,6 @@ namespace POS_Coffee.Migrations
                             Id = 3,
                             address = "Thủ Đức, TP Hồ Chí Minh",
                             email = "admin1@gmail.com",
-                            isActive = true,
                             name = "Phạm Thế Duyệt",
                             password = "admin1",
                             phone = "0159753214",

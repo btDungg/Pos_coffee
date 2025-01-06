@@ -22,6 +22,7 @@ namespace POS_Coffee.Data
         public DbSet<PaymentDetailModel> PaymentDetails { get; set; }
         public DbSet<PromotionModel> Promotions { get; set; }
         public DbSet<TimeKeppingModel> TimeKeppingModels { get; set; }
+        public DbSet<MembersModel> Members { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
@@ -348,6 +349,18 @@ namespace POS_Coffee.Data
 
             modelBuilder.Entity<StockModel>().HasData(stockModels);
 
+            modelBuilder.Entity<MembersModel>(entity =>
+            {
+                entity.HasKey(e => e.phoneNumber);
+
+                entity.Property(e => e.Name)
+                      .IsRequired()
+                      .HasMaxLength(100);
+
+                entity.Property(e => e.point)
+                      .IsRequired();
+            });
+
             var promotions = new List<PromotionModel>
             {
                 new PromotionModel
@@ -361,7 +374,7 @@ namespace POS_Coffee.Data
                    start_date = new DateTime(2024, 1, 1),
                    end_date = new DateTime(2024, 1, 31),
                    is_active = true,
-                   applicable_to = "all",
+                   applicable_to = "Tất cả sản phẩm",
                    created_date = DateTime.Now,
                    updated_date = DateTime.Now,
                    created_by = 3,
@@ -372,13 +385,13 @@ namespace POS_Coffee.Data
                    Id = 2,
                    Name = "Giảm 50,000 cho hóa đơn từ 300,000 trở lên",
                    Description = "Khuyến mãi cho tất cả đơn hàng từ 15/12/2023 đến 31/12/2023",
-                   discount_type = "amount",
+                   discount_type = "Số tiền cố định",
                    discount_value = 50000,
                    min_order_value = 300000,
                    start_date = new DateTime(2023, 12, 15),
                    end_date = new DateTime(2023, 12, 31),
                    is_active = true,
-                   applicable_to = "all",
+                   applicable_to = "Tất cả sản phẩm",
                    created_date = DateTime.Now,
                    updated_date = DateTime.Now,
                    created_by = 3,
@@ -389,13 +402,13 @@ namespace POS_Coffee.Data
                    Id = 3,
                    Name = "Giảm giá 15% cho danh mục Đồ uống",
                    Description = "Khuyến mãi áp dụng riêng cho danh mục Đồ uống từ 01/02/2024 đến 28/02/2024",
-                   discount_type = "percent",
+                   discount_type = "Phần trăm",
                    discount_value = 15,
                    min_order_value = 0,
                    start_date = new DateTime(2024, 2, 1),
                    end_date = new DateTime(2024, 2, 28),
                    is_active = true,
-                   applicable_to = "categories",
+                   applicable_to = "Tất cả sản phẩm",
                    created_date = DateTime.Now,
                    updated_date = DateTime.Now,
                    created_by = 3,
@@ -403,6 +416,32 @@ namespace POS_Coffee.Data
                }                    
             };
             modelBuilder.Entity<PromotionModel>().HasData(promotions);
+
+
+
+                    var members = new List<MembersModel>
+            {
+                new MembersModel
+                {
+                    Name = "Bùi Tiến Dũng",
+                    phoneNumber = "0123456789",
+                    point = 100
+                },
+                new MembersModel
+                {
+                    Name = "Nguyễn Võ Nhật Duy",
+                    phoneNumber = "0987654321",
+                    point = 10
+                },
+                new MembersModel
+                {
+                    Name = "Phạm Thế Duyệt",
+                    phoneNumber = "0112345678",
+                    point = 50
+                }
+            };
+
+                    modelBuilder.Entity<MembersModel>().HasData(members);
         }
     }
 }

@@ -27,6 +27,7 @@
     <None Remove="Views\AddEmployeePage.xaml" />
     <None Remove="Views\AdminHomePage.xaml" />
     <None Remove="Views\CreatePromotionPage.xaml" />
+    <None Remove="Views\MembersManagermentPage.xaml" />
     <None Remove="Views\PaymentDetailDialog.xaml" />
     <None Remove="Views\StockAdditionDialog.xaml" />
     <None Remove="Views\EmployeeManagementPage.xaml" />
@@ -208,6 +209,12 @@
     <None Update="Assets\pepsi.webp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\MembersManagermentPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\StockAdditionDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\AddEmployeePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

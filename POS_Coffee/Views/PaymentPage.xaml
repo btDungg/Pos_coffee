@@ -115,6 +115,11 @@
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        
+                        
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Text="Tổng tiền hàng:" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" />
@@ -147,6 +152,37 @@
                     <TextBlock Grid.Row="5" Text="Tiền thừa trả khách:" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" />
                     <TextBlock  Grid.Row="5" FontSize="16" Foreground="Black" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1"
                                 Text="{x:Bind PaymentViewModel.Change, Mode=OneWay}"/>
+
+                    <TextBlock Grid.Row="6" Text="Số điện thoại khách hàng" FontSize="16" 
+                       HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" />
+                     <TextBox Height="40" MinWidth="200" Grid.Row="6" FontSize="16" Foreground="#bae4d6" 
+                     HorizontalAlignment="Right" Grid.Column="1"
+                     Text="{x:Bind PaymentViewModel.CustomerPhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Grid Grid.Row="7" Grid.RowSpan="2" Grid.ColumnSpan="2" Visibility="{x:Bind PaymentViewModel.IsCustomerFound, Mode=OneWay}" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Dòng 1: Hiển thị Tên khách hàng và % được giảm giá -->
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Tên khách hàng" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="% được giảm giá" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 50 0"/>
+                        <TextBlock Grid.Row="0" Grid.Column="2" Text="Số điểm đã tích luỹ" VerticalAlignment="Center"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{x:Bind PaymentViewModel.NameCustomer, Mode=TwoWay}" VerticalAlignment="Center" FontWeight="Bold"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind PaymentViewModel.CusDiscount, Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 50 0"/>
+                        <TextBlock Grid.Row="1" Grid.Column="2" Text="{x:Bind PaymentViewModel.PointCustomer, Mode=TwoWay}" VerticalAlignment="Center"  FontWeight="Bold" HorizontalAlignment="Center"/>
+
+
+                        <!-- Thêm các phần tử khác nếu cần -->
+                    </Grid>
 
                 </Grid>
 

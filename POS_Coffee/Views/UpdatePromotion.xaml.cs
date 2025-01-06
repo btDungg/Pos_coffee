@@ -39,12 +39,11 @@ namespace POS_Coffee.Views
         {
             if (e.Parameter is PromotionModel promotion)
             {
-                // Sử dụng DI để lấy các dependency cần thiết và khởi tạo ViewModel
                 var dao = App.Current.Services.GetService<IPromotionDao>();
                 var navigationService = App.Current.Services.GetService<INavigation>();
 
                 ViewModel = new UpdatePromotionViewModel(dao, navigationService, promotion);
-                DataContext = ViewModel; // Gắn ViewModel vào DataContext
+                DataContext = ViewModel; 
             }
             base.OnNavigatedTo(e);
         }

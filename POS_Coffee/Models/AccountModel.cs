@@ -16,5 +16,6 @@ namespace POS_Coffee.Models
         public string phone { get; set; }
         public string email { get; set; }
         public string address { get; set; }
+        public bool isActive { get; set; }
     }
 }

@@ -26,10 +26,17 @@ namespace POS_Coffee.ViewModels
         private readonly INavigation _navigation;
         public ObservableCollection<AccountModel> _employees { get; set; }
 
-        private AccountModel _emp;
-        public AccountModel NewEmp {
-            get => _emp;
-            set => SetProperty(ref _emp, value);
+        private string _search;
+        public string SearchQuery
+        {
+            get => _search;
+            set => SetProperty(ref _search, value);
+        }
+        private AccountModel _selectedEmployee;
+        public AccountModel SelectedEmployee
+        {
+            get => _selectedEmployee;
+            set => SetProperty(ref _selectedEmployee, value);
         }
         private XamlRoot _xamlRoot;
         private DateTimeOffset _workDate = DateTimeOffset.Now;
@@ -76,7 +83,9 @@ namespace POS_Coffee.ViewModels
 
         public ICommand SubmitAttendanceCommand { get; }
         public ICommand AddEmployeeCommand {  get; }
+        public ICommand DeleteEmployeeCommand { get; }
         public ICommand SalaryListCommand { get; }
+        public ICommand SearchButtonClickCommand { get; }
         public IAsyncRelayCommand LoadEmployeesCommand { get; }
         public EmployeeViewModel(IAccountDao dao, INavigation navigation)
         {
@@ -85,7 +94,9 @@ namespace POS_Coffee.ViewModels
             LoadEmployeesCommand = new AsyncRelayCommand(LoadEmployees);
             SubmitAttendanceCommand = new Utilities.RelayCommand(() => AddAttendance());
             AddEmployeeCommand = new Utilities.RelayCommand(() => AddEmployee());
+            DeleteEmployeeCommand = new Utilities.RelayCommand(() => DeleteEmployee());
             SalaryListCommand = new Utilities.RelayCommand(() => GetSalaryList());
+            SearchButtonClickCommand = new Utilities.RelayCommand(() => GetEmployeesByName());
             LoadEmployeesCommand.Execute(null);
         }
 
@@ -97,6 +108,12 @@ namespace POS_Coffee.ViewModels
         public async Task LoadEmployees()
         {
             var employees = await _dao.getAllEmployee();
+            _employees = new ObservableCollection<AccountModel>(employees);
+        }
+
+        public async void GetEmployeesByName()
+        {
+            var employees = await _dao.GetEmployeesByName(SearchQuery);
             _employees = new ObservableCollection<AccountModel>(employees);
         }
 
@@ -121,7 +138,7 @@ namespace POS_Coffee.ViewModels
             }
             else
             {
-                var existedTimeKeeping = _dao.GetTimeKeppingModel(LoginViewModel.id, DateOnly.FromDateTime(WorkDate.DateTime));
+                var existedTimeKeeping = await _dao.GetTimeKeppingModel(LoginViewModel.id, DateOnly.FromDateTime(WorkDate.DateTime));
                 if (existedTimeKeeping != null)
                 {
                     var failDialog = new ContentDialog()
@@ -156,32 +173,9 @@ namespace POS_Coffee.ViewModels
             }
         }
 
-        public async void AddEmployee()
+        public void AddEmployee()
         {
-            NewEmp = new AccountModel();
-            var dialog = new AddEmployeeDialog
-            {
-                XamlRoot = _xamlRoot,
-                AddedEmp = NewEmp
-            };
-            dialog.PrimaryButtonClick += AddEmployeeDialog_PrimaryButtonClick;
-            await dialog.ShowAsync();
-            NewEmp = dialog.AddedEmp;
-        }
-
-        private async void AddEmployeeDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            NewEmp.role = "employee";
-            if (NewEmp == null || string.IsNullOrWhiteSpace(NewEmp.name))
-            {
-                Debug.WriteLine("Tên không đc để trống");
-            }
-            else
-            {
-                await _dao.AddEmployee(NewEmp);
-                var employees = await _dao.getAllEmployee();
-                _employees = new ObservableCollection<AccountModel>(employees);
-            }           
+            _navigation.NavigateTo(typeof(AddEmployeePage));
         }
 
         public void GetSalaryList()
@@ -191,5 +185,35 @@ namespace POS_Coffee.ViewModels
             var salaryList = _dao.GetSalaryByMonth(month, year);
             _navigation.NavigateTo(typeof(SalaryListPage), salaryList);
         }
+
+        public async void DeleteEmployee()
+        {
+            SelectedEmployee = await _dao.RemoveEmployee(SelectedEmployee);
+            if (SelectedEmployee != null)
+            {
+                var dialog = new ContentDialog()
+                {
+                    XamlRoot = _xamlRoot,
+                    Content = "Xóa thành công",
+                    Title = "Thành công",
+                    CloseButtonText = "OK",
+                };
+                await dialog.ShowAsync();
+                var employees = await _dao.getAllEmployee();
+                _employees = new ObservableCollection<AccountModel>(employees);
+            }
+            else
+            {
+                var dialog = new ContentDialog()
+                {
+                    XamlRoot = _xamlRoot,
+                    Content = "Xóa thất bại",
+                    Title = "Thất bại",
+                    CloseButtonText = "OK",
+                };
+                await dialog.ShowAsync();
+            }
+        }
+
     }
 }

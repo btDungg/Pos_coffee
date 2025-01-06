@@ -41,20 +41,13 @@ namespace POS_Coffee.Repositories
             {
                 return null;
             }
-            return new AccountModel
-            {
-                Id = account.Id,
-                username = account.username,
-                password = account.password,
-                role = account.role,
-                name = account.name
-            };
+            return account;
         }
 
         public async Task<List<AccountModel>> getAllEmployee()
         {
             var accounts = _dbcontext.Accounts.AsQueryable();
-            var employees = await  accounts.Where(a => a.role == "employee").ToListAsync();
+            var employees = await  accounts.Where(a => a.role == "employee" && a.isActive == true).ToListAsync();
             return employees;
         }
 
@@ -66,6 +59,17 @@ namespace POS_Coffee.Repositories
                 return null;
             }
             return employee;
+        }
+
+        public async Task<List<AccountModel>> GetEmployeesByName(string searchQuery)
+        {
+            if (string.IsNullOrEmpty(searchQuery) == false)
+            {
+                var accounts = await _dbcontext.Accounts.Where(a => a.name.Contains(searchQuery)).ToListAsync();
+                return accounts;
+            }
+            return await getAllEmployee();  
+           
         }
 
         public List<SalaryDTO> GetSalaryByMonth(int month, int year)
@@ -107,6 +111,18 @@ namespace POS_Coffee.Repositories
                 return null;
             }
             return timeKeeping;
+        }
+
+        public async Task<AccountModel> RemoveEmployee(AccountModel employee)
+        {
+            var existedEmp = await _dbcontext.Accounts.FirstOrDefaultAsync(e => e.Id == employee.Id);
+            if (existedEmp == null)
+            {
+                return null;
+            }
+            existedEmp.isActive = false;
+            await _dbcontext.SaveChangesAsync();
+            return existedEmp;
         }
     }
 }

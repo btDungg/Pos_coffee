@@ -13,14 +13,20 @@
     <StackPanel Orientation="Vertical" Width="Auto" Height="Auto" Background="FloralWhite" Margin="10 10 10 10">
         <TextBlock Text="QUẢN LÝ NHÂN VIÊN" FontSize="25" Margin="0,10,0,0" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Center"/>
         <!--<Button Command="{x:Bind ViewModel.ShowDetailCommand}">-->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Thêm nhân viên" Command="{x:Bind EmployeeViewModel.AddEmployeeCommand}" Margin="10 10 10 10" HorizontalAlignment="Right" Background="#3498eb"></Button>
-            <Button Content="Xem bảng lương" Command="{x:Bind EmployeeViewModel.SalaryListCommand}" Margin="10 10 10 10" HorizontalAlignment="Right" Background="#3498eb"></Button>
+        <StackPanel Orientation="Horizontal" Margin="0 20 0 0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0 0 490 0">
+                <TextBox Width="400" Height="35" PlaceholderText="Tìm nhân viên" Margin="10,0,0,0" Text="{x:Bind EmployeeViewModel.SearchQuery, Mode=TwoWay}"/>
+                <Button Content="Search" Height="35" Margin="10,0,0,0" Command="{x:Bind EmployeeViewModel.SearchButtonClickCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Thêm nhân viên" Command="{x:Bind EmployeeViewModel.AddEmployeeCommand}" Margin="10 10 10 10" HorizontalAlignment="Right" Background="#3498eb"></Button>
+                <Button Content="Xem bảng lương" Command="{x:Bind EmployeeViewModel.SalaryListCommand}" Margin="10 10 10 10" HorizontalAlignment="Right" Background="#3498eb"></Button>
+            </StackPanel>
+
         </StackPanel>
-        
         <controls:DataGrid x:Name="detailTable"
             GridLinesVisibility="All" VerticalAlignment="Top"
-            IsReadOnly="True" 
+            IsReadOnly="True" SelectedItem="{x:Bind EmployeeViewModel.SelectedEmployee, Mode=TwoWay}"
             Margin="10" MaxHeight="500" SelectionMode="Single"
             AutoGenerateColumns="False" 
             ItemsSource="{x:Bind EmployeeViewModel._employees, Mode=TwoWay}"
@@ -57,9 +63,7 @@
                 Binding="{Binding address}" 
                 FontSize="14" />
             </controls:DataGrid.Columns>
-
         </controls:DataGrid>
-
-        
+        <Button Content="Xóa" Command="{x:Bind EmployeeViewModel.DeleteEmployeeCommand}" Margin="10 10 10 10" HorizontalAlignment="Right" Background="#e81010"></Button>
     </StackPanel>
 </Page>

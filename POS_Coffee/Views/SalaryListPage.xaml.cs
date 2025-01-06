@@ -30,7 +30,14 @@ namespace POS_Coffee.Views
         public SalaryListPage()
         {
             this.InitializeComponent();
+            this.Loaded += SalaryListPage_Loaded;
         }
+
+        private void SalaryListPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            SalaryViewModel.SetXamlRoot(this.XamlRoot);
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);

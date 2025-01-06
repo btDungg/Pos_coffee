@@ -21,6 +21,7 @@ namespace POS_Coffee.Data
         public DbSet<PaymentModel> Payments { get; set; }
         public DbSet<PaymentDetailModel> PaymentDetails { get; set; }
         public DbSet<PromotionModel> Promotions { get; set; }
+        public DbSet<TimeKeppingModel> TimeKeppingModels { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
@@ -78,6 +79,11 @@ namespace POS_Coffee.Data
                 entity.Property(e => e.applicable_to)
                       .IsRequired()
                       .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TimeKeppingModel>(entity =>
+            {
+                entity.HasKey(e => new { e.EmployeeID, e.WorkDate });
             });
 
             var foods = new List<FoodModel>
@@ -248,7 +254,10 @@ namespace POS_Coffee.Data
                     username = "emp1",
                     password = "emp1",
                     role = "employee",
-                    name = "Nguyễn Võ Nhật Huy"
+                    name = "Nguyễn Võ Nhật Huy",
+                    phone = "0123456789",
+                    email = "emp1@gmail.com",
+                    address = "Thủ Đức, TP Hồ Chí Minh"
                 },
                 new AccountModel()
                 {
@@ -256,7 +265,10 @@ namespace POS_Coffee.Data
                     username = "emp2",
                     password = "emp2",
                     role = "employee",
-                    name = "Bùi Tiến Dũng"
+                    name = "Bùi Tiến Dũng",
+                    phone = "0805057891",
+                    email = "emp2@gmail.com",
+                    address = "Đông Hòa, Dĩ An, Bình Dương"
                 },
                 new AccountModel()
                 {
@@ -264,7 +276,10 @@ namespace POS_Coffee.Data
                     username = "admin1",
                     password = "admin1",
                     role = "admin",
-                    name = "Phạm Thế Duyệt"
+                    name = "Phạm Thế Duyệt",
+                    phone = "0159753214",
+                    email = "admin1@gmail.com",
+                    address = "Thủ Đức, TP Hồ Chí Minh"
                 }
             };
 

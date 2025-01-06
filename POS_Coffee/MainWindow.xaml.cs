@@ -72,11 +72,13 @@ namespace POS_Coffee
             {
                 if (item is NavigationViewItem navItem)
                 {
-                    if((navItem.Name == "HomePage" || navItem.Name == "PaymentPage") && role == "employee")
+                    if((navItem.Name == "HomePage" || navItem.Name == "PaymentPage" || navItem.Name == "TimeKeepingPage") && role == "employee")
                     {
                         navItem.Visibility = Visibility.Visible;
                     }
-                    if ((navItem.Name == "StockManagement" || navItem.Name == "PaymentPage" || navItem.Name == "FinancialReport" || navItem.Name == "PromotionManagement")
+                    if ((navItem.Name == "StockManagement" || navItem.Name == "PaymentPage" 
+                        || navItem.Name == "FinancialReport" || navItem.Name == "PromotionManagement"
+                        || navItem.Name == "EmployeeManagement")
                         && role == "admin")
                     {
                         navItem.Visibility = Visibility.Visible;

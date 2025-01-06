@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using POS_Coffee.Data;
 
@@ -11,9 +12,11 @@ using POS_Coffee.Data;
 namespace POS_Coffee.Migrations
 {
     [DbContext(typeof(PosDbContext))]
-    partial class PosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241226091203_update AccountModel")]
+    partial class updateAccountModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -408,7 +411,7 @@ namespace POS_Coffee.Migrations
                             Name = "Giảm 10% cho hóa đơn lớn hơn 500,000",
                             applicable_to = "all",
                             created_by = 3,
-                            created_date = new DateTime(2025, 1, 4, 20, 3, 20, 109, DateTimeKind.Local).AddTicks(2044),
+                            created_date = new DateTime(2024, 12, 26, 16, 12, 0, 767, DateTimeKind.Local).AddTicks(2852),
                             discount_type = "percent",
                             discount_value = 10m,
                             end_date = new DateTime(2024, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -416,7 +419,7 @@ namespace POS_Coffee.Migrations
                             min_order_value = 500000m,
                             start_date = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             updated_by = 3,
-                            updated_date = new DateTime(2025, 1, 4, 20, 3, 20, 110, DateTimeKind.Local).AddTicks(7102)
+                            updated_date = new DateTime(2024, 12, 26, 16, 12, 0, 768, DateTimeKind.Local).AddTicks(3031)
                         },
                         new
                         {
@@ -425,7 +428,7 @@ namespace POS_Coffee.Migrations
                             Name = "Giảm 50,000 cho hóa đơn từ 300,000 trở lên",
                             applicable_to = "all",
                             created_by = 3,
-                            created_date = new DateTime(2025, 1, 4, 20, 3, 20, 110, DateTimeKind.Local).AddTicks(7767),
+                            created_date = new DateTime(2024, 12, 26, 16, 12, 0, 768, DateTimeKind.Local).AddTicks(4582),
                             discount_type = "amount",
                             discount_value = 50000m,
                             end_date = new DateTime(2023, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -433,7 +436,7 @@ namespace POS_Coffee.Migrations
                             min_order_value = 300000m,
                             start_date = new DateTime(2023, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             updated_by = 3,
-                            updated_date = new DateTime(2025, 1, 4, 20, 3, 20, 110, DateTimeKind.Local).AddTicks(7769)
+                            updated_date = new DateTime(2024, 12, 26, 16, 12, 0, 768, DateTimeKind.Local).AddTicks(4588)
                         },
                         new
                         {
@@ -442,7 +445,7 @@ namespace POS_Coffee.Migrations
                             Name = "Giảm giá 15% cho danh mục Đồ uống",
                             applicable_to = "categories",
                             created_by = 3,
-                            created_date = new DateTime(2025, 1, 4, 20, 3, 20, 110, DateTimeKind.Local).AddTicks(7774),
+                            created_date = new DateTime(2024, 12, 26, 16, 12, 0, 768, DateTimeKind.Local).AddTicks(4593),
                             discount_type = "percent",
                             discount_value = 15m,
                             end_date = new DateTime(2024, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -450,7 +453,7 @@ namespace POS_Coffee.Migrations
                             min_order_value = 0m,
                             start_date = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             updated_by = 3,
-                            updated_date = new DateTime(2025, 1, 4, 20, 3, 20, 110, DateTimeKind.Local).AddTicks(7775)
+                            updated_date = new DateTime(2024, 12, 26, 16, 12, 0, 768, DateTimeKind.Local).AddTicks(4594)
                         });
                 });
 
@@ -537,28 +540,6 @@ namespace POS_Coffee.Migrations
                         });
                 });
 
-            modelBuilder.Entity("POS_Coffee.Models.TimeKeppingModel", b =>
-                {
-                    b.Property<int>("EmployeeID")
-                        .HasColumnType("int");
-
-                    b.Property<DateOnly>("WorkDate")
-                        .HasColumnType("date");
-
-                    b.Property<TimeOnly>("EndTime")
-                        .HasColumnType("time");
-
-                    b.Property<double>("Hours")
-                        .HasColumnType("float");
-
-                    b.Property<TimeOnly>("StartTime")
-                        .HasColumnType("time");
-
-                    b.HasKey("EmployeeID", "WorkDate");
-
-                    b.ToTable("TimeKeppingModels");
-                });
-
             modelBuilder.Entity("POS_Coffee.Models.PaymentDetailModel", b =>
                 {
                     b.HasOne("POS_Coffee.Models.FoodModel", "Food")
@@ -568,17 +549,6 @@ namespace POS_Coffee.Migrations
                         .IsRequired();
 
                     b.Navigation("Food");
-                });
-
-            modelBuilder.Entity("POS_Coffee.Models.TimeKeppingModel", b =>
-                {
-                    b.HasOne("POS_Coffee.Models.AccountModel", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
                 });
 #pragma warning restore 612, 618
         }

@@ -24,12 +24,14 @@
     <None Remove="Assets\trungga.jpg" />
     <None Remove="Assets\trungnguyen.jpg" />
     <None Remove="Assets\Vinamilk.jpg" />
+    <None Remove="Views\AddEmployeeDialog.xaml" />
     <None Remove="Views\AdminHomePage.xaml" />
     <None Remove="Views\CreatePromotionPage.xaml" />
-    <None Remove="Views\PaymentDetailDialog.xaml" />
+    <None Remove="Views\EmployeeManagementPage.xaml" />
     <None Remove="Views\FinancialReportPage.xaml" />
     <None Remove="Views\PromotionManagementPage.xaml" />
     <None Remove="Views\PromotionPage.xaml" />
+    <None Remove="Views\SalaryListPage.xaml" />
     <None Remove="Views\StockManagementPage.xaml" />
     <Content Remove="Assets\bac-xiu.jpg" />
     <Content Remove="Assets\banhmingot.jpg" />
@@ -54,6 +56,7 @@
     <None Remove="Views\AdminHomePage.xaml" />
     <None Remove="Views\PaymentManagementPage.xaml" />
     <None Remove="Views\PaymentPage.xaml" />
+    <None Remove="Views\TimeKeepingPage.xaml" />
     <None Remove="Views\UpdatePromotion.xaml" />
   </ItemGroup>
 
@@ -201,6 +204,18 @@
     <None Update="Assets\pepsi.webp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\SalaryListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\AddEmployeeDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\TimeKeepingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\EmployeeManagementPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\UpdatePromotion.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -211,9 +226,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\PromotionManagementPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\PaymentDetailDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\FinancialReportPage.xaml">

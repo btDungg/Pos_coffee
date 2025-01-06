@@ -352,12 +352,33 @@ namespace POS_Coffee.ViewModels
                     CreatedDate = DateTime.Now,
                     CreatedBy = LoginViewModel.username
                 };
+                if(PriceAfterDiscount>0)
+                {
+                    int pointupdate = 0;
+                    if(PriceAfterDiscount<100000)
+                    {
+                        pointupdate = 1;
+                    }
+                    else if (PriceAfterDiscount >= 100000 && PriceAfterDiscount < 300000)
+                    {
+                        pointupdate = 3;
+                    }
+                    else if (PriceAfterDiscount >= 300000 && PriceAfterDiscount < 500000)
+                    {
+                        pointupdate = 5;
+                    }       
+                    else if (PriceAfterDiscount >= 500000)
+                    {
+                        pointupdate = 10;
+                    }
+                    await _membersDao.UpdateMemberPoints(CustomerPhoneNumber, pointupdate);
+                }
 
                 // Update quantities
                 await _foodDao.UpdateQuantity(cartItems);
                 await _paymentDao.AddPayment(payment);
                 await _paymentDao.AddPaymentDetail(cartItems, payment.Id);
-
+                
                 var dialog = new ContentDialog()
                 {
                     XamlRoot = _xamlRoot,

@@ -10,5 +10,8 @@ namespace POS_Coffee.Repositories
     public interface IMembersDao
     {
         Task<MembersModel> getMember(string phoneNumber);
+        Task<List<MembersModel>> GetAllMembers();
+        Task AddMember(MembersModel newMember);
+        Task UpdateMemberPoints(string phoneNumber, int newPoints);
     }
 }

@@ -40,7 +40,7 @@ namespace POS_Coffee
             nvSample.ItemInvoked += OnItemInvoked;
             ViewModel.NavigationCompleted += OnNavigationCompleted;
             LoginViewModel.OnLoginSuccess += ShowNavigationItems;
-            SetWindowSize(this, 1300, 825);
+            SetWindowSize(this, 1400, 825);
             CenterWindowOnScreen(this);
             DisableWindowResize(this);
             this.Title = "Quản lý bán hàng";

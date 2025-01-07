@@ -156,8 +156,8 @@
                         <Run Text="Tổng tiền: " />
                         <Run Text="{x:Bind CartItemsViewModel.TotalPrice, Mode=OneWay, Converter={StaticResource PriceConverter}}" />
                     </TextBlock>
-                    <Button Content="Thanh toán" Command="{x:Bind CartItemsViewModel.NavigateToPaymentCommand}"
-                            Height="50" Width="200" Background="Green" Foreground="White" CornerRadius="20" FontSize="18" FontWeight="Bold"/>
+                    <Button Content="Thanh toán" Command="{x:Bind CartItemsViewModel.NavigateToPaymentCommand}" Margin="0 0 0 10"
+                            Height="50" Width="200" Background="#003f8b" Foreground="White" CornerRadius="20" FontSize="18" FontWeight="Bold"/>
                 </StackPanel>
             </Grid>
         </Grid>

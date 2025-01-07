@@ -7,65 +7,69 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="#003f8b">
 
-    <Grid Padding="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <StackPanel Orientation="Vertical" Width="Auto" Height="Auto" Background="FloralWhite" Margin="10">
+        <Grid Padding="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <TextBlock Text="Tạo mới khuyến mại" 
-                   FontSize="30" 
-                   FontWeight="Bold" 
-                   HorizontalAlignment="Center" 
-                   Margin="0,20" 
-                   Grid.Row="0"/>
+            <TextBlock Text="Tạo mới khuyến mại" 
+               FontSize="30" 
+               FontWeight="Bold" 
+               HorizontalAlignment="Center" 
+               Margin="0,20" 
+               Grid.Row="0"/>
 
-        <StackPanel Grid.Row="1" Spacing="10">
-            <TextBox Header="Tên khuyến mại" 
-                     Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                     PlaceholderText="Nhập tên khuyến mại"/>
+            <StackPanel Grid.Row="1" Spacing="10">
+                <TextBox Header="Tên khuyến mại" 
+                 Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                 PlaceholderText="Nhập tên khuyến mại"/>
 
-            <TextBox Header="Mô tả" 
-                     Text="{Binding Description, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" 
-                     PlaceholderText="Mô tả chi tiết khuyến mại"/>
+                <TextBox Header="Mô tả" 
+                 Text="{Binding Description, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" 
+                 PlaceholderText="Mô tả chi tiết khuyến mại"/>
 
-            <ComboBox Header="Loại giảm giá" 
-                      ItemsSource="{Binding DiscountTypes, Mode=OneWay}"
-                      SelectedItem="{Binding DiscountType, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}"
-                      PlaceholderText="Chọn loại giảm giá"/>
+                <ComboBox Header="Loại giảm giá" 
+                  ItemsSource="{Binding DiscountTypes, Mode=OneWay}"
+                  SelectedItem="{Binding DiscountType, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}"
+                  PlaceholderText="Chọn loại giảm giá"/>
 
-            <NumberBox Header="Giá trị giảm" 
-                       Value="{Binding DiscountValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                       Minimum="0"
-                       />
-
-            <NumberBox Header="Giá trị đơn hàng tối thiểu" 
-                       Value="{Binding MinOrderValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                       Minimum="0"/>
-
-            <ComboBox Header="Áp dụng cho" 
-                      ItemsSource="{Binding ApplicableToOptions}"
-                      SelectedItem="{Binding ApplicableTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      PlaceholderText="Chọn phạm vi áp dụng"/>
-
-            <CalendarDatePicker Header="Ngày bắt đầu" 
-                                 Date="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-
-            <CalendarDatePicker Header="Ngày kết thúc" 
-                                 Date="{Binding EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        </StackPanel>
-
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
-            <Button Content="Hủy" 
-                    Command="{Binding CancelCommand}"
-                    />
-
-            <Button Content="Lưu"  Background="Green"
-                    Command="{Binding SavePromotionCommand}"
+                <NumberBox Header="Giá trị giảm" 
+                   Value="{Binding DiscountValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                   Minimum="0"
                    />
-        </StackPanel>
-    </Grid>
+
+                <NumberBox Header="Giá trị đơn hàng tối thiểu" 
+                   Value="{Binding MinOrderValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                   Minimum="0"/>
+
+                <ComboBox Header="Áp dụng cho" 
+                  ItemsSource="{Binding ApplicableToOptions}"
+                  SelectedItem="{Binding ApplicableTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  PlaceholderText="Chọn phạm vi áp dụng"/>
+
+                <CalendarDatePicker Header="Ngày bắt đầu" 
+                             Date="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <CalendarDatePicker Header="Ngày kết thúc" 
+                             Date="{Binding EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+                <Button Content="Hủy" Width="100" Background="Red" Foreground="White"
+                Command="{Binding CancelCommand}"
+                />
+
+                <Button Content="Lưu"  Background="#003f8b" Foreground="White" Width="100"
+                Command="{Binding SavePromotionCommand}"
+               />
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+
+    
 </Page>

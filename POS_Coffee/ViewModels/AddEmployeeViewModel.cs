@@ -204,7 +204,7 @@ namespace POS_Coffee.ViewModels
                 }
                 else
                 {
-                    PhoneErrorVisible = "Collapse";
+                    PhoneErrorVisible = "Collapsed";
                 }
             }
             //check email

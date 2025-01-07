@@ -7,80 +7,84 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     x:Name="RootPage"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="#003f8b">
 
-    <Grid DataContext="{Binding ViewModel, ElementName=RootPage}" Padding="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <StackPanel Width="Auto" Height="Auto" Background="FloralWhite" Margin="20">
+        <Grid DataContext="{Binding ViewModel, ElementName=RootPage}" Padding="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <!-- Header Text -->
-        <TextBlock Text="Quản lý khách hàng"
-                  FontSize="28"
-                  FontWeight="Bold"
-                  HorizontalAlignment="Left"
-                  Margin="0,0,0,20"
-                  Foreground="#333333" />
+            <!-- Header Text -->
+            <TextBlock Text="Quản lý khách hàng"
+              FontSize="28"
+              FontWeight="Bold"
+              HorizontalAlignment="Left"
+              Margin="0,0,0,20"
+              Foreground="#333333" />
 
-        <!-- Input Fields -->
-        <StackPanel Margin="0,60,0,0" Orientation="Horizontal" >
-            <TextBox Header="Tên Khách hàng" 
-                     Text="{x:Bind ViewModel.CustomerName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                     Margin="0,0,10,10"
-                     Width="300" />
-            <TextBox Header="Số điện thoại" 
-                     Text="{x:Bind ViewModel.PhoneNumber, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                     Margin="0,0,10,10"
-                     Width="300"/>
-            <NumberBox Header="Số điểm" 
-                      Value="{x:Bind ViewModel.Point, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                      Margin="10,0,0,10"
-                       Width="100"/>
-            <Button Margin="100,25,10,10" 
-            Content="Thêm" 
-            Height="36"
-            Command="{x:Bind ViewModel.AddNewMemberCommand}" />
-        </StackPanel>
+            <!-- Input Fields -->
+            <StackPanel Margin="0,60,0,0" Orientation="Horizontal" >
+                <TextBox Header="Tên Khách hàng" 
+                 Text="{x:Bind ViewModel.CustomerName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                 Margin="0,0,10,10"
+                 Width="300" />
+                <TextBox Header="Số điện thoại" 
+                 Text="{x:Bind ViewModel.PhoneNumber, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                 Margin="0,0,10,10"
+                 Width="300"/>
+                <!--<NumberBox Header="Số điểm" IsEnabled="False"
+                  Value="{x:Bind ViewModel.Point, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                  Margin="10,0,0,10"
+                   Width="100"/>-->
+                <Button Margin="60,25,10,10" Foreground="White"
+                    Content="Thêm" Width="100"
+                    Height="36"
+                    Background="#003f8b"
+                    Command="{x:Bind ViewModel.AddNewMemberCommand}" />
+            </StackPanel>
 
-        <!-- Members List -->
-        <ListView Grid.Row="2"
-                  ItemsSource="{Binding Members}"
-                  SelectionMode="None"
-                  Background="White"
-                  BorderBrush="#E0E0E0"
-                  BorderThickness="1">
+            <!-- Members List -->
+            <ListView Grid.Row="2"
+              ItemsSource="{Binding Members}"
+              SelectionMode="None"
+              Background="White"
+              BorderBrush="#E0E0E0"
+              BorderThickness="1">
 
-            <ListView.HeaderTemplate>
-                <DataTemplate>
-                    <Grid Background="#D8D8D8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Tên Khách hàng" FontWeight="Bold" TextAlignment="Center" Margin="10" Foreground="#333333" />
-                        <TextBlock Text="Số điện thoại" FontWeight="Bold" TextAlignment="Center" Grid.Column="1" Margin="10" Foreground="#333333"/>
-                        <TextBlock Text="Số điểm hiện có" FontWeight="Bold" TextAlignment="Center" Grid.Column="2" Margin="10" Foreground="#333333"/>
-                    </Grid>
-                </DataTemplate>
-            </ListView.HeaderTemplate>
+                <ListView.HeaderTemplate>
+                    <DataTemplate>
+                        <Grid Background="#D8D8D8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Tên Khách hàng" FontWeight="Bold" TextAlignment="Center" Margin="10" Foreground="#333333" />
+                            <TextBlock Text="Số điện thoại" FontWeight="Bold" TextAlignment="Center" Grid.Column="1" Margin="10" Foreground="#333333"/>
+                            <TextBlock Text="Số điểm hiện có" FontWeight="Bold" TextAlignment="Center" Grid.Column="2" Margin="10" Foreground="#333333"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.HeaderTemplate>
 
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Background="#F0F0F0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" TextAlignment="Center" Margin="10" Foreground="#555555"/>
-                        <TextBlock Text="{Binding phoneNumber}" VerticalAlignment="Center" TextAlignment="Center" Grid.Column="1" Margin="10" Foreground="#555555"/>
-                        <TextBlock Text="{Binding point}" VerticalAlignment="Center" TextAlignment="Center" Grid.Column="2" Margin="10" Foreground="#555555"/>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </Grid>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Background="White">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" TextAlignment="Center" Margin="10" Foreground="#555555"/>
+                            <TextBlock Text="{Binding phoneNumber}" VerticalAlignment="Center" TextAlignment="Center" Grid.Column="1" Margin="10" Foreground="#555555"/>
+                            <TextBlock Text="{Binding point}" VerticalAlignment="Center" TextAlignment="Center" Grid.Column="2" Margin="10" Foreground="#555555"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </StackPanel>
+    
 </Page>

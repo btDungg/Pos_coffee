@@ -147,6 +147,7 @@ namespace POS_Coffee.ViewModels
         {
             _stockDao = stockDAO;
             _navigation = navigation;
+            StockAddition = new StockModel();
             AllStockClickCmd = new RelayCommand(() => AllStockClick());
             NormalStockClickCmd = new RelayCommand(() => NormalStockClick());
             LowStockClickCmd = new RelayCommand(() => LowStockClick());
@@ -231,20 +232,36 @@ namespace POS_Coffee.ViewModels
                 NameErrorStatus = "Visible";
                 name = false;
             }
+            else
+            {
+                NameErrorStatus = "Collapsed";
+            }
             if (StockAddition.Unit == "" || StockAddition.Unit == null)
             {
                 UnitErrorStatus = "Visible";
                 category = false;
+            }
+            else
+            {
+                UnitErrorStatus = "Collapsed";
             }
             if (StockAddition.Price.ToString() == null || StockAddition.Price.ToString() == "" || StockAddition.Price < 0)
             {
                 PriceErrorStatus = "Visible";
                 price = false;
             }
-            if (StockAddition.StockNumber.ToString() == null || StockAddition.StockNumber.ToString() == "" || StockAddition.StockNumber < 0 || !(StockAddition.StockNumber is int))
+            else
+            {
+                PriceErrorStatus = "Collapsed";
+            }
+            if (string.IsNullOrEmpty(StockAddition.StockNumber.ToString()) || StockAddition.StockNumber < 0 || !(StockAddition.StockNumber is int))
             {
                 AmountErrorStatus = "Visible";
                 amount = false;
+            }
+            else
+            {
+                AmountErrorStatus = "Collapsed";
             }
             if (imagePath != null)
             {
@@ -338,20 +355,36 @@ namespace POS_Coffee.ViewModels
                 NameErrorStatus = "Visible";
                 name = false;
             }
+            else
+            {
+                NameErrorStatus = "Collapsed";
+            }
             if (StockDetail.Unit == "")
             {
                 UnitErrorStatus = "Visible";
                 unit = false;
             }
-            if (StockDetail.Price.ToString() == null || StockDetail.Price.ToString() == "" || StockDetail.Price < 0)
+            else
+            {
+                UnitErrorStatus = "Collapsed";
+            }
+            if (string.IsNullOrEmpty(StockDetail.Price.ToString()) || StockDetail.Price < 0)
             {
                 PriceErrorStatus = "Visible";
                 price = false;
+            }
+            else
+            {
+                PriceErrorStatus = "Collapsed";
             }
             if (StockDetail.StockNumber.ToString() == null || StockDetail.StockNumber.ToString() == "" || StockDetail.StockNumber < 0 || !(StockDetail.StockNumber is int))
             {
                 AmountErrorStatus = "Visible";
                 amount = false;
+            }
+            else
+            {
+                AmountErrorStatus = "Collapsed";
             }
             if (imagePath != null)
             {

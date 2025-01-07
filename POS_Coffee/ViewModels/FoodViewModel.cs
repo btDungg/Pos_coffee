@@ -220,20 +220,36 @@ namespace POS_Coffee.ViewModels
                 NameErrorStatus = "Visible";
                 name = false;
             }
+            else
+            {
+                NameErrorStatus = "Collapsed";
+            }
             if (FoodAddition.Category == "" || FoodAddition.Category == null)
             {
                 CategoryErrorStatus = "Visible";
                 category = false;
+            }
+            else
+            {
+                CategoryErrorStatus = "Collapsed";
             }
             if (FoodAddition.Price.ToString() == null || FoodAddition.Price.ToString() == "" || FoodAddition.Price < 0)
             {
                 PriceErrorStatus = "Visible";
                 price = false;
             }
+            else
+            {
+                PriceErrorStatus = "Collapsed";
+            }
             if (FoodAddition.Amount.ToString() == null || FoodAddition.Amount.ToString() == "" || FoodAddition.Amount < 0 || !(FoodAddition.Amount is int))
             {
                 AmountErrorStatus = "Visible";
                 amount = false;
+            }
+            else
+            {
+                AmountErrorStatus = "Collapsed";
             }
             if (imagePath != null)
             {
@@ -323,28 +339,45 @@ namespace POS_Coffee.ViewModels
             var name = true;
             var price = true;
             var amount = true;
+            var image = true;
             if (FoodDetail.Name == "")
             {
                 NameErrorStatus = "Visible";
                 name = false;
+            }
+            else
+            {
+                NameErrorStatus = "Collapsed";
             }
             if (FoodDetail.Price.ToString() == null || FoodDetail.Price.ToString() == "" || FoodDetail.Price < 0)
             {
                 PriceErrorStatus = "Visible";
                 price = false;
             }
+            else
+            {
+                PriceErrorStatus = "Collapsed";
+            }
             if (FoodDetail.Amount.ToString() == null || FoodDetail.Amount.ToString() == "" || FoodDetail.Amount < 0 || !(FoodDetail.Amount is int))
             {
                 AmountErrorStatus = "Visible";
                 amount = false;
             }
-            if (imagePath != null)
+            else
+            {
+                AmountErrorStatus = "Collapsed";
+            }
+            if (imagePath != null) 
             {
                 FoodDetail.Image = imagePath;
                 imagePath = null;
             }
+            else
+            {
+                ImageErrorStatus = "Visible";
+            }
             var id = FoodDetail.Id;
-            if(name == true && price == true && amount == true)
+            if(name == true && price == true && amount == true && image == true)
             {
                 await dao.UpdateFood(FoodDetail);
                 name = false;

@@ -11,7 +11,7 @@
     xmlns:models="using:POS_Coffee.Models"
     xmlns:converter="using:POS_Coffee.Converters" 
     d:DataContext="{d:DesignInstance Type=viewModels:CartItemViewModel}"
-    Background="#cfe4dd">
+    Background="#003f8b">
     <Page.Resources>
         <converter:PriceConverter x:Key="PriceConverter"/>
         <converter:PaymentMethodToBoolConverter x:Key="PaymentMethodToBoolConverter"/>
@@ -32,10 +32,7 @@
 
             <!-- Thông tin khách hàng và trạng thái đơn hàng -->
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Margin="10">
-                <TextBlock Text="Phiếu thanh toán - " FontWeight="Bold" FontSize="18" />
-                <TextBlock Text="1-4" FontSize="18" />
-                <TextBlock Text=" • " FontSize="18" />
-                <TextBlock Text="Mang về" Foreground="Blue" FontSize="18" />
+
             </StackPanel>
 
         <Grid Grid.Row="1" Grid.Column="0" Background="#ffffff" CornerRadius="10" Margin="20 0 10 0">
@@ -85,9 +82,9 @@
 
         <Grid Grid.Column="1" Grid.Row="0" Margin="10 0 25 0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                <TextBlock Foreground="#8a8d90" Margin="5 0 5 0">Ngày/Thang/Năm</TextBlock>
+                <!--<TextBlock Foreground="#8a8d90" Margin="5 0 5 0">Ngày/Tháng/Năm</TextBlock>
                 <TextBlock  Margin="5 0 5 0">📅</TextBlock>
-                <TextBlock Margin="5 0 5 0">🕒</TextBlock>
+                <TextBlock Margin="5 0 5 0">🕒</TextBlock>-->
             </StackPanel>
         </Grid>
 
@@ -191,7 +188,7 @@
                <!--Nút Thanh toán và In hóa đơn-->
             <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,50">
                 <Button Content="Thanh toán" 
-                    Background="Green" 
+                    Background="#003f8b" 
                     Foreground="White" 
                     FontWeight="Bold" 
                     Width="150" 
@@ -201,13 +198,13 @@
                     Command="{x:Bind PaymentViewModel.PayCommand}"
                     CommandParameter="{Binding CartItems}"/>
 
-                <Button Content="In hoá đơn" 
+                <!--<Button Content="In hoá đơn" 
                     Background="Red" 
                     Foreground="White" 
                     FontWeight="Bold" 
                     Width="150" 
                     Height="50" 
-                    CornerRadius="10" />
+                    CornerRadius="10" />-->
             </StackPanel>
 
 

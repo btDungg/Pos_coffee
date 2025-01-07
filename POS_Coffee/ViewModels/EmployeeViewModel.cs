@@ -79,7 +79,14 @@ namespace POS_Coffee.ViewModels
             set => SetProperty(ref _hours, value);
         }
 
-        
+        private ObservableCollection<TimeKeppingModel> _timeKeppings;
+        public ObservableCollection<TimeKeppingModel> TimeKeppings
+        {
+            get => _timeKeppings;
+            set => SetProperty(ref _timeKeppings, value);
+        }
+
+
 
         public ICommand SubmitAttendanceCommand { get; }
         public ICommand AddEmployeeCommand {  get; }
@@ -108,6 +115,8 @@ namespace POS_Coffee.ViewModels
         public async Task LoadEmployees()
         {
             var employees = await _dao.getAllEmployee();
+            var timeKeepings = await _dao.GetTimeKeppingModelById(LoginViewModel.id);
+            TimeKeppings = new ObservableCollection<TimeKeppingModel>(timeKeepings);
             _employees = new ObservableCollection<AccountModel>(employees);
         }
 
@@ -161,6 +170,8 @@ namespace POS_Coffee.ViewModels
                         Hours = Hours,
                     };
                     await _dao.AddTimeKepping(timeKeeping);
+                    var timeKeepings = await _dao.GetTimeKeppingModelById(LoginViewModel.id);
+                    TimeKeppings = new ObservableCollection<TimeKeppingModel>(timeKeepings);
                     var dialog = new ContentDialog()
                     {
                         XamlRoot = _xamlRoot,

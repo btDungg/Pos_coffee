@@ -88,7 +88,7 @@ namespace POS_Coffee.ViewModels
                 {
                     Name = CustomerName,
                     phoneNumber = PhoneNumber,
-                    point = Point
+                    point = 0
                 };
 
                 await _membersDao.AddMember(newMember);

@@ -113,6 +113,12 @@ namespace POS_Coffee.Repositories
             return timeKeeping;
         }
 
+        public async Task<List<TimeKeppingModel>> GetTimeKeppingModelById(int employeeId)
+        {
+            var timeKeeppings = _dbcontext.TimeKeppingModels.Where(t => t.EmployeeID == employeeId).OrderByDescending(t => t.WorkDate);
+            return await timeKeeppings.ToListAsync();
+        }
+
         public async Task<AccountModel> RemoveEmployee(AccountModel employee)
         {
             var existedEmp = await _dbcontext.Accounts.FirstOrDefaultAsync(e => e.Id == employee.Id);

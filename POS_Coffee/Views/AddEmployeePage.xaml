@@ -7,80 +7,84 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="#003f8b">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <StackPanel Orientation="Vertical" Width="Auto" Height="Auto" Background="FloralWhite" Margin="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <TextBlock Text="THÊM NHÂN VIÊN MỚI" 
-           FontSize="30" 
-           FontWeight="Bold" 
-           HorizontalAlignment="Center" 
-           Margin="0,20" 
-           Grid.Row="0"/>
+            <TextBlock Text="THÊM NHÂN VIÊN MỚI" 
+               FontSize="30" 
+               FontWeight="Bold" 
+               HorizontalAlignment="Center" 
+               Margin="0,20" 
+               Grid.Row="0"/>
 
-        <StackPanel Grid.Row="1" Spacing="10">
-            <TextBox Header="Tên nhân viên" Margin="10 0 0 0"
-             Text="{Binding Name, Mode=TwoWay}" 
-             PlaceholderText="Nhập tên nhân viên"/>
-            <TextBlock Text="{Binding NameErrorMessage, Mode=TwoWay}" 
-               Foreground="#ed323e"
-               Visibility="{Binding  NameErrorVisible, Mode=TwoWay}" 
-               Margin="10,0,0,0" />
+            <StackPanel Grid.Row="1" Spacing="10">
+                <TextBox Header="Tên nhân viên" Margin="10 0 0 0"
+                 Text="{Binding Name, Mode=TwoWay}" 
+                 PlaceholderText="Nhập tên nhân viên"/>
+                <TextBlock Text="{Binding NameErrorMessage, Mode=TwoWay}" 
+                   Foreground="#ed323e"
+                   Visibility="{Binding  NameErrorVisible, Mode=TwoWay}" 
+                   Margin="10,0,0,0" />
 
-            <TextBox Header="Địa chỉ" Margin="10 0 0 0"
-             Text="{Binding Address, Mode=TwoWay}" 
-             PlaceholderText="Nhập địa chỉ"/>
-            <TextBlock Text="{Binding AddressErrorMessage, Mode=TwoWay}" 
-               Foreground="#ed323e"
-               Visibility="{Binding  AddressErrorVisible, Mode=TwoWay}" 
-               Margin="10,0,0,0" />
+                <TextBox Header="Địa chỉ" Margin="10 0 0 0"
+                 Text="{Binding Address, Mode=TwoWay}" 
+                 PlaceholderText="Nhập địa chỉ"/>
+                <TextBlock Text="{Binding AddressErrorMessage, Mode=TwoWay}" 
+                   Foreground="#ed323e"
+                   Visibility="{Binding  AddressErrorVisible, Mode=TwoWay}" 
+                   Margin="10,0,0,0" />
 
-            <TextBox Header="Email" Margin="10 0 0 0"
-             Text="{Binding  Email, Mode=TwoWay}" 
-             PlaceholderText="Nhập email"/>
-            <TextBlock Text="{Binding EmailErrorMessage, Mode=TwoWay}" 
-               Foreground="#ed323e"
-               Visibility="{Binding  EmailErrorVisible, Mode=TwoWay}" 
-               Margin="10,0,0,0" />
+                <TextBox Header="Email" Margin="10 0 0 0"
+                 Text="{Binding  Email, Mode=TwoWay}" 
+                 PlaceholderText="Nhập email"/>
+                <TextBlock Text="{Binding EmailErrorMessage, Mode=TwoWay}" 
+                   Foreground="#ed323e"
+                   Visibility="{Binding  EmailErrorVisible, Mode=TwoWay}" 
+                   Margin="10,0,0,0" />
 
-            <TextBox Header="Số điện thoại" Margin="10 0 0 0"
-             Text="{Binding Phone, Mode=TwoWay}" 
-             PlaceholderText="Nhập số điện thoại"/>
+                <TextBox Header="Số điện thoại" Margin="10 0 0 0"
+                 Text="{Binding Phone, Mode=TwoWay}" 
+                 PlaceholderText="Nhập số điện thoại"/>
 
-            <TextBlock Text="{Binding PhoneErrorMessage, Mode=TwoWay}" 
-               Foreground="#ed323e"
-               Visibility="{Binding  PhoneErrorVisible, Mode=TwoWay}" 
-               Margin="10,0,0,0" />
+                <TextBlock Text="{Binding PhoneErrorMessage, Mode=TwoWay}" 
+                   Foreground="#ed323e"
+                   Visibility="{Binding  PhoneErrorVisible, Mode=TwoWay}" 
+                   Margin="10,0,0,0" />
 
-            <TextBox Header="Tên đăng nhập" Margin="10 0 0 0"
-             Text="{Binding Username, Mode=TwoWay}" 
-             PlaceholderText="Nhập tên đăng nhập"/>
-            <TextBlock Text="{Binding UsernameErrorMessage, Mode=TwoWay}" 
-               Foreground="#ed323e"
-               Visibility="{Binding  UsernameErrorVisible, Mode=TwoWay}" 
-               Margin="10,0,0,0" />
+                <TextBox Header="Tên đăng nhập" Margin="10 0 0 0"
+                 Text="{Binding Username, Mode=TwoWay}" 
+                 PlaceholderText="Nhập tên đăng nhập"/>
+                <TextBlock Text="{Binding UsernameErrorMessage, Mode=TwoWay}" 
+                   Foreground="#ed323e"
+                   Visibility="{Binding  UsernameErrorVisible, Mode=TwoWay}" 
+                   Margin="10,0,0,0" />
 
-            <TextBox Header="Mật khẩu" Margin="10 0 0 0"
-             Text="{Binding Password, Mode=TwoWay}" 
-             PlaceholderText="Nhập mật khẩu"/>
-            <TextBlock Text="{Binding PasswordErrorMessage, Mode=TwoWay}" 
-               Foreground="#ed323e"
-               Visibility="{Binding  PasswordErrorVisible, Mode=TwoWay}" 
-               Margin="10,0,0,0" />
-        </StackPanel>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10" Margin="0 0 0 35">
-            <Button Content="Hủy" Width="100"
+                <TextBox Header="Mật khẩu" Margin="10 0 0 0"
+                 Text="{Binding Password, Mode=TwoWay}" 
+                 PlaceholderText="Nhập mật khẩu"/>
+                <TextBlock Text="{Binding PasswordErrorMessage, Mode=TwoWay}" 
+                   Foreground="#ed323e"
+                   Visibility="{Binding  PasswordErrorVisible, Mode=TwoWay}" 
+                   Margin="10,0,0,0" />
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10" Margin="0 0 0 35">
+                <Button Content="Hủy" Width="100" Background="Red" Foreground="White"
                 Command="{Binding CancelCommand}"
                 />
 
-            <Button Content="Lưu" Width="100"  Background="#3498eb"
+                <Button Content="Lưu" Width="100"  Background="#003f8b" Foreground="White"
                 Command="{Binding AddCommand}"
                />
-        </StackPanel>
-    </Grid>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+
+    
 </Page>

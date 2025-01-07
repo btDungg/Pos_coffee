@@ -42,7 +42,7 @@
              Text="{x:Bind ViewModel.StockAddition.Description, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBox x:Name="PriceData" Header="Đơn giá:" Grid.Row="4" Margin="0 0 10 10"
-             Text="{x:Bind ViewModel.StockAddition.Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource PriceConverter}}"/>
+             Text="{x:Bind ViewModel.StockAddition.Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock x:Name="PriceError" Grid.Row="5" Text="*Price must be a positive number" Foreground="Red" Margin="0 0 0 10"
                Visibility="{x:Bind ViewModel.PriceErrorStatus, Mode=TwoWay}" />
 
@@ -51,7 +51,7 @@
             <TextBlock x:Name="AmountError" Grid.Row="7" Text="*Amount must be a positive integer" Margin="0 0 0 10"
                Visibility="{x:Bind ViewModel.AmountErrorStatus, Mode=TwoWay}" Foreground="Red"/>
 
-            <TextBox x:Name="UnitData" Header="Đơn vị:" Grid.Row="6" Margin="0 0 10 10"
+            <TextBox x:Name="UnitData" Header="Đơn vị:" Grid.Row="8" Margin="0 0 10 10"
                 Text="{x:Bind ViewModel.StockAddition.Unit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock x:Name="CategoryError" Grid.Row="9" Text="*Category is required" Margin="0 0 0 10"
                Visibility="{x:Bind ViewModel.UnitErrorStatus, Mode=TwoWay}" Foreground="Red"/>

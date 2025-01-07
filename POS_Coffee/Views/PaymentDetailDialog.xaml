@@ -14,7 +14,7 @@
 
     <ContentDialog.TitleTemplate>
         <DataTemplate>
-            <Border Background="#19aad6" Padding="10" Width="700">
+            <Border Background="#003f8b" Padding="10" Width="700">
                 <TextBlock Text="Hóa đơn" Foreground="White"
                            FontSize="20" FontWeight="Bold"/>
             </Border>

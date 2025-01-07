@@ -29,9 +29,7 @@
 * Bổ sung
   + Sử dụng Stimulsoft report để tạo hóa đơn và bảng lương.
   + Kết hợp sử dụng store procedure để binding dữ liệu lên stimulsoft report.
-  + Xem chi tiết tại link drive: [Advanced Topic](https://drive.google.com/file/d/12nzM3NaaHX0HFIkjh8CxGc9oWVbXxgwa/view?usp=drive_link)
-  + Minh họa:
-    ![image](https://github.com/user-attachments/assets/bbc4db0d-3c63-4744-b239-8c1737dd0382)
+  + Xem chi tiết tại link drive: [Advanced Topic](https://drive.google.com/drive/u/0/folders/1SyC8ub0SG-PLY_8-dpwcAslXI4Sfx34h)
 
 # IV. Các chức năng đã thực hiện
 * Tổng số giờ làm việc: 11.5 giờ.
@@ -99,12 +97,12 @@
 * Tạo các nhánh feature để thực hiện các chức năng Link github.
 * Tạo các pull request để review code, trước khi merge vào nhánh main.
 * Số giờ thực hiện test: 1.5 giờ
-* Link drive: [Test report](https://docs.google.com/spreadsheets/d/1Uh3LyWOOiO5eIof8vTc7Z9HPaGPfTpIo/edit?usp=sharing&ouid=108070913437558414936&rtpof=true&sd=true)
+* Link drive: [Test report](https://docs.google.com/spreadsheets/d/1HMGBv_U88l7n1lPtolOAPJQzR5ibCICZ/edit?gid=1860852391#gid=1860852391)
 
 # VI. Team work:
 * Tự đánh giá: 10/10
 * Tổng số giờ làm việc: 13 giờ
-* Link drive: [Biên bản họp nhóm milestone 3](https://drive.google.com/drive/folders/1FyAP845olfxLxhFwVeVoSRRMkitoKC7m?usp=sharing)
+* Link drive: [Biên bản họp nhóm milestone 3](https://drive.google.com/drive/u/0/folders/1jLrQ6s61UVMPNEiuftuhfargX4cLjMjq)
 
 # VII. Tài liệu tham khảo:
 - [Dependency Injection(DI) Design Pattern](https://www.geeksforgeeks.org/dependency-injectiondi-design-pattern/)
@@ -114,3 +112,4 @@
 - [Getting Started with WinUI Chart](https://help.syncfusion.com/winui/chart/getting-started)
 - [Getting Started with WinUI Cartesian Chart (SfCartesianChart)](https://help.syncfusion.com/winui/cartesian-charts/getting-started)
 - [Stacked Charts in WinUI Chart (SfCartesianChart)](https://help.syncfusion.com/winui/cartesian-charts/stacked)
+- [Invoice report with parameter](https://www.stimulsoft.com/en/documentation/online/user-manual/index.html?getting_started_invoice_report_with_parameters.htm)

@@ -7,11 +7,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
-    mc:Ignorable="d">
-    <!--Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">-->
+    mc:Ignorable="d"
+    Background="#003f8b">
+
 
     <Grid>
-        <StackPanel Orientation="Vertical" Width="Auto" Height="Auto" Background="FloralWhite" Margin="10 10 10 10">
+        <StackPanel Orientation="Vertical" Width="Auto" Height="Auto" Background="FloralWhite" Margin="20">
             <TextBlock Text="BẢNG LƯƠNG" FontSize="25" Margin="0,10,0,0" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Center"/>
             <!--<Button Command="{x:Bind ViewModel.ShowDetailCommand}">-->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Spacing="10" Margin="10 0 0 0">
@@ -28,7 +29,7 @@
                   ItemsSource ="{x:Bind SalaryViewModel.Years, Mode=OneWay}"
                   SelectedItem="{Binding SelectedYear, Mode=TwoWay}">
                 </ComboBox>
-                <Button Content="Xem" Background="#3498eb" Margin="0 25 0 0" Width="100"
+                <Button Content="Xem" Background="#003f8b" Margin="0 25 0 0" Width="100" Foreground="White"
                     Command="{x:Bind SalaryViewModel.GetSalaryListCommand}" />
             </StackPanel>
 
@@ -73,13 +74,9 @@
                 </controls:DataGrid.Columns>
 
             </controls:DataGrid>
-            <StackPanel Orientation="Horizontal">
-                <StackPanel HorizontalAlignment="Left">
-                    <Button Content="Trở về" Margin="10 10 10 10" HorizontalAlignment="Right" Background="#3498eb" Command="{x:Bind SalaryViewModel.BackCommand}"></Button>
-                </StackPanel>
-                <StackPanel HorizontalAlignment="Right">
-                    <Button Content="In bảng lương" Margin="1060 10 10 10" HorizontalAlignment="Right" Background="#3498eb" Command="{x:Bind SalaryViewModel.PrintSalaryListCommand}"></Button>
-                </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Trở về" Margin="10 10 10 10" Foreground="White" HorizontalAlignment="Right" Background="#003f8b" Command="{x:Bind SalaryViewModel.BackCommand}"></Button>
+                <Button Content="In bảng lương" Margin="10 10 10 10" Foreground="White" HorizontalAlignment="Right" Background="#003f8b" Command="{x:Bind SalaryViewModel.PrintSalaryListCommand}"></Button>
             </StackPanel>
         </StackPanel>
     </Grid>

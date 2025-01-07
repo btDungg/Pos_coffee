@@ -21,5 +21,6 @@ namespace POS_Coffee.Repositories
         List<SalaryDTO> GetSalaryByMonth(int month, int year);
         Task<AccountModel> RemoveEmployee(AccountModel employee);
         Task<List<AccountModel>> GetEmployeesByName(string searchQuery);   
+        Task<List<TimeKeppingModel>> GetTimeKeppingModelById(int employeeId);   
     }
 }

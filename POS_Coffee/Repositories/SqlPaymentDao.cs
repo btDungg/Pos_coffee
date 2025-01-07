@@ -42,7 +42,7 @@ namespace POS_Coffee.Repositories
 
         public async Task<List<PaymentModel>> GetAllPayment()
         {
-            var payments = await  _dbContext.Payments.ToListAsync();
+            var payments = await  _dbContext.Payments.OrderByDescending(p => p.CreatedDate).ToListAsync();
             return payments;
         }
 

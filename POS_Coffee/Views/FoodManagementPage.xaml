@@ -46,8 +46,8 @@
                 <ColumnDefinition Width ="2*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Background="WhiteSmoke" Margin="0 0 0 10" Grid.Column="0" Height="Auto">
-                <controls:DataGrid x:Name="detailTable"
-                    GridLinesVisibility="All" VerticalAlignment="Top"
+                <controls:DataGrid x:Name="detailTable" MaxHeight="590"
+                    GridLinesVisibility="All" VerticalAlignment="Top" VerticalScrollBarVisibility="Visible"
                     IsReadOnly="True" SelectedItem="{x:Bind ViewModel.FoodDetail, Mode=TwoWay}"
                     Margin="10 10 10 10" Height="Auto" SelectionMode="Single"
                     AutoGenerateColumns="False"

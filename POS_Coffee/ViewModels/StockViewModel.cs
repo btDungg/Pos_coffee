@@ -263,12 +263,13 @@ namespace POS_Coffee.ViewModels
             {
                 AmountErrorStatus = "Collapsed";
             }
-            if (imagePath != null)
+            if (StockAddition.ImagePath == null && imagePath != null)
             {
                 StockAddition.ImagePath = imagePath;
+                ImageErrorStatus = "Collapsed";
                 imagePath = null;
             }
-            else
+            else if (StockAddition.ImagePath == null && imagePath == null)
             {
                 ImageErrorStatus = "Visible";
                 image = false;

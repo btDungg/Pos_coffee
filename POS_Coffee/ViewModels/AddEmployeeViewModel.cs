@@ -252,7 +252,7 @@ namespace POS_Coffee.ViewModels
             //check password
             if (string.IsNullOrWhiteSpace(Password))
             {
-                PasswordErrorMessage = "Tên đăng nhập không được để trống";
+                PasswordErrorMessage = "Mật khẩu không được để trống";
                 PasswordErrorVisible = "Visible";
                 check = false;
             }

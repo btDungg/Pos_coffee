@@ -45,9 +45,9 @@
 
             <StackPanel Background="WhiteSmoke" Margin="0 0 0 10" Grid.Column="0" BorderBrush="Black" BorderThickness="0.3">
                 <controls:DataGrid x:Name="detailTable" Background="WhiteSmoke"
-                    GridLinesVisibility="All" VerticalAlignment="Top" 
+                    GridLinesVisibility="All" VerticalAlignment="Top" VerticalScrollBarVisibility="Visible" MaxHeight="590"
                     IsReadOnly="True" SelectedItem="{x:Bind ViewModel.StockDetail, Mode=TwoWay}"
-                    Margin="10 10 10 10" MaxHeight="550" SelectionMode="Single"
+                    Margin="10 10 10 10" SelectionMode="Single"
                     AutoGenerateColumns="False" 
                     ItemsSource="{x:Bind ViewModel.Stocks, Mode=TwoWay}"
                     DataContext="{x:Bind ViewModel}">
